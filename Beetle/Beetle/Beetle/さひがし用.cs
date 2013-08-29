@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
+using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -23,6 +25,7 @@ namespace Shooting
 
         class Object
         {
+            protected int t;
             protected Vector2 position;
             protected Texture2D texture;
             protected Vector2 size;
@@ -87,8 +90,8 @@ namespace Shooting
         class Actor : Object
         {
             protected int zanki;
-
-
+            protected int shokiHP;
+            protected bool mutekiflag;
             public Actor() { }
 
 
@@ -98,18 +101,22 @@ namespace Shooting
                 texture = settexture; //うまくいかなかったらここ
                 size = new Vector2(setsize.X, setsize.Y);
                 HP = setHP;
+                shokiHP = setHP;
                 speed = setspeed;
                 exist = true;
                 HP = setHP;
                 zanki = setzanki;
             }
             /// <summary>
-            /// 引数だけ残機を減らす
+            /// 引数だけ残機を減らし,HPを回復
             /// </summary>
             /// <param name="points">残機を減らす数int</param>
+            /// 
             public void zankiReduce(int points)
             {
                 zanki -= points;
+                HP = shokiHP;
+                mutekiflag = true;
             }
             /// <summary>
             /// 引数だけHPを減らす
@@ -136,6 +143,7 @@ namespace Shooting
         {
             public Player() { }
 
+            Stopwatch sw1 = new Stopwatch();
             /// <summary>
             /// プレイヤーコンストラクタ
             /// </summary>
@@ -145,7 +153,7 @@ namespace Shooting
             /// <param name="setHP">プレイヤーのヒットポイント</param>
             /// <param name="setspeed">プレイヤーのスピード</param>
             /// <param name="setzanki">プレイヤーの残機</param>
-            public Player(Vector2 posi, Texture2D settexture, Vector2 setsize, int setHP, Vector2 setspeed, int setzanki)
+            public Player(Vector2 posi, Texture2D settexture, Vector2 setsize, int setHP, Vector2 setspeed, int setzanki, bool mutekiflag)
             {
                 position = new Vector2(posi.X, posi.Y);
                 texture = settexture; //うまくいかなかったらここ
@@ -153,8 +161,9 @@ namespace Shooting
                 HP = setHP;
                 speed = setspeed;
                 exist = true;
-            }
-
+                mutekiflag = false;
+                }
+            
             /// <summary>
             /// 死んだときなど、プレイヤーの位置を再設定
             /// </summary>
@@ -164,9 +173,38 @@ namespace Shooting
                 position = pos;
             }
 
+            void muteki()
+            {
+                mutekiflag = true;
+                sw1.Start();
+            }
+            void getItem(int item)
+            {
+                switch (item)
+                {
+                    case 1:         //アイテム番号1を拾ったとき
+                        speed.X++;
+                        break;
+                    case 2:         //アイテム番号2を拾ったとき
+                        speed.Y++;
+                        break;
+                    case 3:         //アイテム番号3を拾ったとき
+                        speed.X--;
+                        break;
+                    case 4:         //アイテム番号4を拾ったとき
+                        speed.Y--;
+                        break;
+                    default:
+                        break;
+                }
 
+            }
             public void update()
             {
+                if (sw1.ElapsedTicks > 3)
+                {
+                    mutekiflag = false;                 //無敵の処理、無敵になってから３秒後にもどる
+                }
                 KeyboardState KeyState = Keyboard.GetState();
                 if (KeyState.IsKeyDown(Keys.Left)) position.X -= speed.X;
                 if (KeyState.IsKeyDown(Keys.Right)) position.X += speed.X;
@@ -184,8 +222,10 @@ namespace Shooting
         class Enemy : Actor
         {
             Vector2 shokiposi;
+            int enemynum;
+            int haveitem;
             public Enemy() { }
-            int num;
+
             /// <summary>
             /// 敵のコンストラクタ
             /// </summary>
@@ -195,7 +235,9 @@ namespace Shooting
             /// <param name="setHP">敵のHP</param>
             /// <param name="setspeed">敵のスピード</param>
             /// <param name="setzanki">敵の残機</param>
-            public Enemy(Vector2 posi, Texture2D settexture, Vector2 setsize, int setHP, Vector2 setspeed, int setzanki, Vector2 setshokiposi)
+            /// <param name="enemynum">敵の種類番号</param>
+            /// <param name="haveitem">敵が持つアイテムの種類、０なら持たない</param>
+            public Enemy(Vector2 posi, Texture2D settexture, Vector2 setsize, int setHP, Vector2 setspeed, int setzanki, Vector2 setshokiposi,int enemynum, int haveitem)
             {
                 position = new Vector2(posi.X, posi.Y);
                 texture = settexture; //うまくいかなかったらここ
@@ -204,6 +246,7 @@ namespace Shooting
                 speed = setspeed;
                 exist = true;
                 shokiposi = new Vector2(setshokiposi.X, setshokiposi.Y);
+                haveitem = 0;
                 
             }
             /// <summary>
@@ -211,18 +254,22 @@ namespace Shooting
             /// </summary>
             /// <param name="shokiposition">初期位置</param>
             /// <param name="enemynum">敵番号</param>
-            public void set(Vector2 shokiposition, int enemynum)
+            public void set(Vector2 shokiposition, int num)
             {
                 shokiposi = shokiposition;
                 position = shokiposition;
-                num = enemynum;
+                enemynum = num;
             }
             public void update()
             {
                 switch (enemynum)
                 {
-                    case 1:
+                    case 1:             //敵番号1のと右へまっすぐ
                         position.X += 4;
+                        break;
+                    case 2:             //敵番号2のとき下へまっすぐ
+                        position.Y += 4;
+                        break;
                 }
             }
             public void draw(SpriteBatch spriteBatch)
@@ -285,6 +332,7 @@ namespace Shooting
         }
         class Item : Object
         {
+            public int itemnum;
             public void update()
             {
             }
@@ -295,6 +343,15 @@ namespace Shooting
                 spriteBatch.End();
             }
 
+
+        }
+        void makeTama()
+        {
+
+        }
+
+        void makeEnemy()
+        {
 
         }
     }
