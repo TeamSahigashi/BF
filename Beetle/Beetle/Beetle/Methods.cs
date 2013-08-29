@@ -14,6 +14,10 @@ namespace Shooting
 {
     public partial class Game1 : Microsoft.Xna.Framework.Game
     {
+        System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+        int flg1;
+        int flg2;
+
         /// <summary>
         /// ゲームを開始する
         /// </summary>
@@ -26,8 +30,11 @@ namespace Shooting
 
             if (syokaiyobidashi)
             {
-                player = new Player(Vector2.Zero, playerSp, new Vector2(texturePlayer.Width, texturePlayer.Height), zanki, new Vector2(1, 1), zanki);
+                player = new Player(new Vector2(300, 200), playerSp, new Vector2(texturePlayer.Width, texturePlayer.Height), zanki, new Vector2(1, 1), zanki);
+                sw.Start();
                 syokaiyobidashi = false;
+                flg1 = 1;
+                flg2 = 0;
             }
 
             player.update();
@@ -145,7 +152,13 @@ namespace Shooting
         /// </summary>
         void Makestage2()
         {
-            makeEnemy(new Vector2(0, 0), 0);
+            if (flg1 != flg2 && sw.ElapsedMilliseconds > 5000)
+            {
+                makeEnemy(new Vector2(0, 0), 0);
+                flg2++;
+            }
+           this.Window.Title += sw.Elapsed;
+           this.Window.Title += " " +sw.Elapsed.Milliseconds;
         }
 
 

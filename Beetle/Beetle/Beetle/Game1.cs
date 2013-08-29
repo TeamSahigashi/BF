@@ -20,7 +20,7 @@ namespace Shooting
         SpriteBatch spriteBatch;
 
         sprite playerSp;
-        
+        TimeSpan ts1;
 
         Texture2D texturePlayer;
         Texture2D textureTama;
