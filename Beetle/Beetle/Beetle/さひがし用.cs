@@ -312,7 +312,8 @@ namespace Shooting
             {
                 switch (enemynum)
                 {
-                    case 1:             //敵番号1のと右へまっすぐ
+                       
+                    case 0:             //敵番号1のと右へまっすぐ
                         position.X += 4;
                         break;
                     case 2:             //敵番号2のとき下へまっすぐ
