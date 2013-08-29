@@ -402,17 +402,22 @@ namespace Shooting
             }
             public void update()
             {
-                /*
-                switch (ugoki)
+                switch (0) //fordg
                 {
+                    case 0:
+                        speed.X = 0;
+                        speed.Y = -4;
+                        break;
                     case 1:
                         speed.X = 1;
                         break;
                     case 2:
                         speed.X = 2;
                         break;
+                    default:
+                        break;
                 }
-                 */
+                position += speed;
             }
             public void draw(SpriteBatch spriteBatch)
             {
