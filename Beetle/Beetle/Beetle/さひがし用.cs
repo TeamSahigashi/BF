@@ -112,6 +112,7 @@ namespace Shooting
                 exist = true;
                 HP = setHP;
                 zanki = setzanki;
+                mutekiflag = false;
             }
             /// <summary>
             /// 引数だけ残機を減らし,HPを回復
@@ -129,10 +130,11 @@ namespace Shooting
             /// <param name="points">HPを減らす数int</param>
             public void HPReduce(int points)
             {
-                if(mutekiflag = false)
+                if(mutekiflag == false)
                 {
                     HP -= points;
                 }
+                mutekiflag = true;
             }
             /// <summary>
             /// 残機を返す
@@ -409,7 +411,7 @@ namespace Shooting
 
         }
         /*
-        public void makeTama(Vector2 setshokiposi, int setugoki, int setHP, setnum)
+        public void makeTama(Vector2 setshokiposi, int setugoki, int setHP, int setnum)
         {
             Tama tm;
             tm.position = setshokiposi;
@@ -419,7 +421,7 @@ namespace Shooting
         }
         public void makeTama(Vector2 pos,int num)
         {
-            Enemy ene = new Enemy(pos, enemyTextureList[num], new Vector2(enemyTextureList[num].Width, enemyTextureList[num].Height), tamaStatusList[num].HP, tamaStatusList[num].speed, 1, pos, num, enemyStatusList[num].haveItem);
+            Tama tm = new tm(pos, enemyTextureList[num], new Vector2(enemyTextureList[num].Width, enemyTextureList[num].Height), tamaStatusList[num].HP, tamaStatusList[num].speed, 1, pos, num, enemyStatusList[num].haveItem);
             EnemyList.Add(ene);
         }
         */
