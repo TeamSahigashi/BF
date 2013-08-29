@@ -19,6 +19,9 @@ namespace Shooting
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        sprite playerSp;
+        
+
         Texture2D texturePlayer;
         Texture2D textureTama;
         Texture2D textureEnemy1;
@@ -78,6 +81,7 @@ namespace Shooting
             texturePlayer = Content.Load<Texture2D>("beatle");
             textureEnemy1 = Content.Load<Texture2D>("watermelon");
             textureTama = Content.Load<Texture2D>("tamatate");
+            playerSp = new sprite(texturePlayer, new Vector2(0, 0), new Point(40, 60), new Point(3, 1), 1.0f);
 
 
             EnemyList = new List<Enemy>();
@@ -152,6 +156,7 @@ namespace Shooting
             base.Draw(gameTime);
         }
     }
-    //
+
+
 }
 
