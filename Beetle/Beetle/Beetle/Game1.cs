@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 namespace Shooting
 {
     /// <summary>
-    /// 蝓ｺ蠎・Game 繧ｯ繝ｩ繧ｹ縺九ｉ豢ｾ逕溘＠縺溘√ご繝ｼ繝縺ｮ繝｡繧､繝ｳ 繧ｯ繝ｩ繧ｹ縺ｧ縺吶・
+    /// 基底 Game クラスから派生した、ゲームのメイン クラスです。
     /// </summary>
     public partial class Game1 : Microsoft.Xna.Framework.Game
     {
@@ -23,20 +23,20 @@ namespace Shooting
         Texture2D textureTama;
         Texture2D textureEnemy1;
 
-        //繧ｪ繝悶ず繧ｧ繧ｯ繝医◆縺｡
+        //オブジェクトたち
         List<Enemy> EnemyList;
         List<Tama> TamaList;
         List<Item> ItemList;
         Player player;
-        
 
-        bool clearflag; //蜷・擇繧偵け繝ｪ繧｢縺励◆縺九←縺・°縺ｮ繝輔Λ繧ｰ
-        const int zanki = 10;//谿区ｩ溯ｨｭ螳・
-        int stagenum;//繧ｹ繝・・繧ｸ逡ｪ蜿ｷ
-        int scenenum; //繧ｷ繝ｼ繝ｳ逡ｪ蜿ｷ縲・撰ｼ壹ち繧､繝医Ν縲・托ｼ壹・繝ｬ繧､逕ｻ髱｢縲・抵ｼ・
-        const int stageMax = 3; //繧ｹ繝・・繧ｸ譛螟ｧ逡ｪ蜿ｷ
-        bool syokaiyobidashi; //繧ｹ繝・・繧ｸ髢句ｧ区凾縺ｮ縺ｿ縺ｮ謫堺ｽ懊↑縺ｩ縲∝・蝗槫他縺ｳ蜃ｺ縺励↓菴ｿ縺・
-        
+
+        bool clearflag; //各面をクリアしたかどうかのフラグ
+        const int zanki = 10;　//残機設定
+        int stagenum;　//ステージ番号
+        int scenenum; //シーン番号　０：タイトル　１：プレイ画面　２：
+        const int stageMax = 3; //ステージ最大番号
+        bool syokaiyobidashi; //ステージ開始時のみの操作など、初回呼び出しに使う
+
 
         public Game1()
         {
@@ -45,14 +45,14 @@ namespace Shooting
         }
 
         /// <summary>
-        /// 繧ｲ繝ｼ繝縺悟ｮ溯｡後ｒ髢句ｧ九☆繧句燕縺ｫ蠢・ｦ√↑蛻晄悄蛹悶ｒ陦後＞縺ｾ縺吶・
-        /// 縺薙％縺ｧ縲∝ｿ・ｦ√↑繧ｵ繝ｼ繝薙せ繧堤・莨壹＠縺ｦ縲・未騾｣縺吶ｋ繧ｰ繝ｩ繝輔ぅ繝・け莉･螟悶・繧ｳ繝ｳ繝・Φ繝・ｒ
-        /// 隱ｭ縺ｿ霎ｼ繧縺薙→縺後〒縺阪∪縺吶Ｃase.Initialize 繧貞他縺ｳ蜃ｺ縺吶→縲∽ｽｿ逕ｨ縺吶ｋ縺吶∋縺ｦ縺ｮ
-        /// 繧ｳ繝ｳ繝昴・繝阪Φ繝医′蛻玲嫌縺輔ｌ繧九→縺ｨ繧ゅ↓縲∝・譛溷喧縺輔ｌ縺ｾ縺吶・
+        /// ゲームが実行を開始する前に必要な初期化を行います。
+        /// ここで、必要なサービスを照会して、関連するグラフィック以外のコンテンツを
+        /// 読み込むことができます。base.Initialize を呼び出すと、使用するすべての
+        /// コンポーネントが列挙されるとともに、初期化されます。
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: 縺薙％縺ｫ蛻晄悄蛹悶Ο繧ｸ繝・け繧定ｿｽ蜉縺励∪縺吶・
+            // TODO: ここに初期化ロジックを追加します。
 
 
             stagenum = 1; //fordg
@@ -62,77 +62,77 @@ namespace Shooting
         }
 
         /// <summary>
-        /// LoadContent 縺ｯ繧ｲ繝ｼ繝縺斐→縺ｫ 1 蝗槫他縺ｳ蜃ｺ縺輔ｌ縲√％縺薙〒縺吶∋縺ｦ縺ｮ繧ｳ繝ｳ繝・Φ繝・ｒ
-        /// 隱ｭ縺ｿ霎ｼ縺ｿ縺ｾ縺吶・
+        /// LoadContent はゲームごとに 1 回呼び出され、ここですべてのコンテンツを
+        /// 読み込みます。
         /// </summary>
         protected override void LoadContent()
         {
-            // 譁ｰ隕上・ SpriteBatch 繧剃ｽ懈・縺励∪縺吶ゅ％繧後・繝・け繧ｹ繝√Ε繝ｼ縺ｮ謠冗判縺ｫ菴ｿ逕ｨ縺ｧ縺阪∪縺吶・
+            // 新規の SpriteBatch を作成します。これはテクスチャーの描画に使用できます。
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            //繧ｷ繝ｼ繝ｳ縺ｮ繝ｭ繝ｼ繝・
+            //シーンのロード
 
-            //繧ｪ繝悶ず繧ｧ繧ｯ繝医・繝ｭ繝ｼ繝・
-            
+            //オブジェクトのロード
+
             texturePlayer = Content.Load<Texture2D>("beatle");
             textureEnemy1 = Content.Load<Texture2D>("watermelon");
             textureTama = Content.Load<Texture2D>("tamatate");
-            
+
 
             EnemyList = new List<Enemy>();
             TamaList = new List<Tama>();
             ItemList = new List<Item>();
-            
-            //逕ｻ蜒上・繝ｭ繝ｼ繝・
+
+            //画像のロード
 
 
-            // TODO: this.Content 繧ｯ繝ｩ繧ｹ繧剃ｽｿ逕ｨ縺励※縲√ご繝ｼ繝縺ｮ繧ｳ繝ｳ繝・Φ繝・ｒ隱ｭ縺ｿ霎ｼ縺ｿ縺ｾ縺吶・
-           
+            // TODO: this.Content クラスを使用して、ゲームのコンテンツを読み込みます。
+
         }
 
         /// <summary>
-        /// UnloadContent 縺ｯ繧ｲ繝ｼ繝縺斐→縺ｫ 1 蝗槫他縺ｳ蜃ｺ縺輔ｌ縲√％縺薙〒縺吶∋縺ｦ縺ｮ繧ｳ繝ｳ繝・Φ繝・ｒ
-        /// 繧｢繝ｳ繝ｭ繝ｼ繝峨＠縺ｾ縺吶・
+        /// UnloadContent はゲームごとに 1 回呼び出され、ここですべてのコンテンツを
+        /// アンロードします。
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: 縺薙％縺ｧ ContentManager 莉･螟悶・縺吶∋縺ｦ縺ｮ繧ｳ繝ｳ繝・Φ繝・ｒ繧｢繝ｳ繝ｭ繝ｼ繝峨＠縺ｾ縺吶・
+            // TODO: ここで ContentManager 以外のすべてのコンテンツをアンロードします。
         }
 
         /// <summary>
-        /// 繝ｯ繝ｼ繝ｫ繝峨・譖ｴ譁ｰ縲∬｡晉ｪ∝愛螳壹∝・蜉帛､縺ｮ蜿門ｾ励√が繝ｼ繝・ぅ繧ｪ縺ｮ蜀咲函縺ｪ縺ｩ縺ｮ
-        /// 繧ｲ繝ｼ繝 繝ｭ繧ｸ繝・け繧偵∝ｮ溯｡後＠縺ｾ縺吶・
+        /// ワールドの更新、衝突判定、入力値の取得、オーディオの再生などの
+        /// ゲーム ロジックを、実行します。
         /// </summary>
-        /// <param name="gameTime">繧ｲ繝ｼ繝縺ｮ迸ｬ髢鍋噪縺ｪ繧ｿ繧､繝溘Φ繧ｰ諠・ｱ</param>
+        /// <param name="gameTime">ゲームの瞬間的なタイミング情報</param>
         protected override void Update(GameTime gameTime)
         {
-            // 繧ｲ繝ｼ繝縺ｮ邨ゆｺ・擅莉ｶ繧偵メ繧ｧ繝・け縺励∪縺吶・
+            // ゲームの終了条件をチェックします。
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: 縺薙％縺ｫ繧ｲ繝ｼ繝縺ｮ繧｢繝・・繝・・繝・繝ｭ繧ｸ繝・け繧定ｿｽ蜉縺励∪縺吶・
+            // TODO: ここにゲームのアップデート ロジックを追加します。
 
             if (scenenum == 0)
             {
-                //繧ｿ繧､繝医Ν繧ｷ繝ｼ繝ｳ縺ｮ謫堺ｽ・
-                ; 
+                //タイトルシーンの操作
+                ;
             }
             if (scenenum == 1)
             {
-                //繧ｲ繝ｼ繝繝励Ξ繧､逕ｻ髱｢縺ｮ謫堺ｽ・
+                //ゲームプレイ画面の操作
                 GameUpdate();
             }
             base.Update(gameTime);
         }
 
         /// <summary>
-        /// 繧ｲ繝ｼ繝縺瑚・霄ｫ繧呈緒逕ｻ縺吶ｋ縺溘ａ縺ｮ繝｡繧ｽ繝・ラ縺ｧ縺吶・
+        /// ゲームが自身を描画するためのメソッドです。
         /// </summary>
-        /// <param name="gameTime">繧ｲ繝ｼ繝縺ｮ迸ｬ髢鍋噪縺ｪ繧ｿ繧､繝溘Φ繧ｰ諠・ｱ</param>
+        /// <param name="gameTime">ゲームの瞬間的なタイミング情報</param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: 縺薙％縺ｫ謠冗判繧ｳ繝ｼ繝峨ｒ霑ｽ蜉縺励∪縺吶・
+            // TODO: ここに描画コードを追加します。
             player.draw(spriteBatch);
             foreach (var item in EnemyList)
             {
