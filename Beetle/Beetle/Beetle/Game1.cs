@@ -32,13 +32,15 @@ namespace Shooting
         List<Texture2D> tamaTextureList;
         List<Texture2D> sceneTextureList;
 
+
+
         //オブジェクトたち
         List<scene> SceneList;
         List<Enemy> EnemyList;
         List<Tama> TamaList;
         List<Item> ItemList;
         Player player;
-
+        titlescene title;
         //敵のステータス
         List<EnemyStatus> enemyStatusList;
 
@@ -95,9 +97,14 @@ namespace Shooting
             textureTitle = Content.Load<Texture2D>("title");
             sceneTextureList.Add(textureTitle);
             
+
             //オブジェクトのロード
             textureArrow = Content.Load<Texture2D>("arrow");
-            
+
+            title = new titlescene(textureTitle, textureArrow);
+
+            SceneList.Add(title);
+
             texturePlayer = Content.Load<Texture2D>("beatle");
             textureEnemy1 = Content.Load<Texture2D>("watermelon");
             enemyTextureList.Add(textureEnemy1);
@@ -106,8 +113,8 @@ namespace Shooting
             tamaTextureList.Add(textureTama);
 
             playerSp = new sprite(texturePlayer, new Vector2(0, 0), new Point(40, 60), new Point(3, 1),5000);
-            
 
+          
 
             //敵のステータスのロード
             EnemyStatus ene = new EnemyStatus(1, new Vector2(0,0), 0);

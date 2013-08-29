@@ -74,26 +74,72 @@ namespace Shooting
     }
 
 
-    class scene
+    abstract class scene
     {
-        Texture texture;
+        protected Texture2D textureScene;
+
+        public scene() { }//ここがコンストラクタ
+
+        public virtual void draw(SpriteBatch sp)
+        {
+        }
+        public virtual void update() { }
     }
 
     class titlescene : scene
     {
-        public titlescene()
+        Arrow arrow;
+        public titlescene(Texture2D inputTexture, Texture2D inputArrowTexture)
         {
-            
+            textureScene = inputTexture;
+            arrow = new Arrow(new Vector2(600, 600), inputArrowTexture);
+        }
+
+        public override void update()
+        {
+            arrow.update();
+        }
+
+        public override void draw(SpriteBatch sp)
+        {
+            sp.Begin();
+            sp.Draw(textureScene, Vector2.Zero, Color.White);
+            arrow.draw(sp);
+            sp.End();
+        }
+    }
+
+    class Arrow
+    {
+        Texture2D texture;
+        Vector2 pos;
+
+        public Arrow(Vector2 inputVec, Texture2D inputPos)
+        {
+            pos = inputVec;
+            texture = inputPos;
         }
 
         public void update()
         {
+            KeyboardState ks = new KeyboardState();
+
+            if (ks.IsKeyDown(Keys.Up))
+            {
+                pos.Y = 400;
+            }
+            if (ks.IsKeyDown(Keys.Down))
+            {
+                pos.Y = 600;
+            }
 
         }
 
-        public void draw()
+        public void draw(SpriteBatch sp)
         {
-
+            sp.Begin();
+            sp.Draw(texture,pos,Color.White);
+            sp.End();
         }
     }
 }
