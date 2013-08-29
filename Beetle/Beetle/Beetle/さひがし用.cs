@@ -243,6 +243,7 @@ namespace Shooting
             }
             public void draw(SpriteBatch spriteBatch)
             {
+                sp.setPos(position);
                 spriteBatch.Begin();
                 sp.Draw(spriteBatch);
                 spriteBatch.End();
