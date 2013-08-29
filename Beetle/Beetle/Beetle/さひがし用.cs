@@ -370,6 +370,7 @@ namespace Shooting
 
 
         }
+        /*
         void makeTama(int shokiposi)
         {
             Tama tm = new Tama();
@@ -381,6 +382,7 @@ namespace Shooting
             Enemy tm = new Enemy();
             EnemyList.Add(em);
         }
+        */
     }
 }
 
