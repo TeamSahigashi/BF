@@ -20,8 +20,9 @@ namespace Shooting
         /// <param name="stagenum">ステージ番号</param>
         void GameUpdate()
         {
-            playerSp.update(1.0f);
+            playerSp.update(100f);
 
+            
 
             if (syokaiyobidashi)
             {

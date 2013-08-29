@@ -65,5 +65,10 @@ namespace Shooting
             Rectangle texRect = new Rectangle(m_currentFrame.X * m_framesize.X, m_currentFrame.Y * m_framesize.Y, m_framesize.X, m_framesize.Y);
             sp.Draw(m_texture, m_position, texRect, Color.White, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.0f);
         }
+
+        public void setPos(Vector2 pos)
+        {
+            m_position = pos;
+        }
     }
 }
