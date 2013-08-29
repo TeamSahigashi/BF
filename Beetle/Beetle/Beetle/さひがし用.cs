@@ -56,7 +56,7 @@ namespace Shooting
             /// <summary>
             /// existをfalseにする
             /// </summary>
-            void deleate()
+            public void delete()
             {
                 exist = false;
             }
@@ -185,7 +185,7 @@ namespace Shooting
                 mutekiflag = true;
                 sw1.Start();
             }
-            void getitem(Item item)
+            public void getitem(Item item)
             {
                 switch (item.num)   //アイテム番号によって
                 {
@@ -209,7 +209,7 @@ namespace Shooting
             /// <summary>
             /// 残機が減った後、復帰するときの処理、３秒間無敵にして、初期位置に再配置
             /// </summary>
-            void recover()
+            public void recover()
             {
                 mutekiflag = true;
                 position = shokiposition;
@@ -229,9 +229,7 @@ namespace Shooting
             }
             public void draw(sprite spriteBatch)
             {
-                spriteBatch.Begin();
-                spriteBatch.Draw(texture, position, Color.White);
-                spriteBatch.End();
+                spriteBatch.Draw(texture);
             }
         }
         class Enemy : Actor
@@ -368,14 +366,16 @@ namespace Shooting
 
 
         }
-        void makeTama()
+        void makeTama(int shokiposi)
         {
-
+            Tama tm = new Tama();
+            TamaList.Add(tm);
         }
 
         void makeEnemy()
         {
-
+            Enemy tm = new Enemy();
+            EnemyList.Add(em);
         }
     }
 }
