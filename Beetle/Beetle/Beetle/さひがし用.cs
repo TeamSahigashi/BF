@@ -330,7 +330,8 @@ namespace Shooting
                         position.Y +=4;
                         break;
                     case 4:
-                        position.X = 
+                        position.X += 4;
+                        break;
                 }
             }
             public void draw(SpriteBatch spriteBatch)
@@ -407,7 +408,7 @@ namespace Shooting
 
 
         }
-
+        /*
         public void makeTama(Vector2 setshokiposi, int setugoki, int setHP, setnum)
         {
             Tama tm;
@@ -421,6 +422,7 @@ namespace Shooting
             Enemy ene = new Enemy(pos, enemyTextureList[num], new Vector2(enemyTextureList[num].Width, enemyTextureList[num].Height), tamaStatusList[num].HP, tamaStatusList[num].speed, 1, pos, num, enemyStatusList[num].haveItem);
             EnemyList.Add(ene);
         }
+        */
     }
 }
 
