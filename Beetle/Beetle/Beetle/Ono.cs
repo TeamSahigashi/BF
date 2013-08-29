@@ -126,11 +126,11 @@ namespace Shooting
 
             if (ks.IsKeyDown(Keys.Up))
             {
-                pos.Y = 400;
+                pos.Y = 500;
             }
             if (ks.IsKeyDown(Keys.Down))
             {
-                pos.Y = 600;
+                pos.Y = 700;
             }
 
         }
