@@ -22,7 +22,7 @@ namespace Shooting
             return;
         }
 
-        class Object
+        public class Object
         {
             protected int t;
             protected Vector2 position;
@@ -98,6 +98,7 @@ namespace Shooting
             protected int zanki;
             protected int shokiHP;
             protected int status;
+            protected int attacklevel;
             public Actor() { }
 
 
@@ -160,7 +161,7 @@ namespace Shooting
             /// <param name="setHP">プレイヤーのヒットポイント</param>
             /// <param name="setspeed">プレイヤーのスピード</param>
             /// <param name="setzanki">プレイヤーの残機</param>
-            public Player(Vector2 posi, sprite settexture, Vector2 setsize, int setHP, Vector2 setspeed, int setzanki)
+           public Player(Vector2 posi, sprite settexture, Vector2 setsize, int setHP, Vector2 setspeed, int setzanki)
             {
                 shokiHP = setHP;
                 shokiposition = posi;
@@ -224,14 +225,12 @@ namespace Shooting
             /// <param name="pos">発射位置</param>
             /// <param name="num">玉番号</param>
             /// <param name="tamaList">玉リストをとる</param>
-            /// <param name="tamaTextureList">玉テクスチャリストをとる</param>
-            /// <param name="tamaStatusList">玉ステータスリストをとる</param>
-            void makeTama(Vector2 pos, int num, List<Tama> tamaList, List<Texture2D> tamaTextureList, List<int> tamaStatusList)
+            void makeTama(Vector2 pos, int num, List<Tama>tamaList, List<Texture2D> tamaTextureList)
             {
-                Tama tm = new Tama(pos, tamaTextureList[num], new Vector2(tamaTextureList[num].Width, tamaTextureList[num].Height), tamaStatusList[num].HP, tamaStatusList[num].speed, num);
+                Tama tm = new Tama(pos, tamaTextureList[num], new Vector2(tamaTextureList[num].Width, tamaTextureList[num].Height), attacklevel, speed * 4, num);
                 TamaList.Add(tm);
             }
-            public void update(List<Tama> tamaList, List<Texture2D> tamatextureList)
+            public void update(ref List<Tama> tamaList, ref List<Texture2D> tamaTextureList)
             {
                 KeyboardState KeyState = Keyboard.GetState();
                 if (sw1.Elapsed.Seconds > 3)
@@ -259,7 +258,7 @@ namespace Shooting
                 }
                 if (KeyState.IsKeyDown(Keys.Enter))
                 {
-                    makeTama(position, 1, tamaList, tamaTextureList, tamaStatusList);
+                    makeTama(position, attacklevel,tamaList,tamaTextureList);
                 }
 
             }
@@ -290,7 +289,7 @@ namespace Shooting
                 }              
             }
         }
-        class EnemyStatus
+       class EnemyStatus
         {
             public int HP;
             public Vector2 speed;
@@ -344,14 +343,12 @@ namespace Shooting
             /// <param name="pos">発射位置</param>
             /// <param name="num">玉番号</param>
             /// <param name="tamaList">玉リストをとる</param>
-            /// <param name="tamaTextureList">玉テクスチャリストをとる</param>
-            /// <param name="tamaStatusList">玉ステータスリストをとる</param>
-            void makeTama(Vector2 pos, int num, List<Tama> tamaList, List<Texture2D> tamaTextureList, List<int> tamaStatusList)
+            void makeTama(Vector2 pos, int num, List<Tama> tamaList, List<Texture2D> tamaTextureList)
             {
-                Tama tm = new Tama(pos, tamaTextureList[num], new Vector2(tamaTextureList[num].Width, tamaTextureList[num].Height), tamaStatusList[num].HP, tamaStatusList[num].speed, num);
+                Tama tm = new Tama(pos, tamaTextureList[num], new Vector2(tamaTextureList[num].Width, tamaTextureList[num].Height), attacklevel, speed * 4, num);
                 TamaList.Add(tm);
             }
-            public void update(List<Tama> tamaList, List<Texture2D> tamatextureList)
+            public void update(ref List<Tama> tamaList,ref  List<Texture2D> tamatextureList)
             {
                 switch (enemynum)
                 {
@@ -380,7 +377,7 @@ namespace Shooting
                 spriteBatch.End();
             }
         }
-        class Tama : Object
+        public class Tama : Object
         {
             protected Vector2 shokiposi;
             /// <summary>
@@ -424,7 +421,7 @@ namespace Shooting
                 spriteBatch.End();
             }
         }
-        class Item : Object
+       public  class Item : Object
         {
             public int num;
             /// <summary>
