@@ -238,7 +238,7 @@ namespace Shooting
         /// <param name="enenum">敵の番号</param>
         public void makeEnemy(Vector2 pos,int enenum)
         {
-            Enemy ene = new Enemy(pos, enemyTextureList[enenum], new Vector2(enemyTextureList[enenum].Width, enemyTextureList[enenum].Height), enemyStatusList[enenum].HP, enemyStatusList[enenum].speed, 1, pos, enenum, enemyStatusList[enenum].haveItem);
+            Enemy ene = new Enemy(pos, enemyTextureList[enenum], new Vector2(enemyTextureList[enenum].Width, enemyTextureList[enenum].Height), enemyStatusList[enenum].HP, enemyStatusList[enenum].speed,enenum, enemyStatusList[enenum].haveItem);
             EnemyList.Add(ene);
         }
     }
