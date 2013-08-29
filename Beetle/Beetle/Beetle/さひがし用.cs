@@ -148,7 +148,6 @@ namespace Shooting
         class Player : Actor
         {
             public Player() { }
-            KeyboardState KeyState = Keyboard.GetState();
             Stopwatch sw1 = new Stopwatch();
             Vector2 shokiposition = new Vector2();
             sprite sp;
@@ -219,7 +218,8 @@ namespace Shooting
             }
             public void update()
             {
-                if (sw1.ElapsedTicks > 3)
+                KeyboardState KeyState = Keyboard.GetState();
+                if (sw1.ElapsedTicks > 3000)
                 {
                     mutekiflag = false;                 //無敵の処理、無敵になってから３秒後にもどる
                 }
