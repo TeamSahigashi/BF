@@ -37,7 +37,7 @@ namespace Shooting
         const int stageMax = 3; //ステージ最大番号
         bool syokaiyobidashi; //ステージ開始時のみの操作など、初回呼び出しに使う
 
-
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
