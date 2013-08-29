@@ -54,6 +54,13 @@ namespace Shooting
                 exist = true;
             }
             /// <summary>
+            /// existをfalseにする
+            /// </summary>
+            void deleate()
+            {
+                exist = false;
+            }
+            /// <summary>
             /// 存在してるかどうか
             /// </summary>
             /// <returns>存在しているならtrue</returns>
@@ -116,7 +123,6 @@ namespace Shooting
             {
                 zanki -= points;
                 HP = shokiHP;
-                mutekiflag = true;
             }
             /// <summary>
             /// 引数だけHPを減らす
@@ -142,8 +148,8 @@ namespace Shooting
         class Player : Actor
         {
             public Player() { }
-
             Stopwatch sw1 = new Stopwatch();
+            Vector2 shokiposition = new Vector2();  
             /// <summary>
             /// プレイヤーコンストラクタ
             /// </summary>
@@ -153,7 +159,7 @@ namespace Shooting
             /// <param name="setHP">プレイヤーのヒットポイント</param>
             /// <param name="setspeed">プレイヤーのスピード</param>
             /// <param name="setzanki">プレイヤーの残機</param>
-            public Player(Vector2 posi, Texture2D settexture, Vector2 setsize, int setHP, Vector2 setspeed, int setzanki, bool mutekiflag)
+            public Player(Vector2 posi, Texture2D settexture, Vector2 setsize, int setHP, Vector2 setspeed, int setzanki)
             {
                 position = new Vector2(posi.X, posi.Y);
                 texture = settexture; //うまくいかなかったらここ
@@ -161,8 +167,8 @@ namespace Shooting
                 HP = setHP;
                 speed = setspeed;
                 exist = true;
-                mutekiflag = false;
                 }
+
             
             /// <summary>
             /// 死んだときなど、プレイヤーの位置を再設定
@@ -171,6 +177,7 @@ namespace Shooting
             public void setPos(Vector2 pos)
             {
                 position = pos;
+                shokiposition = pos;
             }
 
             void muteki()
@@ -178,9 +185,9 @@ namespace Shooting
                 mutekiflag = true;
                 sw1.Start();
             }
-            void getItem(int item)
+            void getitem(Item item)
             {
-                switch (item)
+                switch (item.num)   //アイテム番号によって
                 {
                     case 1:         //アイテム番号1を拾ったとき
                         speed.X++;
@@ -199,6 +206,14 @@ namespace Shooting
                 }
 
             }
+            /// <summary>
+            /// 残機が減った後、復帰するときの処理、３秒間無敵にして、初期位置に再配置
+            /// </summary>
+            void recover()
+            {
+                mutekiflag = true;
+                position = shokiposition;
+            }
             public void update()
             {
                 if (sw1.ElapsedTicks > 3)
@@ -212,7 +227,7 @@ namespace Shooting
                 if (KeyState.IsKeyDown(Keys.Down)) position.Y += speed.Y;
 
             }
-            public void draw(SpriteBatch spriteBatch)
+            public void draw(sprite spriteBatch)
             {
                 spriteBatch.Begin();
                 spriteBatch.Draw(texture, position, Color.White);
@@ -332,7 +347,15 @@ namespace Shooting
         }
         class Item : Object
         {
-            public int itemnum;
+            public int num;
+            /// <summary>
+            /// アイテムのコンストラクタ
+            /// </summary>
+            /// <param name="num">アイテム番号</param>
+            public Item(int num)
+            {
+                num = 0;
+            }
             public void update()
             {
             }
