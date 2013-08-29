@@ -148,6 +148,7 @@ namespace Shooting
         class Player : Actor
         {
             public Player() { }
+            KeyboardState KeyState = Keyboard.GetState();
             Stopwatch sw1 = new Stopwatch();
             Vector2 shokiposition = new Vector2();
             sprite sp;
@@ -222,11 +223,22 @@ namespace Shooting
                 {
                     mutekiflag = false;                 //無敵の処理、無敵になってから３秒後にもどる
                 }
-                KeyboardState KeyState = Keyboard.GetState();
-                if (KeyState.IsKeyDown(Keys.Left)) position.X -= speed.X;
-                if (KeyState.IsKeyDown(Keys.Right)) position.X += speed.X;
-                if (KeyState.IsKeyDown(Keys.Up)) position.Y -= speed.Y;
-                if (KeyState.IsKeyDown(Keys.Down)) position.Y += speed.Y;
+                if (KeyState.IsKeyDown(Keys.Left))
+                {
+                    position.X -= speed.X;
+                }
+                if (KeyState.IsKeyDown(Keys.Right))
+                {
+                    position.X += speed.X;
+                }
+                if (KeyState.IsKeyDown(Keys.Up))
+                {
+                    position.Y -= speed.Y;
+                }
+                if (KeyState.IsKeyDown(Keys.Down))
+                {
+                    position.Y += speed.Y;
+                }
 
             }
             public void draw(SpriteBatch spriteBatch)
@@ -382,7 +394,7 @@ namespace Shooting
             Enemy tm = new Enemy();
             EnemyList.Add(em);
         }
-        */
+         */
     }
 }
 
