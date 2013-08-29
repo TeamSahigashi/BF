@@ -145,7 +145,7 @@ namespace Shooting
         /// </summary>
         void Makestage2()
         {
-
+            makeEnemy(new Vector2(0, 0), 0);
         }
 
 
@@ -215,7 +215,17 @@ namespace Shooting
         {
             return !ob.checkExist();
         }
-        
+
+        /// <summary>
+        /// 敵を生成します。
+        /// </summary>
+        /// <param name="pos">出現位置</param>
+        /// <param name="enenum">敵の番号</param>
+        public void makeEnemy(Vector2 pos,int enenum)
+        {
+         //   Enemy ene = new Enemy(pos,enemyTextureList[enenum],new Vector2(enemyTextureList[enenum].Width,enemyTextureList[enenum].Height),
+
+        }
     }
 }
 

@@ -25,6 +25,11 @@ namespace Shooting
         Texture2D texturePlayer;
         Texture2D textureTama;
         Texture2D textureEnemy1;
+        Texture2D textureArrow;
+        Texture2D textureTitle;
+
+        List<Texture2D> enemyTextureList;
+        List<Texture2D> tamaTextureList;
 
         //オブジェクトたち
         List<Enemy> EnemyList;
@@ -32,6 +37,8 @@ namespace Shooting
         List<Item> ItemList;
         Player player;
 
+        //敵のステータス
+        List<EnemyStatus> enemyStatusList;
 
         bool clearflag; //各面をクリアしたかどうかのフラグ
         const int zanki = 10;　//残機設定
@@ -58,7 +65,8 @@ namespace Shooting
         protected override void Initialize()
         {
             // TODO: ここに初期化ロジックを追加します。
-
+            enemyTextureList = new List<Texture2D>();
+            tamaTextureList = new List<Texture2D>();
 
             stagenum = 1; //fordg
             scenenum = 1; //fordg
@@ -75,12 +83,18 @@ namespace Shooting
             // 新規の SpriteBatch を作成します。これはテクスチャーの描画に使用できます。
             spriteBatch = new SpriteBatch(GraphicsDevice);
             //シーンのロード
-
+            textureTitle = Content.Load<Texture2D>("title");
+            
             //オブジェクトのロード
-
+            textureArrow = Content.Load<Texture2D>("arrow");
+            
             texturePlayer = Content.Load<Texture2D>("beatle");
             textureEnemy1 = Content.Load<Texture2D>("watermelon");
+            enemyTextureList.Add(textureEnemy1);
+            
             textureTama = Content.Load<Texture2D>("tamatate");
+            tamaTextureList.Add(textureTama);
+
             playerSp = new sprite(texturePlayer, new Vector2(0, 0), new Point(40, 60), new Point(3, 1),5000);
             
 

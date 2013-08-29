@@ -78,4 +78,22 @@ namespace Shooting
     {
         Texture texture;
     }
+
+    class titlescene : scene
+    {
+        public titlescene()
+        {
+
+        }
+
+        public void update()
+        {
+
+        }
+
+        public void draw()
+        {
+
+        }
+    }
 }
