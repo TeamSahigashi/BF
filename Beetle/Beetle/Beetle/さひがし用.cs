@@ -230,7 +230,7 @@ namespace Shooting
                 Tama tm = new Tama(pos, tamaTextureList[num], new Vector2(tamaTextureList[num].Width, tamaTextureList[num].Height), attacklevel, speed * 4, num);
                 TamaList.Add(tm);
             }
-            public void update(ref List<Tama> tamaList, ref List<Texture2D> tamaTextureList)
+            public void update(List<Tama> tamaList, List<Texture2D> tamaTextureList)
             {
                 KeyboardState KeyState = Keyboard.GetState();
                 if (sw1.Elapsed.Seconds > 3)
@@ -258,7 +258,7 @@ namespace Shooting
                 }
                 if (KeyState.IsKeyDown(Keys.Enter))
                 {
-                    makeTama(position, attacklevel,tamaList,tamaTextureList);
+                    makeTama(new Vector2(position.X - 100,position.Y - 100), attacklevel,tamaList,tamaTextureList);
                 }
 
             }
@@ -348,7 +348,7 @@ namespace Shooting
                 Tama tm = new Tama(pos, tamaTextureList[num], new Vector2(tamaTextureList[num].Width, tamaTextureList[num].Height), attacklevel, speed * 4, num);
                 TamaList.Add(tm);
             }
-            public void update(ref List<Tama> tamaList,ref  List<Texture2D> tamatextureList)
+            public void update(List<Tama> tamaList,List<Texture2D> tamatextureList)
             {
                 switch (enemynum)
                 {

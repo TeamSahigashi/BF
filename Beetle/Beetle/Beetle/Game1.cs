@@ -80,7 +80,7 @@ namespace Shooting
             ItemList = new List<Item>();
 
             stagenum = 1; //fordg
-            scenenum = 0; //fordg
+            scenenum = 1; //fordg 
             syokaiyobidashi = true;
             base.Initialize();
         }

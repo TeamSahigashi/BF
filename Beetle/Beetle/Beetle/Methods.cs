@@ -37,13 +37,13 @@ namespace Shooting
                 flg2 = 0;
             }
 
-            player.update();
+            player.update(TamaList,tamaTextureList);
             
             if (EnemyList != null)
             {
                 foreach (var item in EnemyList)
                 {
-                    item.update();
+                    item.update(TamaList,tamaTextureList);
                 }
             }
 
