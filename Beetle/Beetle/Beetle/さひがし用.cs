@@ -97,7 +97,7 @@ namespace Shooting
         {
             protected int zanki;
             protected int shokiHP;
-            protected bool mutekiflag;
+            protected int status;
             public Actor() { }
 
 
@@ -112,7 +112,7 @@ namespace Shooting
                 exist = true;
                 HP = setHP;
                 zanki = setzanki;
-                mutekiflag = false;
+                status = 1;                 //status1のとき生きてる普通の状態
             }
             /// <summary>
             /// 引数だけ残機を減らし,HPを回復
@@ -130,11 +130,11 @@ namespace Shooting
             /// <param name="points">HPを減らす数int</param>
             public void HPReduce(int points)
             {
-                if(mutekiflag == false)
+                if( status == 1)    //通常状態のときだけ
                 {
                     HP -= points;
                 }
-                mutekiflag = true;
+                status = 2;         //無敵にする
             }
             /// <summary>
             /// 残機を返す
@@ -189,8 +189,8 @@ namespace Shooting
 
             public void muteki()
             {
-                mutekiflag = true;
-                sw1.Start();
+                status = 2;     //無敵のにする
+                sw1.Start();    //無敵にしてからの時間をはかる
             }
             public void getitem(Item item)
             {
@@ -219,7 +219,7 @@ namespace Shooting
             /// </summary>
             public void recover()
             {
-                mutekiflag = true;
+                status = 2;                 //無敵にする
                 position = shokiposition;
             }
             public void update()
@@ -227,7 +227,10 @@ namespace Shooting
                 KeyboardState KeyState = Keyboard.GetState();
                 if (sw1.Elapsed.Seconds > 3)
                 {
-                    mutekiflag = false;                 //無敵の処理、無敵になってから３秒後にもどる
+                    if (status == 2)
+                    {
+                        status = 1;
+                    }                       //無敵の処理、無敵になってから３秒後なら、もとにもどる
                 }
                 if (KeyState.IsKeyDown(Keys.Left))
                 {
@@ -249,10 +252,29 @@ namespace Shooting
             }
             public void draw(SpriteBatch spriteBatch)
             {
-                sp.setPos(position);
-                spriteBatch.Begin();
-                sp.Draw(spriteBatch);
-                spriteBatch.End();
+                switch (status)
+                {
+                    case 0:                     //死んでるとき
+                        sp.setPos(position);
+                        spriteBatch.Begin();
+                        sp.Draw(spriteBatch);
+                        spriteBatch.End();
+                        break;
+                    case 1:                     //普通のとき
+                        sp.setPos(position);
+                        spriteBatch.Begin();
+                        sp.Draw(spriteBatch);
+                        spriteBatch.End();
+                        break;
+                    case 2:                     //無敵のとき
+                        sp.setPos(position);
+                        spriteBatch.Begin();
+                        sp.Draw(spriteBatch);
+                        spriteBatch.End();
+                        break;
+                    default:
+                        break;
+                }              
             }
         }
         class EnemyStatus
@@ -291,7 +313,7 @@ namespace Shooting
             /// <param name="setzanki">敵の残機</param>
             /// <param name="enemynum">敵の種類番号</param>
             /// <param name="haveitem">敵が持つアイテムの種類、０なら持たない</param>
-            public Enemy(Vector2 posi, Texture2D settexture, Vector2 setsize, int setHP, Vector2 setspeed, int setzanki, Vector2 setshokiposi,int enemynum, int haveitem)
+            public Enemy(Vector2 posi, Texture2D settexture, Vector2 setsize, int setHP, Vector2 setspeed, int enemynum, int haveitem)
             {
                 position = new Vector2(posi.X, posi.Y);
                 texture = settexture; //うまくいかなかったらここ
@@ -301,7 +323,6 @@ namespace Shooting
                 exist = true;
                 shokiposi = posi;
                 haveitem = 0;
-                
             }
             /// <summary>
             /// 敵を配置
