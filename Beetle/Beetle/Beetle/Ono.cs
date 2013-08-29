@@ -70,5 +70,12 @@ namespace Shooting
         {
             m_position = pos;
         }
+
+    }
+
+
+    class scene
+    {
+        Texture texture;
     }
 }
