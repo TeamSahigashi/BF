@@ -1,0 +1,17 @@
+object.delete()
+
+Exist -> false
+
+
+player.getItem(item)
+itemをとったときの操作
+
+
+残機減らすときにHPを初期値に戻す必要ある（要確認）
+
+
+player.recover()
+
+復帰処理
+
+無敵＋位置の再設定
