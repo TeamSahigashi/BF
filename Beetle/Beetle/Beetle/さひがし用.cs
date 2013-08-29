@@ -254,11 +254,17 @@ namespace Shooting
             public int HP;
             public int speed;
             public int haveItem;
-            public EnemyStatus(int a, int b, int c)
+            /// <summary>
+            /// EnemyStatusのコンストラクタ
+            /// </summary>
+            /// <param name="setHP">ヒットポイント１以上</param>
+            /// <param name="setspeed">スピード</param>
+            /// <param name="sethaveItem">アイテムを持つ0はアイテムを持たない</param>
+            public EnemyStatus(int setHP, int setspeed, int sethaveItem)
             {
-                a = HP;
-                b = speed;
-                c = haveItem;
+                HP = setHP;
+                speed = setspeed;
+                haveItem = sethaveItem;
             }
         }
         class Enemy : Actor
