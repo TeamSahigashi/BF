@@ -110,7 +110,7 @@ namespace Shooting
 
 
             //敵のステータスのロード
-            EnemyStatus ene = new EnemyStatus(1, 1, 0);
+            EnemyStatus ene = new EnemyStatus(1, new Vector2(0,0), 0);
             enemyStatusList.Add(ene);
 
 
