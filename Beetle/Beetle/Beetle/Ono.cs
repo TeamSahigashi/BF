@@ -83,7 +83,7 @@ namespace Shooting
     {
         public titlescene()
         {
-
+            
         }
 
         public void update()

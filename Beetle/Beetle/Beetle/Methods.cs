@@ -98,6 +98,8 @@ namespace Shooting
                 }
             }
 
+            Window.Title += " " + player.checkHP();
+
             //HP０なら残機減らす
             if (player.checkHP() == 0)
             {
