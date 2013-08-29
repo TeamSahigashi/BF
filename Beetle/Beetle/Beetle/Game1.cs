@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Shooting
 {
+
     /// <summary>
     /// 基底 Game クラスから派生した、ゲームのメイン クラスです。
     /// </summary>
@@ -37,8 +38,8 @@ namespace Shooting
         //オブジェクトたち
         List<scene> SceneList;
         List<Enemy> EnemyList;
-        public static List<Tama> TamaList;
-        static List<Item> ItemList;
+        List<Tama> TamaList;
+        List<Item> ItemList;
         Player player;
         titlescene title;
         //敵のステータス

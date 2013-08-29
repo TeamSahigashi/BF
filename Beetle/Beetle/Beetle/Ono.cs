@@ -92,7 +92,7 @@ namespace Shooting
         public titlescene(Texture2D inputTexture, Texture2D inputArrowTexture)
         {
             textureScene = inputTexture;
-            arrow = new Arrow(new Vector2(600, 600), inputArrowTexture);
+            arrow = new Arrow(new Vector2(300, 300), inputArrowTexture);
         }
 
         public override void update()
@@ -122,7 +122,7 @@ namespace Shooting
 
         public void update()
         {
-            KeyboardState ks = new KeyboardState();
+            KeyboardState ks = Keyboard.GetState();
 
             if (ks.IsKeyDown(Keys.Up))
             {
