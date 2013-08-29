@@ -137,9 +137,9 @@ namespace Shooting
 
         public void draw(SpriteBatch sp)
         {
-            sp.Begin();
+            
             sp.Draw(texture,pos,Color.White);
-            sp.End();
+        
         }
     }
 }

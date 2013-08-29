@@ -37,8 +37,8 @@ namespace Shooting
         //オブジェクトたち
         List<scene> SceneList;
         List<Enemy> EnemyList;
-        List<Tama> TamaList;
-        List<Item> ItemList;
+        public static List<Tama> TamaList;
+        static List<Item> ItemList;
         Player player;
         titlescene title;
         //敵のステータス
@@ -76,11 +76,11 @@ namespace Shooting
 
             SceneList = new List<scene>();
             EnemyList = new List<Enemy>();
-            TamaList = new List<Tama>();
+             TamaList = new List<Tama>();
             ItemList = new List<Item>();
 
             stagenum = 1; //fordg
-            scenenum = 1; //fordg
+            scenenum = 0; //fordg
             syokaiyobidashi = true;
             base.Initialize();
         }
@@ -150,8 +150,7 @@ namespace Shooting
             if (scenenum == 0)
             {
                 //タイトルシーンの操作
-                
-                ;
+                SceneList[0].update();
             }
             if (scenenum == 1)
             {
@@ -169,20 +168,28 @@ namespace Shooting
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            if (scenenum == 0)
+            {
+                SceneList[scenenum].draw(spriteBatch);
+            }
             // TODO: ここに描画コードを追加します。
-            player.draw(spriteBatch);
-            foreach (var item in EnemyList)
+            if (scenenum == 1)
             {
-                item.draw(spriteBatch);
-            }
-            foreach (var item in TamaList)
-            {
-                item.draw(spriteBatch);
-            }
+                player.draw(spriteBatch);
+                foreach (var item in EnemyList)
+                {
+                    item.draw(spriteBatch);
+                }
+                foreach (var item in TamaList)
+                {
+                    item.draw(spriteBatch);
+                }
 
-            foreach (var item in ItemList)
-            {
-                item.draw(spriteBatch);
+                foreach (var item in ItemList)
+                {
+                    item.draw(spriteBatch);
+                }
+
             }
             base.Draw(gameTime);
         }

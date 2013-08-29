@@ -144,10 +144,6 @@ namespace Shooting
             {
                 return zanki;
             }
-            public void MakeTama()
-            {
-                return;
-            }
         }
         class Player : Actor
         {
@@ -174,7 +170,7 @@ namespace Shooting
                 HP = setHP;
                 speed = setspeed;
                 exist = true;
-                }
+            }
 
             
             /// <summary>
@@ -222,7 +218,20 @@ namespace Shooting
                 status = 2;                 //無敵にする
                 position = shokiposition;
             }
-            public void update()
+            /// <summary>
+            /// 玉を発射
+            /// </summary>
+            /// <param name="pos">発射位置</param>
+            /// <param name="num">玉番号</param>
+            /// <param name="tamaList">玉リストをとる</param>
+            /// <param name="tamaTextureList">玉テクスチャリストをとる</param>
+            /// <param name="tamaStatusList">玉ステータスリストをとる</param>
+            void makeTama(Vector2 pos, int num, List<Tama> tamaList, List<Texture2D> tamaTextureList, List<int> tamaStatusList)
+            {
+                Tama tm = new Tama(pos, tamaTextureList[num], new Vector2(tamaTextureList[num].Width, tamaTextureList[num].Height), tamaStatusList[num].HP, tamaStatusList[num].speed, num);
+                TamaList.Add(tm);
+            }
+            public void update(List<Tama> tamaList, List<Texture2D> tamatextureList)
             {
                 KeyboardState KeyState = Keyboard.GetState();
                 if (sw1.Elapsed.Seconds > 3)
@@ -247,6 +256,10 @@ namespace Shooting
                 if (KeyState.IsKeyDown(Keys.Down))
                 {
                     position.Y += speed.Y;
+                }
+                if (KeyState.IsKeyDown(Keys.Enter))
+                {
+                    makeTama(position, 1, tamaList, tamaTextureList, tamaStatusList);
                 }
 
             }
@@ -297,6 +310,7 @@ namespace Shooting
         }
         class Enemy : Actor
         {
+            List<Tama> tamaList;
             Vector2 shokiposi;
             int enemynum;
             int haveitem;
@@ -325,17 +339,19 @@ namespace Shooting
                 haveitem = 0;
             }
             /// <summary>
-            /// 敵を配置
+            /// 玉を発射
             /// </summary>
-            /// <param name="shokiposition">初期位置</param>
-            /// <param name="enemynum">敵番号</param>
-            public void set(Vector2 shokiposition, int num)
+            /// <param name="pos">発射位置</param>
+            /// <param name="num">玉番号</param>
+            /// <param name="tamaList">玉リストをとる</param>
+            /// <param name="tamaTextureList">玉テクスチャリストをとる</param>
+            /// <param name="tamaStatusList">玉ステータスリストをとる</param>
+            void makeTama(Vector2 pos, int num, List<Tama> tamaList, List<Texture2D> tamaTextureList, List<int> tamaStatusList)
             {
-                shokiposi = shokiposition;
-                position = shokiposition;
-                enemynum = num;
+                Tama tm = new Tama(pos, tamaTextureList[num], new Vector2(tamaTextureList[num].Width, tamaTextureList[num].Height), tamaStatusList[num].HP, tamaStatusList[num].speed, num);
+                TamaList.Add(tm);
             }
-            public void update()
+            public void update(List<Tama> tamaList, List<Texture2D> tamatextureList)
             {
                 switch (enemynum)
                 {
@@ -428,24 +444,6 @@ namespace Shooting
                 spriteBatch.Draw(texture, position, Color.White);
                 spriteBatch.End();
             }
-
-
         }
-        /*
-        public void makeTama(Vector2 setshokiposi, int setugoki, int setHP, int setnum)
-        {
-            Tama tm;
-            tm.position = setshokiposi;
-            tm.HP = setHP;
-            tm.num = setnum;
-            TamaList.Add(tm);
-        }
-        public void makeTama(Vector2 pos,int num)
-        {
-            Tama tm = new tm(pos, enemyTextureList[num], new Vector2(enemyTextureList[num].Width, enemyTextureList[num].Height), tamaStatusList[num].HP, tamaStatusList[num].speed, 1, pos, num, enemyStatusList[num].haveItem);
-            EnemyList.Add(ene);
-        }
-        */
     }
 }
-
