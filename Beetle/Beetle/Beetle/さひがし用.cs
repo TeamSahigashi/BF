@@ -11,7 +11,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-
 namespace Shooting
 {
     public partial class Game1 : Microsoft.Xna.Framework.Game
@@ -130,7 +129,10 @@ namespace Shooting
             /// <param name="points">HPを減らす数int</param>
             public void HPReduce(int points)
             {
-                HP -= points;
+                if(mutekiflag = false)
+                {
+                    HP -= points;
+                }
             }
             /// <summary>
             /// 残機を返す
@@ -162,6 +164,8 @@ namespace Shooting
             /// <param name="setzanki">プレイヤーの残機</param>
             public Player(Vector2 posi, sprite settexture, Vector2 setsize, int setHP, Vector2 setspeed, int setzanki)
             {
+                shokiHP = setHP;
+                shokiposition = posi;
                 position = new Vector2(posi.X, posi.Y);
                 sp = settexture; //うまくいかなかったらここ
                 size = new Vector2(setsize.X, setsize.Y);
@@ -219,7 +223,7 @@ namespace Shooting
             public void update()
             {
                 KeyboardState KeyState = Keyboard.GetState();
-                if (sw1.ElapsedTicks > 3000)
+                if (sw1.Elapsed.Seconds > 3)
                 {
                     mutekiflag = false;                 //無敵の処理、無敵になってから３秒後にもどる
                 }
@@ -293,7 +297,7 @@ namespace Shooting
                 HP = setHP;
                 speed = setspeed;
                 exist = true;
-                shokiposi = new Vector2(setshokiposi.X, setshokiposi.Y);
+                shokiposi = posi;
                 haveitem = 0;
                 
             }
@@ -313,12 +317,20 @@ namespace Shooting
                 switch (enemynum)
                 {
                        
-                    case 0:             //敵番号1のと右へまっすぐ
+                    case 0:             //敵番号0のとき右へまっすぐ動く
                         position.X += 4;
                         break;
-                    case 2:             //敵番号2のとき下へまっすぐ
+                    case 1:             //敵番号1のとき左へまっすぐ動く
+                        position.X += 4;
+                        break;
+                    case 2:             //敵番号2のとき下へまっすぐ動く
                         position.Y += 4;
                         break;
+                    case 3:
+                        position.Y +=4;
+                        break;
+                    case 4:
+                        position.X = 
                 }
             }
             public void draw(SpriteBatch spriteBatch)
@@ -339,8 +351,9 @@ namespace Shooting
             /// <param name="setsize">玉のサイズ</param>
             /// <param name="setHP">玉の威力</param>
             /// <param name="setspeed">玉のスピード</param>
-            /// <param name="setshokiposi">玉の初期位置</param>
-            public Tama(Vector2 posi, Texture2D settexture, Vector2 setsize, int setHP, Vector2 setspeed, Vector2 setshokiposi)
+            /// <param name="num">玉番号</param>
+            
+            public Tama(Vector2 posi, Texture2D settexture, Vector2 setsize, int setHP, Vector2 setspeed, int num)
             {
                 position = new Vector2(posi.X, posi.Y);
                 texture = settexture; //うまくいかなかったらここ
@@ -348,13 +361,8 @@ namespace Shooting
                 HP = setHP;
                 speed = setspeed;
                 exist = true;
-                shokiposi = new Vector2(setshokiposi.X, setshokiposi.Y);
+                shokiposi = posi;
             }
-            /// <summary>
-            /// 玉をセット
-            /// </summary>
-            /// <param name="posi">玉の初期位置</param>
-            /// <param name="ugoki">玉の動き</param>
             public void update()
             {
                 /*
@@ -399,20 +407,20 @@ namespace Shooting
 
 
         }
-        /*
-        public void makeTama(Vector2 setshokiposi, int ugoki)//hpとspeedとhaveitem
+
+        public void makeTama(Vector2 setshokiposi, int setugoki, int setHP, setnum)
         {
-            Tama tm = new Tama;
-            tm.set(shokiposi);
+            Tama tm;
+            tm.position = setshokiposi;
+            tm.HP = setHP;
+            tm.num = setnum;
             TamaList.Add(tm);
         }
-        
-        void makeEnemy()
+        public void makeTama(Vector2 pos,int num)
         {
-            Enemy tm = new Enemy();
-            EnemyList.Add(em);
+            Enemy ene = new Enemy(pos, enemyTextureList[num], new Vector2(enemyTextureList[num].Width, enemyTextureList[num].Height), tamaStatusList[num].HP, tamaStatusList[num].speed, 1, pos, num, enemyStatusList[num].haveItem);
+            EnemyList.Add(ene);
         }
-         */
     }
 }
 
