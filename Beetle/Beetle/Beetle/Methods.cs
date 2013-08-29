@@ -20,9 +20,12 @@ namespace Shooting
         /// <param name="stagenum">ステージ番号</param>
         void GameUpdate()
         {
+            playerSp.update(1.0f);
+
+
             if (syokaiyobidashi)
             {
-                player = new Player(Vector2.Zero, texturePlayer, new Vector2(texturePlayer.Width, texturePlayer.Height), zanki, new Vector2(1, 1), zanki);
+                player = new Player(Vector2.Zero, playerSp, new Vector2(texturePlayer.Width, texturePlayer.Height), zanki, new Vector2(1, 1), zanki);
                 syokaiyobidashi = false;
             }
 
@@ -98,7 +101,7 @@ namespace Shooting
             //プレイヤーとアイテム
             foreach (var item in ItemList)
             {
-                player.getItem(item); //アイテムとったときの挙動
+                player.getitem(item); //アイテムとったときの挙動
                 item.delete(); //アイテムを消す
             }
             //敵と弾
