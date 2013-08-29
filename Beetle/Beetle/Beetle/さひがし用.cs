@@ -249,6 +249,16 @@ namespace Shooting
                 spriteBatch.End();
             }
         }
+        class EnemyStatus
+        {
+            int HP;
+            int speed;
+            int haveItem;
+            public EnemyStatus(int HP, int speed, int haveItem)
+            {
+                haveItem = 0;
+            }
+        }
         class Enemy : Actor
         {
             Vector2 shokiposi;
@@ -336,9 +346,8 @@ namespace Shooting
             /// </summary>
             /// <param name="posi">玉の初期位置</param>
             /// <param name="ugoki">玉の動き</param>
-            public void set(Vector2 setshokiposi, int ugoki)
+            public void update()
             {
-                shokiposi = setshokiposi;
                 switch (ugoki)
                 {
                     case 1:
@@ -348,10 +357,6 @@ namespace Shooting
                         speed.X = 2;
                         break;
                 }
-                return;
-            }
-            public void update()
-            {
             }
             public void draw(SpriteBatch spriteBatch)
             {
@@ -383,10 +388,11 @@ namespace Shooting
 
 
         }
-        /*
-        void makeTama(int shokiposi)
+
+        public void makeTama(Vector2 setshokiposi, int ugoki)//hpとspeedとhaveitem
         {
             Tama tm = new Tama();
+            tm.set(shokiposi);
             TamaList.Add(tm);
         }
 
