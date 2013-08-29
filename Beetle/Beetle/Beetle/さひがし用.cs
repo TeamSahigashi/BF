@@ -428,24 +428,19 @@ namespace Shooting
                 spriteBatch.Draw(texture, position, Color.White);
                 spriteBatch.End();
             }
-
-
         }
-        /*
-        public void makeTama(Vector2 setshokiposi, int setugoki, int setHP, int setnum)
+        /// <summary>
+        /// 玉を配置
+        /// </summary>
+        /// <param name="pos">玉の位置</param>
+        /// <param name="num">玉の番号</param>
+        /// <param name="tamaList">玉リストを引数に取る</param>
+        public void makeTama(Vector2 pos, int num)
         {
-            Tama tm;
-            tm.position = setshokiposi;
-            tm.HP = setHP;
-            tm.num = setnum;
-            TamaList.Add(tm);
+            Tama tm = new Tama(pos, tamaTextureList[num], new Vector2(tamaTextureList[num].Width, tamaTextureList[num].Height), tamaStatusList[num].HP, tamaStatusList[num].speed, num);
+            Game1.TamaList.Add(tm);
+           
+            
         }
-        public void makeTama(Vector2 pos,int num)
-        {
-            Tama tm = new tm(pos, enemyTextureList[num], new Vector2(enemyTextureList[num].Width, enemyTextureList[num].Height), tamaStatusList[num].HP, tamaStatusList[num].speed, 1, pos, num, enemyStatusList[num].haveItem);
-            EnemyList.Add(ene);
-        }
-        */
     }
 }
-
