@@ -252,7 +252,7 @@ namespace Shooting
         class EnemyStatus
         {
             public int HP;
-            public int speed;
+            public Vector2 speed;
             public int haveItem;
             /// <summary>
             /// EnemyStatusのコンストラクタ
@@ -260,7 +260,7 @@ namespace Shooting
             /// <param name="setHP">ヒットポイント１以上</param>
             /// <param name="setspeed">スピード</param>
             /// <param name="sethaveItem">アイテムを持つ0はアイテムを持たない</param>
-            public EnemyStatus(int setHP, int setspeed, int sethaveItem)
+            public EnemyStatus(int setHP, Vector2 setspeed, int sethaveItem)
             {
                 HP = setHP;
                 speed = setspeed;
@@ -401,11 +401,11 @@ namespace Shooting
         /*
         public void makeTama(Vector2 setshokiposi, int ugoki)//hpとspeedとhaveitem
         {
-            Tama tm = new Tama();
+            Tama tm = new Tama;
             tm.set(shokiposi);
             TamaList.Add(tm);
         }
-
+        
         void makeEnemy()
         {
             Enemy tm = new Enemy();
