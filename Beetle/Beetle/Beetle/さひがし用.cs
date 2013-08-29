@@ -149,20 +149,21 @@ namespace Shooting
         {
             public Player() { }
             Stopwatch sw1 = new Stopwatch();
-            Vector2 shokiposition = new Vector2();  
+            Vector2 shokiposition = new Vector2();
+            sprite sp;
             /// <summary>
             /// プレイヤーコンストラクタ
             /// </summary>
             /// <param name="posi">プレイやを表示する位置</param>
-            /// <param name="settexture">プレイヤーのテクスチャ</param>
+            /// <param name="sprite">プレイヤーのテクスチャ</param>
             /// <param name="setsize">プレイヤーのサイズ</param>
             /// <param name="setHP">プレイヤーのヒットポイント</param>
             /// <param name="setspeed">プレイヤーのスピード</param>
             /// <param name="setzanki">プレイヤーの残機</param>
-            public Player(Vector2 posi, Texture2D settexture, Vector2 setsize, int setHP, Vector2 setspeed, int setzanki)
+            public Player(Vector2 posi, sprite settexture, Vector2 setsize, int setHP, Vector2 setspeed, int setzanki)
             {
                 position = new Vector2(posi.X, posi.Y);
-                texture = settexture; //うまくいかなかったらここ
+                sp = settexture; //うまくいかなかったらここ
                 size = new Vector2(setsize.X, setsize.Y);
                 HP = setHP;
                 speed = setspeed;
@@ -180,7 +181,7 @@ namespace Shooting
                 shokiposition = pos;
             }
 
-            void muteki()
+            public void muteki()
             {
                 mutekiflag = true;
                 sw1.Start();
@@ -191,15 +192,16 @@ namespace Shooting
                 {
                     case 1:         //アイテム番号1を拾ったとき
                         speed.X++;
-                        break;
-                    case 2:         //アイテム番号2を拾ったとき
                         speed.Y++;
                         break;
-                    case 3:         //アイテム番号3を拾ったとき
+                    case 2:         //アイテム番号2を拾ったとき
                         speed.X--;
+                        speed.Y--;
+                        break;
+                    case 3:         //アイテム番号3を拾ったとき
+                        muteki();
                         break;
                     case 4:         //アイテム番号4を拾ったとき
-                        speed.Y--;
                         break;
                     default:
                         break;
@@ -227,9 +229,11 @@ namespace Shooting
                 if (KeyState.IsKeyDown(Keys.Down)) position.Y += speed.Y;
 
             }
-            public void draw(sprite spriteBatch)
+            public void draw(SpriteBatch spriteBatch)
             {
-                spriteBatch.Draw(texture);
+                spriteBatch.Begin();
+                sp.Draw(spriteBatch);
+                spriteBatch.End();
             }
         }
         class Enemy : Actor
