@@ -30,8 +30,10 @@ namespace Shooting
 
         List<Texture2D> enemyTextureList;
         List<Texture2D> tamaTextureList;
+        List<Texture2D> sceneTextureList;
 
         //オブジェクトたち
+        List<scene> SceneList;
         List<Enemy> EnemyList;
         List<Tama> TamaList;
         List<Item> ItemList;
@@ -67,6 +69,13 @@ namespace Shooting
             // TODO: ここに初期化ロジックを追加します。
             enemyTextureList = new List<Texture2D>();
             tamaTextureList = new List<Texture2D>();
+            enemyStatusList = new List<EnemyStatus>();
+            sceneTextureList = new List<Texture2D>();
+
+            SceneList = new List<scene>();
+            EnemyList = new List<Enemy>();
+            TamaList = new List<Tama>();
+            ItemList = new List<Item>();
 
             stagenum = 1; //fordg
             scenenum = 1; //fordg
@@ -84,6 +93,7 @@ namespace Shooting
             spriteBatch = new SpriteBatch(GraphicsDevice);
             //シーンのロード
             textureTitle = Content.Load<Texture2D>("title");
+            sceneTextureList.Add(textureTitle);
             
             //オブジェクトのロード
             textureArrow = Content.Load<Texture2D>("arrow");
@@ -98,11 +108,10 @@ namespace Shooting
             playerSp = new sprite(texturePlayer, new Vector2(0, 0), new Point(40, 60), new Point(3, 1),5000);
             
 
-            EnemyList = new List<Enemy>();
-            TamaList = new List<Tama>();
-            ItemList = new List<Item>();
 
-            //画像のロード
+            //敵のステータスのロード
+            EnemyStatus ene = new EnemyStatus(1, 1, 0);
+            enemyStatusList.Add(ene);
 
 
             // TODO: this.Content クラスを使用して、ゲームのコンテンツを読み込みます。
@@ -134,6 +143,7 @@ namespace Shooting
             if (scenenum == 0)
             {
                 //タイトルシーンの操作
+                
                 ;
             }
             if (scenenum == 1)
