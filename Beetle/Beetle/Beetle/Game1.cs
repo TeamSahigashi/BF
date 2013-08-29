@@ -38,7 +38,7 @@ namespace Shooting
         List<scene> SceneList;
         List<Enemy> EnemyList;
         public static List<Tama> TamaList;
-        static List<Item> ItemList;
+        public static List<Item> ItemList;
         Player player;
         titlescene title;
         //敵のステータス
