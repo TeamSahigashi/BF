@@ -171,6 +171,8 @@ namespace Shooting
                 HP = setHP;
                 speed = setspeed;
                 exist = true;
+                status = 1;
+                attacklevel = 0;
             }
 
             
@@ -227,7 +229,7 @@ namespace Shooting
             /// <param name="tamaList">玉リストをとる</param>
             void makeTama(Vector2 pos, int num, List<Tama>tamaList, List<Texture2D> tamaTextureList)
             {
-                Tama tm = new Tama(pos, tamaTextureList[num], new Vector2(tamaTextureList[num].Width, tamaTextureList[num].Height), attacklevel, speed * 4, num);
+                Tama tm = new Tama(pos, tamaTextureList[num], new Vector2(tamaTextureList[num].Width, tamaTextureList[num].Height), 1, speed * 4, num); //fordg
                 TamaList.Add(tm);
             }
             public void update(List<Tama> tamaList, List<Texture2D> tamaTextureList)
@@ -336,6 +338,7 @@ namespace Shooting
                 exist = true;
                 shokiposi = posi;
                 haveitem = 0;
+                status = 1;
             }
             /// <summary>
             /// 玉を発射

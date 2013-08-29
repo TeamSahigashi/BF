@@ -121,7 +121,12 @@ namespace Shooting
                 {
                     if (hit(itemEne,itemTama))
                     {
+                        
                         itemEne.HPReduce(itemTama.checkHP()); //敵のHPへらす
+                        if (itemEne.checkHP() <= 0)
+                        {
+                            itemEne.delete();
+                        }
                         itemTama.delete(); //たま消す
                     }
                 }
