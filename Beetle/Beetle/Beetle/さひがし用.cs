@@ -272,10 +272,10 @@ namespace Shooting
                 {
                     position.Y += speed.Y;
                 }
-                if ((KeyState.IsKeyDown(Keys.Enter)) && (t % 12 == 0)) //update12回に一回makeTama
+                if ((KeyState.IsKeyDown(Keys.Enter)) && (t % 6 == 0)) //update12回に一回makeTama
                 {
                     
-                    makeTama(new Vector2(position.X + (size.X - tamaTextureList[0].Width) / 2, position.Y - 60), attacklevel, tamaList, tamaTextureList);
+                    makeTama(new Vector2(position.X + (size.X - tamaTextureList[0].Width) / 2, position.Y - (tamaTextureList[0].Height + 12)), attacklevel, tamaList, tamaTextureList);
                     //fordg
                 }
                 t++;
