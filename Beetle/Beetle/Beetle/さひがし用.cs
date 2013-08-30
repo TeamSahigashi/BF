@@ -329,10 +329,10 @@ namespace Shooting
         {
             List<Tama> tamaList;
             Vector2 shokiposi;
-            int enemynum;
+            int enemyn;
             int haveitem;
             public Enemy() { }
-
+            int ugokin;
             /// <summary>
             /// 敵のコンストラクタ
             /// </summary>
@@ -345,17 +345,19 @@ namespace Shooting
             /// <param name="enemynum">敵の種類番号</param>
             /// <param name="ugokinum">うごきの番号</param>
             /// <param name="haveitem">敵がもってるアイテムの種類 0ならもたない</param>
-            public Enemy(Vector2 posi, Texture2D settexture, Vector2 setsize, int setHP, Vector2 setspeed, int enemynum,int ugokinum, int haveitem)
+            public Enemy(Vector2 posi, Texture2D settexture, Vector2 setsize, int enemynum, int ugokinum, EnemyStatus es)
             {
                 position = new Vector2(posi.X, posi.Y);
                 texture = settexture; //うまくいかなかったらここ
                 size = new Vector2(setsize.X, setsize.Y);
-                HP = setHP;
-                speed = setspeed;
+                HP = es.HP;
+                speed = es.speed;
                 exist = true;
                 shokiposi = posi;
-                haveitem = 0;
+                haveitem = es.haveItem;
                 status = 1;
+                enemyn = enemynum;
+                ugokin = ugokinum;
             }
             /// <summary>
             /// 玉を発射
@@ -370,23 +372,32 @@ namespace Shooting
             }
             public void update(List<Tama> tamaList,List<Texture2D> tamatextureList)
             {
-                switch (enemynum)
+                switch (ugokin)
                 {
-                       
-                    case 0:             //敵番号0のとき右へまっすぐ動く
-                        position.X += 4;
+                    case 0:             //うごき番号0のとき右へまっすぐ動く
+                        position.X += speed.X;
                         break;
-                    case 1:             //敵番号1のとき左へまっすぐ動く
-                        position.X += 4;
+                    case 1:             //うごき番号1のとき左へまっすぐ動く
+                        position.X += speed.X;
                         break;
-                    case 2:             //敵番号2のとき下へまっすぐ動く
-                        position.Y += 4;
+                    case 2:             //うごき番号2のとき↘へまっすぐ動く
+                        position.X -= speed.X;
                         break;
                     case 3:
-                        position.Y +=4;
+                        position.Y +=speed.Y;
+                        position.X += speed.X;
                         break;
                     case 4:
-                        position.X += 4;
+                        position.Y += speed.Y;
+                        position.X -= speed.X;
+                        break;
+                    case 5:
+                        position.Y += speed.X;
+                        break;
+                    case 6:
+                        position.Y -= speed.Y;
+                        break;
+                    default:
                         break;
                 }
                 if(!PositionIsInField(position, size)) //フィールドの外に出たら、existにfalseを入れて消す
@@ -404,6 +415,7 @@ namespace Shooting
         public class Tama : Object
         {
             protected Vector2 shokiposi;
+            protected int n;
             /// <summary>
             /// 玉のコントラクタ
             /// </summary>
@@ -423,20 +435,23 @@ namespace Shooting
                 speed = setspeed;
                 exist = true;
                 shokiposi = posi;
+                n = num;
             }
             public void update()
             {
-                switch (0) //fordg
+                switch (n)
                 {
-                    case 0:
+                    case 0:             //玉番号0のとき
                         speed.X = 0;
                         speed.Y = -4;
                         break;
                     case 1:
-                        speed.X = 1;
+                        speed.Y = 0;
+                        speed.Y -= 1;
                         break;
                     case 2:
-                        speed.X = 2;
+                        speed.X = 0;
+                        speed.Y -= 2;
                         break;
                     default:
                         break;
