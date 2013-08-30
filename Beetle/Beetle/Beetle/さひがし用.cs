@@ -11,16 +11,25 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+
 namespace Shooting
 {
     public partial class Game1 : Microsoft.Xna.Framework.Game
     {
+        /*graphics = new GraphicsDeviceManager(this);
+                    this.graphics.GraphicsDevice.Viewport.Width
+        static field_W = Shooting.Game1.GraphicsDevice.Viewport.Width;
+        static int field_W;
+         */ 
         //ここのあたりに定義を書いていくでござる
         void test()
         {
             Console.WriteLine("うぇーいｗｗ");
             return;
         }
+        //field_W = Shooting.Game1.graphics.GraphicsDevice.Viewport.Width;
+        //field_H = Shooting.Game1.graphics.GraphicsDevice.Viewport.Height;
+        //            this.graphics.GraphicsDevice.Viewport.Width
 
         public class Object
         {
@@ -235,18 +244,16 @@ namespace Shooting
             public void update(List<Tama> tamaList, List<Texture2D> tamaTextureList)
             {
                 KeyboardState KeyState = Keyboard.GetState();
-                if (sw1.Elapsed.Seconds > 3)
+                if (sw1.Elapsed.Seconds > 3 && status == 2)
                 {
-                    if (status == 2)
-                    {
-                        status = 1;
-                    }                       //無敵の処理、無敵になってから３秒後なら、もとにもどる
+                    status = 1;           //無敵の処理、無敵になってから３秒後なら、もとにもどる
                 }
-                if (KeyState.IsKeyDown(Keys.Left))
+
+                if (KeyState.IsKeyDown(Keys.Left) && position.X > 0)
                 {
                     position.X -= speed.X;
                 }
-                if (KeyState.IsKeyDown(Keys.Right))
+                if (KeyState.IsKeyDown(Keys.Right) && position.X < 500) //fordg
                 {
                     position.X += speed.X;
                 }
