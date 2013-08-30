@@ -148,6 +148,17 @@ namespace Shooting
         {
 
 
+            if (flg1 != flg2 && sw.ElapsedMilliseconds > 5000)
+            {
+                makeEnemy(new Vector2(0, 0), 0, 0);
+                flg2++;
+            }
+
+
+
+
+            this.Window.Title += sw.Elapsed;
+            this.Window.Title += " " + sw.Elapsed.Milliseconds;
 
 
           
@@ -159,17 +170,6 @@ namespace Shooting
         /// </summary>
         void Makestage2()
         {
-            if (flg1 != flg2 && sw.ElapsedMilliseconds > 5000)
-            {
-                makeEnemy(new Vector2(0, 0), 0,0);
-                flg2++;
-            }
-
-
-
-
-           this.Window.Title += sw.Elapsed;
-           this.Window.Title += " " +sw.Elapsed.Milliseconds;
         }
 
 
