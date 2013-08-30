@@ -153,13 +153,6 @@ namespace Shooting
         }
 
 
-        /// <summary>
-        /// ２面設定
-        /// </summary>
-        void Makestage2()
-        {
-        }
-
 
 
         /// <summary>

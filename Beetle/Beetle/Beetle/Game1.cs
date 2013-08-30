@@ -81,7 +81,7 @@ namespace Shooting
              TamaList = new List<Tama>();
             ItemList = new List<Item>();
 
-            stagenum = 0; //fordg
+            stagenum = 1; //fordg
             scenenum = 0; //fordg 
             syokaiyobidashi = true;
             score = 0;
