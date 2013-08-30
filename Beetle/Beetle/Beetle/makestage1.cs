@@ -102,6 +102,7 @@ namespace Shooting
 
             this.Window.Title += sw.Elapsed;
             this.Window.Title += " " + sw.ElapsedMilliseconds;
+            this.Window.Title += " score:" + score; 
 
         }
 

@@ -20,6 +20,7 @@ namespace Shooting
         int flg2;
         int flg3;//局地的フラグ管理
         int flg4;
+        int score;
         
         /// <summary>
         /// ゲームを開始する
@@ -131,6 +132,7 @@ namespace Shooting
                         if (itemEne.checkHP() <= 0)
                         {
                             itemEne.delete();
+                            score += itemEne.getScore();
                         }
                         itemTama.delete(); //たま消す
                     }

@@ -84,6 +84,7 @@ namespace Shooting
             stagenum = 0; //fordg
             scenenum = 0; //fordg 
             syokaiyobidashi = true;
+            score = 0;
             base.Initialize();
         }
 
