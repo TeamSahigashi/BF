@@ -45,7 +45,6 @@ namespace Shooting
             protected Vector2 speed;
             protected bool exist;
             public Object() { }
-            protected int H, W;
 
             /// <summary>
             /// コンストラクタ
@@ -106,6 +105,20 @@ namespace Shooting
                 return HP;
             }
 
+            /// <summary>
+            /// オブジェクトの位置がフィールドからはみ出てないかチェック
+            /// </summary>
+            /// <param name="position">位置</param>
+            /// <param name="size">サイズ</param>
+            /// <returns>1:はみ出てない　2:はみ出てる</returns>
+            public int PositionCheck(Vector2 p, Vector2 s)
+            {
+                if (p.X < 0 || p.Y < 0 || p.X > FIELD_W - s.X || p.Y > FIELD_H - s.Y)//フィールドの外に出てる
+                {
+                    return 2;
+                }
+                return 1;
+            }
         }
         class Actor : Object
         {
@@ -252,7 +265,6 @@ namespace Shooting
                 {
                     status = 1;           //無敵の処理、無敵になってから３秒後なら、もとにもどる
                 }
-
                 if (KeyState.IsKeyDown(Keys.Left) && position.X > 0)
                 {
                     position.X -= speed.X;
@@ -265,13 +277,12 @@ namespace Shooting
                 {
                     position.Y -= speed.Y;
                 }
-                if (KeyState.IsKeyDown(Keys.Down) && position.Y < FIELD_H -size.Y)
+                if (KeyState.IsKeyDown(Keys.Down) && position.Y < FIELD_H - size.Y)
                 {
                     position.Y += speed.Y;
                 }
                 if (KeyState.IsKeyDown(Keys.Enter))
                 {
-
                     makeTama(new Vector2(position.X - 100,position.Y - 100), attacklevel,tamaList, tamaTextureList);
                 }
 
@@ -339,8 +350,9 @@ namespace Shooting
             /// <param name="setspeed">敵のスピード</param>
             /// <param name="setzanki">敵の残機</param>
             /// <param name="enemynum">敵の種類番号</param>
-            /// <param name="haveitem">敵が持つアイテムの種類、０なら持たない</param>
-            public Enemy(Vector2 posi, Texture2D settexture, Vector2 setsize, int setHP, Vector2 setspeed, int enemynum, int haveitem)
+            /// <param name="ugokinum">うごきの番号</param>
+            /// <param name="haveitem">敵がもってるアイテムの種類 0ならもたない</param>
+            public Enemy(Vector2 posi, Texture2D settexture, Vector2 setsize, int setHP, Vector2 setspeed, int enemynum,int ugokinum, int haveitem)
             {
                 position = new Vector2(posi.X, posi.Y);
                 texture = settexture; //うまくいかなかったらここ
@@ -458,6 +470,10 @@ namespace Shooting
             }
             public void update()
             {
+                if (position.X < 0 || position.Y < 0 || position.X > FIELD_W - size.X || position.Y > FIELD_H - size.Y)//フィールドの外に出たら、existにfalseを入れて消す
+                {
+                    exist = false;
+                }
             }
             public void draw(SpriteBatch spriteBatch)
             {
@@ -466,14 +482,5 @@ namespace Shooting
                 spriteBatch.End();
             }
         }
-        /*
-       int IchiCheck(Vector2 position, Vector2 size, o)
-       {
-           if (position.X < 0 || position.Y < 0 || position.X > FIELD_W - size.X || position.Y > FIELD_H - size.Y)//フィールドの外に出たら、existにfalseを入れて消す
-           {
-               exist = false;
-           }
-       }
-         */ 
     }
 }
