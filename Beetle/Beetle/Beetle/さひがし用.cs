@@ -444,9 +444,9 @@ namespace Shooting
                 {
                     //玉をうつタイミング
                     case 0:
-                        if (t % 12 == 0)
+                        if (t % 1000 == 0 || t % 71 == 0)
                         {
-                            makeTama(new Vector2(position.X + (size.X - tamatextureList[2].Width) / 2, position.Y + size.Y +100), 2, tamaList, tamatextureList);
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[2].Width) / 2, position.Y + size.Y), 2, tamaList, tamatextureList);
                         //fordg
                         }
                         break;
