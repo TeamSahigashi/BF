@@ -21,6 +21,8 @@ namespace Shooting
         int flg3;//局地的フラグ管理
         int flg4;
         int score;
+
+        int titlescore;
         
         /// <summary>
         /// ゲームを開始する
@@ -61,6 +63,8 @@ namespace Shooting
                 }
             }
 
+
+            scoreupdate();
             this.Window.Title = "stagenum = " + stagenum + " scenenum = " + scenenum;
 
             switch (stagenum)
@@ -238,6 +242,15 @@ namespace Shooting
         public bool checkAllDeath()
         {
             return EnemyList.Count == 0;
+        }
+
+
+        void scoreupdate()
+        {
+            if (score > titlescore)
+            {
+                titlescore++;
+            }
         }
     }
 }

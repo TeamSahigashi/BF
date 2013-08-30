@@ -60,7 +60,8 @@ namespace Shooting
                         //ここに一定時間ごとに呼び出される処理
                         if (flg3 - flg4 == 1)
                         {
-                            makeEnemy(new Vector2(0, 0), 0, 0);
+                            makeEnemy(ichi, 0, 0);
+                            ichi += ichikankakaku;
                             kazu--;
                             flg4++;
                         }
@@ -88,6 +89,8 @@ namespace Shooting
                         kazu = 10;//呼び出す数
                         jikankankaku = 1000;//呼び出し感覚
                         jikan = jikankankaku;//２が始まってから最初に呼び出して、次の処理が始まるまでの時間
+                        ichi = Vector2.Zero;
+                        ichikankakaku = new Vector2(0, 40);
 
                     }
 
@@ -113,6 +116,8 @@ namespace Shooting
                         if (flg3 - flg4 == 1)
                         {
                             int temp = doujiPop;
+
+                            //同時に一定の間隔で出す
                             while (temp > 0)
                             {
                                 makeEnemy((ichi + ichikankakaku* (doujiPop - temp)), 0, 0);
@@ -147,7 +152,7 @@ namespace Shooting
                         jikan = jikankankaku;//２が始まってから最初に呼び出して、次の処理が始まるまでの時間
                         ichikankakaku = new Vector2(0,50);//連続して配置するときの位置間隔
                         ichi = new Vector2(0, 0); //最初の一個が出る位置
-                        doujiPop = 10;
+                        doujiPop = 3;
 
                     }
 
@@ -163,7 +168,7 @@ namespace Shooting
 
             this.Window.Title += sw.Elapsed;
             this.Window.Title += " " + sw.ElapsedMilliseconds;
-            this.Window.Title += " score:" + score; 
+            this.Window.Title += " score:" + titlescore; 
 
         }
 
