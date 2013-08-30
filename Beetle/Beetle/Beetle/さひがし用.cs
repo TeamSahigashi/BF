@@ -27,12 +27,17 @@ namespace Shooting
         }
         public class Object
         {
+            //t:updateで使用
             protected int t;
+            //位置
             protected Vector2 position;
             protected Texture2D texture;
+            //幅、高さ
             protected Vector2 size;
             protected int HP;
+            //速さベクトル
             protected Vector2 speed;
+            //オブジェクトを消すためのフラグ
             protected bool exist;
             public Object() { }
 
@@ -336,6 +341,7 @@ namespace Shooting
             public Enemy() { }
             int ugokin;
             int score;
+            Vector2 shokispeed;
             /// <summary>
             /// 敵のコンストラクタ
             /// </summary>
@@ -362,6 +368,40 @@ namespace Shooting
                 enemyn = enemynum;
                 ugokin = ugokinum;
                 score = es.score;
+                shokispeed = speed;
+                switch (ugokin)
+                {
+                    case 0:             //うごき番号0のとき右へまっすぐ
+                        speed.X = shokispeed.X;
+                        speed.Y = 0;
+                        break;
+                    case 1:             //うごき番号1のとき右へまっすぐ
+                        speed.X = shokispeed.X;
+                        speed.Y = 0;
+                        break;
+                    case 2:             //うごき番号2のとき左へまっすぐ
+                        speed.X = -shokispeed.X;
+                        speed.Y = 0;
+                        break;
+                    case 3:             //うごき番号3のとき右下へまっすぐ
+                        speed.X = shokispeed.X;
+                        speed.Y = shokispeed.Y;
+                        break;
+                    case 4:
+                        speed.X = -shokispeed.X;
+                        speed.Y = shokispeed.Y;
+                        break;
+                    case 5:
+                        speed.X += shokispeed.Y;
+                        speed.Y = 0;
+                        break;
+                    case 6:
+                        speed.X = 0;
+                        speed.Y = -shokispeed.Y;
+                        break;
+                    default:
+                        break;
+                }
             }
             public int getScore()
             {
@@ -382,32 +422,25 @@ namespace Shooting
             {
                 switch (ugokin)
                 {
-                    case 0:             //うごき番号0のとき右へまっすぐ動く
-                        position.X += speed.X;
+                        //加速度がある動きは、ここで速度を更新、等速直線はなにもしない
+                    case 0:
                         break;
-                    case 1:             //うごき番号1のとき左へまっすぐ動く
-                        position.X += speed.X;
+                    case 1:
                         break;
-                    case 2:             //うごき番号2のとき↘へまっすぐ動く
-                        position.X -= speed.X;
+                    case 2:
                         break;
                     case 3:
-                        position.Y +=speed.Y;
-                        position.X += speed.X;
                         break;
                     case 4:
-                        position.Y += speed.Y;
-                        position.X -= speed.X;
                         break;
                     case 5:
-                        position.Y += speed.X;
                         break;
                     case 6:
-                        position.Y -= speed.Y;
                         break;
                     default:
                         break;
                 }
+                position += speed;
                 if(!PositionIsInField(position, size)) //フィールドの外に出たら、existにfalseを入れて消す
                 {
                     exist = false;
