@@ -161,9 +161,13 @@ namespace Shooting
         {
             if (flg1 != flg2 && sw.ElapsedMilliseconds > 5000)
             {
-                makeEnemy(new Vector2(0, 0), 0);
+                makeEnemy(new Vector2(0, 0), 0,0);
                 flg2++;
             }
+
+
+
+
            this.Window.Title += sw.Elapsed;
            this.Window.Title += " " +sw.Elapsed.Milliseconds;
         }
@@ -241,9 +245,9 @@ namespace Shooting
         /// </summary>
         /// <param name="pos">出現位置</param>
         /// <param name="enenum">敵の番号</param>
-        public void makeEnemy(Vector2 pos,int enenum)
+        public void makeEnemy(Vector2 pos,int enenum,int kidounum)
         {
-            Enemy ene = new Enemy(pos, enemyTextureList[enenum], new Vector2(enemyTextureList[enenum].Width, enemyTextureList[enenum].Height), enemyStatusList[enenum].HP, enemyStatusList[enenum].speed,enenum, enemyStatusList[enenum].haveItem);
+            Enemy ene = new Enemy(pos, enemyTextureList[enenum], new Vector2(enemyTextureList[enenum].Width, enemyTextureList[enenum].Height), enemyStatusList[enenum].HP, enemyStatusList[enenum].speed,enenum,kidounum, enemyStatusList[enenum].haveItem);
             EnemyList.Add(ene);
         }
     }
