@@ -312,17 +312,19 @@ namespace Shooting
             public int HP;
             public Vector2 speed;
             public int haveItem;
+            public int score;
             /// <summary>
             /// EnemyStatusのコンストラクタ
             /// </summary>
             /// <param name="setHP">ヒットポイント１以上</param>
             /// <param name="setspeed">スピード</param>
             /// <param name="sethaveItem">アイテムを持つ0はアイテムを持たない</param>
-            public EnemyStatus(int setHP, Vector2 setspeed, int sethaveItem)
+            public EnemyStatus(int setHP, Vector2 setspeed, int sethaveItem, int setscore)
             {
                 HP = setHP;
                 speed = setspeed;
                 haveItem = sethaveItem;
+                score = setscore;
             }
         }
         class Enemy : Actor
@@ -333,6 +335,7 @@ namespace Shooting
             int haveitem;
             public Enemy() { }
             int ugokin;
+            int score;
             /// <summary>
             /// 敵のコンストラクタ
             /// </summary>
@@ -358,6 +361,11 @@ namespace Shooting
                 status = 1;
                 enemyn = enemynum;
                 ugokin = ugokinum;
+                score = es.score;
+            }
+            public int getScore()
+            {
+                return score;
             }
             /// <summary>
             /// 玉を発射
