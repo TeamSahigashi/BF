@@ -70,6 +70,10 @@ namespace Shooting
         {
             m_position = pos;
         }
+        public Vector2 getFrame()
+        {
+            return new Vector2(m_framesize.X, m_framesize.Y);
+        }
 
     }
 

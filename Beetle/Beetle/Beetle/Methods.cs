@@ -30,7 +30,7 @@ namespace Shooting
 
             if (syokaiyobidashi)
             {
-                player = new Player(new Vector2(300, 200), playerSp, new Vector2(texturePlayer.Width, texturePlayer.Height), zanki, new Vector2(1, 1), zanki);
+                player = new Player(new Vector2(300, 200), playerSp, playerSp.getFrame(), zanki, new Vector2(1, 1), zanki);
                 sw.Start();
                 syokaiyobidashi = false;
                 flg1 = 1;
