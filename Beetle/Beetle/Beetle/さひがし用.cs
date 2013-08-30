@@ -277,11 +277,10 @@ namespace Shooting
                 {
                     position.Y += speed.Y;
                 }
-                if ((KeyState.IsKeyDown(Keys.Enter)) && (t % 6 == 0)) //update12回に一回makeTama
+                if ((KeyState.IsKeyDown(Keys.Enter)) && (t % 6 == 0)) //update6回に一回makeTama
                 {
                     
                     makeTama(new Vector2(position.X + (size.X - tamaTextureList[0].Width) / 2, position.Y - (tamaTextureList[0].Height + 12)), attacklevel, tamaList, tamaTextureList);
-                    //fordg
                 }
                 t++;
             }
@@ -369,6 +368,7 @@ namespace Shooting
                 ugokin = ugokinum;
                 score = es.score;
                 shokispeed = speed;
+                t = 0;
                 switch (ugokin)
                 {
                     case 0:             //うごき番号0のとき右へまっすぐ
@@ -440,7 +440,33 @@ namespace Shooting
                     default:
                         break;
                 }
+                switch (enemyn)
+                {
+                    //玉をうつタイミング
+                    case 0:
+                        if (t % 12 == 0)
+                        {
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[2].Width) / 2, position.Y + size.Y +100), 2, tamaList, tamatextureList);
+                        //fordg
+                        }
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    default:
+                        break;
+                }
                 position += speed;
+                t++;
                 if(!PositionIsInField(position, size)) //フィールドの外に出たら、existにfalseを入れて消す
                 {
                     exist = false;
@@ -477,22 +503,33 @@ namespace Shooting
                 exist = true;
                 shokiposi = posi;
                 n = num;
+                switch (n)
+                {
+                    case 0:             //玉番号0のときプレイヤーの玉
+                        speed.X = 0;
+                        speed.Y = -16;
+                        break;
+                    case 1:
+                        speed.X = 0;
+                        speed.Y += 8;
+                        break;
+                    case 2:
+                        speed.X = 0;
+                        speed.Y += 1;
+                        break;
+                    default:
+                        break;
+                }
             }
             public void update()
             {
                 switch (n)
                 {
                     case 0:             //玉番号0のとき
-                        speed.X = 0;
-                        speed.Y = -4;
                         break;
                     case 1:
-                        speed.Y = 0;
-                        speed.Y -= 1;
                         break;
                     case 2:
-                        speed.X = 0;
-                        speed.Y -= 2;
                         break;
                     default:
                         break;
@@ -501,9 +538,29 @@ namespace Shooting
             }
             public void draw(SpriteBatch spriteBatch)
             {
-                spriteBatch.Begin();
-                spriteBatch.Draw(texture, position, Color.White);
-                spriteBatch.End();
+                switch (n)
+                {
+                    case 0:             //玉番号0のとき
+                        spriteBatch.Begin();
+                        spriteBatch.Draw(texture, position, Color.White);
+                        spriteBatch.End();
+                        break;
+                    case 1:
+                        spriteBatch.Begin();
+                        spriteBatch.Draw(texture, position, Color.White);
+                        spriteBatch.End();
+                        break;
+                    case 2:
+                        spriteBatch.Begin();
+                        spriteBatch.Draw(texture, position, Color.White);
+                        spriteBatch.End();
+                        break;
+                    default:
+                        spriteBatch.Begin();
+                        spriteBatch.Draw(texture, position, Color.White);
+                        spriteBatch.End();
+                        break;
+                }
             }
         }
        public  class Item : Object
