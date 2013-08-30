@@ -16,8 +16,10 @@ namespace Shooting
     {
         System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch(); //ステージ終わるまで止めない
         System.Diagnostics.Stopwatch sw2 = new System.Diagnostics.Stopwatch(); //適度にとめる
-        int flg1;
+        int flg1;//大域的フラグ管理
         int flg2;
+        int flg3;//局地的フラグ管理
+        int flg4;
         
         /// <summary>
         /// ゲームを開始する
@@ -36,6 +38,8 @@ namespace Shooting
                 syokaiyobidashi = false;
                 flg1 = 1;
                 flg2 = 0;
+                flg3 = 1;
+                flg4 = 0;
             }
 
             player.update(TamaList,tamaTextureList);

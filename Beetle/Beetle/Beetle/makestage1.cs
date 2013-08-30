@@ -39,7 +39,7 @@ namespace Shooting
                 //敵全滅してるかどうかチェックするのはこれ
                 if (checkAllDeath())
                 {
-                   
+
                     //時計が動いてないなら動かしておいて
                     if (sw2.IsRunning)
                     {
@@ -49,8 +49,11 @@ namespace Shooting
                             flg1++;
                             sw2.Stop();
                         }
-                    } 
-                    else sw2.Restart();
+                    }
+                    else
+                    {
+                        sw2.Restart();
+                    }
                 }
 
             }
@@ -78,30 +81,9 @@ namespace Shooting
 
 
             this.Window.Title += sw.Elapsed;
-            this.Window.Title += " " +  (sw.ElapsedMilliseconds % 1000);
-
-            if (sw.ElapsedMilliseconds % 1000 == 10)
-            {
-                ;
-            }
+            this.Window.Title += " " + sw.ElapsedMilliseconds;
 
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
-
-
 }
