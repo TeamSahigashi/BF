@@ -190,6 +190,7 @@ namespace Shooting
                 exist = true;
                 status = 1;
                 attacklevel = 0;
+                t = 0;
             }
             
             /// <summary>
@@ -255,29 +256,29 @@ namespace Shooting
                 {
                     status = 1;           //無敵の処理、無敵になってから３秒後なら、もとにもどる
                 }
-                if (PositionIsInField(position, size))
+                if (KeyState.IsKeyDown(Keys.Left) && position.X > 0)
                 {
-                    if (KeyState.IsKeyDown(Keys.Left))
-                    {
-                        position.X -= speed.X;
-                    }
-                    if (KeyState.IsKeyDown(Keys.Right))
-                    {
-                        position.X += speed.X;
-                    }
-                    if (KeyState.IsKeyDown(Keys.Up))
-                    {
-                        position.Y -= speed.Y;
-                    }
-                    if (KeyState.IsKeyDown(Keys.Down))
-                    {
-                        position.Y += speed.Y;
-                    }
-                    if (KeyState.IsKeyDown(Keys.Enter))
-                    {
-                        makeTama(new Vector2(position.X - 100, position.Y - 100), attacklevel, tamaList, tamaTextureList);
-                    }
+                    position.X -= speed.X;
                 }
+                if (KeyState.IsKeyDown(Keys.Right) && position.X < FIELD_W - size.X)
+                {
+                    position.X += speed.X;
+                }
+                if (KeyState.IsKeyDown(Keys.Up) && position.Y > 0)
+                {
+                    position.Y -= speed.Y;
+                }
+                if (KeyState.IsKeyDown(Keys.Down) && position.Y < FIELD_H - size.Y)
+                {
+                    position.Y += speed.Y;
+                }
+                if ((KeyState.IsKeyDown(Keys.Enter)) && (t % 12 == 0)) //update12回に一回makeTama
+                {
+                    
+                    makeTama(new Vector2(position.X + (size.X - tamaTextureList[0].Width) / 2, position.Y - 60), attacklevel, tamaList, tamaTextureList);
+                    //fordg
+                }
+                t++;
             }
             public void draw(SpriteBatch spriteBatch)
             {
