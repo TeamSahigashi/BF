@@ -95,6 +95,7 @@ namespace Shooting
                 {
                     player.HPReduce(item.checkHP()); //自分のHP減らす
                     item.delete(); //弾を消す（Exist->false）
+                    this.Window.Title = "hit! P T";
                 }
             }
 
@@ -104,6 +105,7 @@ namespace Shooting
                 if (hit(item, player))
                 {
                     player.HPReduce(1); //敵の攻撃力？
+                    this.Window.Title = "hit! P E";
                     
                 }
             }
@@ -123,6 +125,7 @@ namespace Shooting
             {
                 player.getitem(item); //アイテムとったときの挙動
                 item.delete(); //アイテムを消す
+                this.Window.Title = "hit! P I";
             }
             //敵と弾
             foreach (var itemEne in EnemyList)
@@ -139,6 +142,7 @@ namespace Shooting
                             score += itemEne.getScore();
                         }
                         itemTama.delete(); //たま消す
+                        this.Window.Title = "hit! E T";
                     }
                 }
             }
@@ -175,10 +179,10 @@ namespace Shooting
             int X0 = (int)A.locate().X;
             int X1 = (int)A.locate().X + (int)A.getSize().X;
             int Y0 = (int)A.locate().Y;
-            int Y1 = (int)A.locate().Y + (int)B.getSize().Y;
+            int Y1 = (int)A.locate().Y + (int)A.getSize().Y;
 
             int X2 = (int)B.locate().X;
-            int X3 = (int)B.locate().X + (int)A.getSize().X;
+            int X3 = (int)B.locate().X + (int)B.getSize().X;
             int Y2 = (int)B.locate().Y;
             int Y3 = (int)B.locate().Y + (int)B.getSize().Y;
 
