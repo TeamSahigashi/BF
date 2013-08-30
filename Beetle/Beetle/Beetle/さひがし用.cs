@@ -371,8 +371,8 @@ namespace Shooting
                 t = 0;
                 switch (ugokin)
                 {
-                    case 0:             //うごき番号0のとき右へまっすぐ
-                        speed.X = shokispeed.X;
+                    case 0:             //うごき番号0のとき静止
+                        speed.X = 0;
                         speed.Y = 0;
                         break;
                     case 1:             //うごき番号1のとき右へまっすぐ
