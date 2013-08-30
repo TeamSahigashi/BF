@@ -27,6 +27,7 @@ namespace Shooting
         Texture2D textureEnemy1;
         Texture2D textureArrow;
         Texture2D textureTitle;
+        Texture2D textureGameScene;
 
         List<Texture2D> enemyTextureList;
         List<Texture2D> tamaTextureList;
@@ -41,6 +42,7 @@ namespace Shooting
         public static List<Item> ItemList;
         Player player;
         titlescene title;
+        gamescene gamescene;
         //敵のステータス
         List<EnemyStatus> enemyStatusList;
 
@@ -79,8 +81,8 @@ namespace Shooting
              TamaList = new List<Tama>();
             ItemList = new List<Item>();
 
-            stagenum = 1; //fordg
-            scenenum = 1; //fordg 
+            stagenum = 0; //fordg
+            scenenum = 0; //fordg 
             syokaiyobidashi = true;
             base.Initialize();
         }
@@ -96,22 +98,42 @@ namespace Shooting
             //シーンのロード
             textureTitle = Content.Load<Texture2D>("title");
             sceneTextureList.Add(textureTitle);
-            
+            textureGameScene = Content.Load<Texture2D>("stage1");
+            sceneTextureList.Add(textureTitle);
 
             //オブジェクトのロード
             textureArrow = Content.Load<Texture2D>("arrow");
 
             title = new titlescene(textureTitle, textureArrow);
-
+            SceneList.Add(title);
+            gamescene = new Shooting.gamescene(textureGameScene);
             SceneList.Add(title);
 
-            texturePlayer = Content.Load<Texture2D>("beatle");
             textureEnemy1 = Content.Load<Texture2D>("watermelon");
+            enemyTextureList.Add(textureEnemy1);
+            textureEnemy1 = Content.Load<Texture2D>("melon");
+            enemyTextureList.Add(textureEnemy1);
+            textureEnemy1 = Content.Load<Texture2D>("kingyo");
             enemyTextureList.Add(textureEnemy1);
             
             textureTama = Content.Load<Texture2D>("tamatate");
             tamaTextureList.Add(textureTama);
+            textureTama = Content.Load<Texture2D>("tama1");
+            tamaTextureList.Add(textureTama);
+            textureTama = Content.Load<Texture2D>("tama2");
+            tamaTextureList.Add(textureTama);
+            textureTama = Content.Load<Texture2D>("tama3");
+            tamaTextureList.Add(textureTama);
+            textureTama = Content.Load<Texture2D>("tama4");
+            tamaTextureList.Add(textureTama);
+            textureTama = Content.Load<Texture2D>("tama5");
+            tamaTextureList.Add(textureTama);
+            textureTama = Content.Load<Texture2D>("tama6");
+            tamaTextureList.Add(textureTama);
 
+
+
+            texturePlayer = Content.Load<Texture2D>("beatle");
             playerSp = new sprite(texturePlayer, new Vector2(0, 0), new Point(40, 60), new Point(3, 1),5000);
 
           
@@ -119,7 +141,10 @@ namespace Shooting
             //敵のステータスのロード
             EnemyStatus ene = new EnemyStatus(1, new Vector2(0,0), 0);
             enemyStatusList.Add(ene);
-
+            ene = new EnemyStatus(10, new Vector2(0, 0), 0);
+            enemyStatusList.Add(ene);
+            ene = new EnemyStatus(100, new Vector2(0, 0), 0);
+            enemyStatusList.Add(ene);
 
             // TODO: this.Content クラスを使用して、ゲームのコンテンツを読み込みます。
 
@@ -150,11 +175,13 @@ namespace Shooting
             if (scenenum == 0)
             {
                 //タイトルシーンの操作
-                SceneList[0].update();
+                title.update();
+                scenenum = title.scenenum();
             }
             if (scenenum == 1)
             {
                 //ゲームプレイ画面の操作
+                gamescene.update();
                 GameUpdate();
             }
             base.Update(gameTime);
@@ -170,11 +197,13 @@ namespace Shooting
 
             if (scenenum == 0)
             {
-                SceneList[scenenum].draw(spriteBatch);
+                title.draw(spriteBatch);
             }
             // TODO: ここに描画コードを追加します。
             if (scenenum == 1)
             {
+                gamescene.draw(spriteBatch);
+
                 player.draw(spriteBatch);
                 foreach (var item in EnemyList)
                 {

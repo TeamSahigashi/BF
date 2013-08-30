@@ -80,14 +80,18 @@ namespace Shooting
 
     abstract class scene
     {
+
+        protected int sceneNum;
         protected Texture2D textureScene;
 
-        public scene() { }//ここがコンストラクタ
+         public scene() { }//ここがコンストラクタ
 
         public virtual void draw(SpriteBatch sp)
         {
         }
         public virtual void update() { }
+
+        public virtual int scenenum() { return 0; }
     }
 
     class titlescene : scene
@@ -96,12 +100,14 @@ namespace Shooting
         public titlescene(Texture2D inputTexture, Texture2D inputArrowTexture)
         {
             textureScene = inputTexture;
-            arrow = new Arrow(new Vector2(300, 300), inputArrowTexture);
+            arrow = new Arrow(new Vector2(300, 500), inputArrowTexture);
+            sceneNum = 0;
         }
 
         public override void update()
         {
             arrow.update();
+            if (arrow.checkstart()) sceneNum = 1;
         }
 
         public override void draw(SpriteBatch sp)
@@ -111,17 +117,49 @@ namespace Shooting
             arrow.draw(sp);
             sp.End();
         }
+
+        public override int scenenum()
+        {
+            return sceneNum;
+        }
+    }
+
+    class gamescene : scene
+    {
+          public gamescene(Texture2D inputTexture)
+        {
+            textureScene = inputTexture;
+        }
+
+          public override void update()
+          {
+              ;
+          }
+
+          public override void draw(SpriteBatch sp)
+          {
+              sp.Begin();
+              sp.Draw(textureScene, Vector2.Zero, Color.White);
+              sp.End();
+
+          }
+          public override int scenenum()
+          {
+              return sceneNum;
+          }
     }
 
     class Arrow
     {
         Texture2D texture;
         Vector2 pos;
+        bool stargflg;
 
         public Arrow(Vector2 inputVec, Texture2D inputPos)
         {
             pos = inputVec;
             texture = inputPos;
+            stargflg = false;
         }
 
         public void update()
@@ -137,7 +175,18 @@ namespace Shooting
                 pos.Y = 700;
             }
 
+            if (ks.IsKeyDown(Keys.Enter) && pos.Y == 500)
+            {
+                stargflg = true;
+            }
         }
+
+        public bool checkstart()
+        {
+            return stargflg;
+        }
+
+        
 
         public void draw(SpriteBatch sp)
         {
