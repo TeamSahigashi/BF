@@ -16,25 +16,15 @@ namespace Shooting
 {
     public partial class Game1 : Microsoft.Xna.Framework.Game
     {
+        //フィールドの高さ、幅
         const int FIELD_H = 800;
         const int FIELD_W = 800;
-        //const int player_H = 60;
-        //const int player_W =40;
-        /*graphics = new GraphicsDeviceManager(this);
-                    this.graphics.GraphicsDevice.Viewport.Width
-        static field_W = Shooting.Game1.GraphicsDevice.Viewport.Width;
-        static int field_W;
-         */ 
         //ここのあたりに定義を書いていくでござる
         void test()
         {
             Console.WriteLine("うぇーいｗｗ");
             return;
         }
-        //field_W = Shooting.Game1.graphics.GraphicsDevice.Viewport.Width;
-        //field_H = Shooting.Game1.graphics.GraphicsDevice.Viewport.Height;
-        //            this.graphics.GraphicsDevice.Viewport.Width
-
         public class Object
         {
             protected int t;
@@ -111,13 +101,13 @@ namespace Shooting
             /// <param name="position">位置</param>
             /// <param name="size">サイズ</param>
             /// <returns>1:はみ出てない　2:はみ出てる</returns>
-            public int PositionCheck(Vector2 p, Vector2 s)
+            public bool PositionIsInField(Vector2 p, Vector2 s)
             {
                 if (p.X < 0 || p.Y < 0 || p.X > FIELD_W - s.X || p.Y > FIELD_H - s.Y)//フィールドの外に出てる
                 {
-                    return 2;
+                    return false;
                 }
-                return 1;
+                return true;
             }
         }
         class Actor : Object
@@ -265,27 +255,29 @@ namespace Shooting
                 {
                     status = 1;           //無敵の処理、無敵になってから３秒後なら、もとにもどる
                 }
-                if (KeyState.IsKeyDown(Keys.Left) && position.X > 0)
+                if (PositionIsInField(position, size))
                 {
-                    position.X -= speed.X;
+                    if (KeyState.IsKeyDown(Keys.Left))
+                    {
+                        position.X -= speed.X;
+                    }
+                    if (KeyState.IsKeyDown(Keys.Right))
+                    {
+                        position.X += speed.X;
+                    }
+                    if (KeyState.IsKeyDown(Keys.Up))
+                    {
+                        position.Y -= speed.Y;
+                    }
+                    if (KeyState.IsKeyDown(Keys.Down))
+                    {
+                        position.Y += speed.Y;
+                    }
+                    if (KeyState.IsKeyDown(Keys.Enter))
+                    {
+                        makeTama(new Vector2(position.X - 100, position.Y - 100), attacklevel, tamaList, tamaTextureList);
+                    }
                 }
-                if (KeyState.IsKeyDown(Keys.Right) && position.X < FIELD_W - size.X)
-                {
-                    position.X += speed.X;
-                }
-                if (KeyState.IsKeyDown(Keys.Up) && position.Y > 0)
-                {
-                    position.Y -= speed.Y;
-                }
-                if (KeyState.IsKeyDown(Keys.Down) && position.Y < FIELD_H - size.Y)
-                {
-                    position.Y += speed.Y;
-                }
-                if (KeyState.IsKeyDown(Keys.Enter))
-                {
-                    makeTama(new Vector2(position.X - 100,position.Y - 100), attacklevel,tamaList, tamaTextureList);
-                }
-
             }
             public void draw(SpriteBatch spriteBatch)
             {
@@ -396,7 +388,7 @@ namespace Shooting
                         position.X += 4;
                         break;
                 }
-                if (position.X < 0 || position.Y < 0 || position.X > FIELD_W - size.X || position.Y > FIELD_H - size.Y)//フィールドの外に出たら、existにfalseを入れて消す
+                if(!PositionIsInField(position, size)) //フィールドの外に出たら、existにfalseを入れて消す
                 {
                     exist = false;
                 }
@@ -470,7 +462,7 @@ namespace Shooting
             }
             public void update()
             {
-                if (position.X < 0 || position.Y < 0 || position.X > FIELD_W - size.X || position.Y > FIELD_H - size.Y)//フィールドの外に出たら、existにfalseを入れて消す
+                if (!PositionIsInField(position, size))//フィールドの外にはみ出たら、existにfalseを入れて消す
                 {
                     exist = false;
                 }
