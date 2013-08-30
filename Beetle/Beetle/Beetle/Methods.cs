@@ -229,14 +229,13 @@ namespace Shooting
         /// <param name="enenum">敵の番号</param>
         public void makeEnemy(Vector2 pos,int enenum,int kidounum)
         {
-            Enemy ene = new Enemy(pos, enemyTextureList[enenum], new Vector2(enemyTextureList[enenum].Width, enemyTextureList[enenum].Height), enemyStatusList[enenum].HP, enemyStatusList[enenum].speed,enenum,kidounum, enemyStatusList[enenum].haveItem);
+            Enemy ene = new Enemy(pos, enemyTextureList[enenum], new Vector2(enemyTextureList[enenum].Width, enemyTextureList[enenum].Height),enenum,kidounum, );
             EnemyList.Add(ene);
         }
-
         public bool checkAllDeath()
         {
             return EnemyList.Count == 0;
-        }
+        } 
     }
 }
 
