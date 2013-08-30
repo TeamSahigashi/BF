@@ -16,6 +16,9 @@ namespace Shooting
     public partial class Game1 : Microsoft.Xna.Framework.Game
     {
 
+        int kazu;
+        int kankaku;
+        int jikan;
 
         /// <summary>
         /// １面設定
@@ -58,30 +61,54 @@ namespace Shooting
 
             }
             /*処理２*/
+            /*１秒毎に敵を出現させる*/
             if (flg1 == 2 && flg2 == 1)
             {
+
                 if (sw2.IsRunning)
                 {
-                    if (true)
+                    if (flg3 - flg4 == 1)
                     {
-                        if (sw2.ElapsedMilliseconds < 10000)
-                        {
-                            makeEnemy(new Vector2(0, 0), 0, 0);
-                        }
-                        else
-                        {
-                            sw2.Stop();
-                            flg2++;
-                        }
+                        makeEnemy(new Vector2(0, 0), 0, 0);
+                        kazu--;
+                        flg4++;
                     }
 
+                    if (flg3 - flg4 == 0 && sw2.ElapsedMilliseconds > jikan)
+                    {
+                        jikan += kankaku;
+                        flg3++;
+                    }
+
+                    if (kazu == 0)
+                    {
+                        flg2++;
+                    }
                 }
-                else sw2.Restart();
+
+                else
+                {
+                    sw2.Restart();
+                    flg3 = 1;
+                    flg4 = 0;
+                    kazu = 10;
+                    kankaku = 1000;
+                    jikan = 1000;
+
+                }
+                
             }
 
 
             this.Window.Title += sw.Elapsed;
             this.Window.Title += " " + sw.ElapsedMilliseconds;
+
+        }
+
+
+        void RenzokuPop(int kazu, int kankaku, int timer,int flg3,int flg4)
+        {
+
 
         }
 
