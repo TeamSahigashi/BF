@@ -14,7 +14,8 @@ namespace Shooting
 {
     public partial class Game1 : Microsoft.Xna.Framework.Game
     {
-        System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+        System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch(); //ステージ終わるまで止めない
+        System.Diagnostics.Stopwatch sw2 = new System.Diagnostics.Stopwatch(); //適度にとめる
         int flg1;
         int flg2;
         
@@ -141,29 +142,6 @@ namespace Shooting
 
         }
 
-        /// <summary>
-        /// １面設定
-        /// </summary>
-        void Makestage1()
-        {
-
-
-            if (flg1 != flg2 && sw.ElapsedMilliseconds > 5000)
-            {
-                makeEnemy(new Vector2(0, 0), 0, 0);
-                flg2++;
-            }
-
-
-
-
-            this.Window.Title += sw.Elapsed;
-            this.Window.Title += " " + sw.Elapsed.Milliseconds;
-
-
-          
-        }
-
 
         /// <summary>
         /// ２面設定
@@ -249,6 +227,11 @@ namespace Shooting
         {
             Enemy ene = new Enemy(pos, enemyTextureList[enenum], new Vector2(enemyTextureList[enenum].Width, enemyTextureList[enenum].Height), enemyStatusList[enenum].HP, enemyStatusList[enenum].speed,enenum,kidounum, enemyStatusList[enenum].haveItem);
             EnemyList.Add(ene);
+        }
+
+        public bool checkAllDeath()
+        {
+            return EnemyList.Count == 0;
         }
     }
 }
