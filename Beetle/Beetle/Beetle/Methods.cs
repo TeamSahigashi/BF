@@ -17,7 +17,7 @@ namespace Shooting
         System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
         int flg1;
         int flg2;
-
+        
         /// <summary>
         /// ゲームを開始する
         /// </summary>
@@ -76,7 +76,7 @@ namespace Shooting
             checkClear();
 
 
-
+            
             /*ここから当たり判定処理*/
             //プレイヤーと弾
             foreach (var item in TamaList)

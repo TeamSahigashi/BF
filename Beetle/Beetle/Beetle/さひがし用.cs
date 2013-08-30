@@ -16,6 +16,10 @@ namespace Shooting
 {
     public partial class Game1 : Microsoft.Xna.Framework.Game
     {
+        const int FIELD_H = 800;
+        const int FIELD_W = 800;
+        //const int player_H = 60;
+        //const int player_W =40;
         /*graphics = new GraphicsDeviceManager(this);
                     this.graphics.GraphicsDevice.Viewport.Width
         static field_W = Shooting.Game1.GraphicsDevice.Viewport.Width;
@@ -41,6 +45,7 @@ namespace Shooting
             protected Vector2 speed;
             protected bool exist;
             public Object() { }
+            protected int H, W;
 
             /// <summary>
             /// コンストラクタ
@@ -183,7 +188,6 @@ namespace Shooting
                 status = 1;
                 attacklevel = 0;
             }
-
             
             /// <summary>
             /// 死んだときなど、プレイヤーの位置を再設定
@@ -253,21 +257,22 @@ namespace Shooting
                 {
                     position.X -= speed.X;
                 }
-                if (KeyState.IsKeyDown(Keys.Right) && position.X < 500) //fordg
+                if (KeyState.IsKeyDown(Keys.Right) && position.X < FIELD_W - size.X)
                 {
                     position.X += speed.X;
                 }
-                if (KeyState.IsKeyDown(Keys.Up))
+                if (KeyState.IsKeyDown(Keys.Up) && position.Y > 0)
                 {
                     position.Y -= speed.Y;
                 }
-                if (KeyState.IsKeyDown(Keys.Down))
+                if (KeyState.IsKeyDown(Keys.Down) && position.Y < FIELD_H -size.Y)
                 {
                     position.Y += speed.Y;
                 }
                 if (KeyState.IsKeyDown(Keys.Enter))
                 {
-                    makeTama(new Vector2(position.X - 100,position.Y - 100), attacklevel,tamaList,tamaTextureList);
+
+                    makeTama(new Vector2(position.X - 100,position.Y - 100), attacklevel,tamaList, tamaTextureList);
                 }
 
             }
@@ -379,6 +384,10 @@ namespace Shooting
                         position.X += 4;
                         break;
                 }
+                if (position.X < 0 || position.Y < 0 || position.X > FIELD_W - size.X || position.Y > FIELD_H - size.Y)//フィールドの外に出たら、existにfalseを入れて消す
+                {
+                    exist = false;
+                }
             }
             public void draw(SpriteBatch spriteBatch)
             {
@@ -457,5 +466,14 @@ namespace Shooting
                 spriteBatch.End();
             }
         }
+        /*
+       int IchiCheck(Vector2 position, Vector2 size, o)
+       {
+           if (position.X < 0 || position.Y < 0 || position.X > FIELD_W - size.X || position.Y > FIELD_H - size.Y)//フィールドの外に出たら、existにfalseを入れて消す
+           {
+               exist = false;
+           }
+       }
+         */ 
     }
 }

@@ -33,7 +33,7 @@ namespace Shooting
         List<Texture2D> sceneTextureList;
 
 
-
+        
         //オブジェクトたち
         List<scene> SceneList;
         List<Enemy> EnemyList;
@@ -50,7 +50,7 @@ namespace Shooting
         int scenenum; //シーン番号　０：タイトル　１：プレイ画面　２：
         const int stageMax = 3; //ステージ最大番号
         bool syokaiyobidashi; //ステージ開始時のみの操作など、初回呼び出しに使う
-
+        
         
         public Game1()
         {
@@ -59,7 +59,7 @@ namespace Shooting
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 800;
         }
-
+        
         /// <summary>
         /// ゲームが実行を開始する前に必要な初期化を行います。
         /// ここで、必要なサービスを照会して、関連するグラフィック以外のコンテンツを
