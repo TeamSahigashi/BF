@@ -17,8 +17,10 @@ namespace Shooting
     {
 
         int kazu;
-        int kankaku;
+        int jikankankaku;
         int jikan;
+        int ichi;
+        int ichikankakaku;
 
         /// <summary>
         /// １面設定
@@ -67,6 +69,7 @@ namespace Shooting
 
                 if (sw2.IsRunning)
                 {
+                    //ここに一定時間ごとに呼び出される処理
                     if (flg3 - flg4 == 1)
                     {
                         makeEnemy(new Vector2(0, 0), 0, 0);
@@ -74,29 +77,59 @@ namespace Shooting
                         flg4++;
                     }
 
+                    //どういう間隔で上野処理を呼び出すかのフラグ管理
                     if (flg3 - flg4 == 0 && sw2.ElapsedMilliseconds > jikan)
                     {
-                        jikan += kankaku;
+                        jikan += jikankankaku;
                         flg3++;
                     }
 
+                    //予定の数だけ呼び出したら処理２は終わり
                     if (kazu == 0)
                     {
                         flg2++;
                     }
                 }
 
+                //処理２が始まったらまずここが呼ばれる
                 else
                 {
-                    sw2.Restart();
-                    flg3 = 1;
-                    flg4 = 0;
-                    kazu = 10;
-                    kankaku = 1000;
-                    jikan = 1000;
+                    sw2.Restart();//ストップウォッチリスタート
+                    flg3 = 1;//連続で呼ぶためのフラグ
+                    flg4 = 0;//同上
+                    kazu = 10;//呼び出す数
+                    jikankankaku = 1000;//呼び出し感覚
+                    jikan = jikankankaku;//２が始まってから最初に呼び出して、次の処理が始まるまでの時間
 
                 }
                 
+            }
+
+
+
+            //処理２（flg1 = 2）が終わったらここ
+            if (flg1 == 2 && flg2 == 2)
+            {
+                //敵全滅してるかどうかチェックするのはこれ
+                if (checkAllDeath())
+                {
+
+                    //時計が動いてないなら動かしておいて
+                    if (sw2.IsRunning)
+                    {
+                        //１秒経ったらflg1　を　２　に。これで処理２が始まる
+                        if (sw2.ElapsedMilliseconds > 1000)
+                        {
+                            flg1++;
+                            sw2.Stop();
+                        }
+                    }
+                    else
+                    {
+                        sw2.Restart();
+                    }
+                }
+
             }
 
 
@@ -106,11 +139,32 @@ namespace Shooting
 
         }
 
-
-        void RenzokuPop(int kazu, int kankaku, int timer,int flg3,int flg4)
+        void taiki(int flag,int taikijikan, int zenmetsuOP)
         {
 
+            if (flag == 0)
+            {
+                //敵全滅してるかどうかチェックするのはこれ
+                if (checkAllDeath())
+                {
 
+                    //時計が動いてないなら動かしておいて
+                    if (sw2.IsRunning)
+                    {
+                        //１秒経ったらflg1　を　２　に。これで処理２が始まる
+                        if (sw2.ElapsedMilliseconds > taikijikan)
+                        {
+                            flg1++;
+                            sw2.Stop();
+                        }
+                    }
+                    else
+                    {
+                        sw2.Restart();
+                    }
+                }
+
+            }
         }
 
     }
