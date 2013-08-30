@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="makestage1.cs" />
     <Compile Include="Methods.cs" />
     <Compile Include="Ono.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
