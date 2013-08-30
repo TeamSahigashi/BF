@@ -251,7 +251,7 @@ namespace Shooting
             /// <param name="tamaList">玉リストをとる</param>
             void makeTama(Vector2 pos, int num, List<Tama>tamaList, List<Texture2D> tamaTextureList)
             {
-                Tama tm = new Tama(pos, tamaTextureList[num], new Vector2(tamaTextureList[num].Width, tamaTextureList[num].Height), 1, speed * 4, num); //fordg
+                Tama tm = new Tama(pos, tamaTextureList[num], new Vector2(tamaTextureList[num].Width, tamaTextureList[num].Height), 1, speed * 4, num, 1);
                 TamaList.Add(tm);
             }
             public void update(List<Tama> tamaList, List<Texture2D> tamaTextureList)
@@ -399,6 +399,10 @@ namespace Shooting
                         speed.X = 0;
                         speed.Y = -shokispeed.Y;
                         break;
+                    case 7:
+                        Stopwatch sw_tama7 = new Stopwatch();
+                        sw_tama7.Start();
+                        break;
                     default:
                         break;
                 }
@@ -415,7 +419,7 @@ namespace Shooting
             /// <param name="tamaList">玉リストをとる</param>
             void makeTama(Vector2 pos, int num, List<Tama> tamaList, List<Texture2D> tamaTextureList)
             {
-                Tama tm = new Tama(pos, tamaTextureList[num], new Vector2(tamaTextureList[num].Width, tamaTextureList[num].Height), attacklevel, speed * 4, num);
+                Tama tm = new Tama(pos, tamaTextureList[num], new Vector2(tamaTextureList[num].Width, tamaTextureList[num].Height), attacklevel, speed * 4, num, 2);
                 TamaList.Add(tm);
             }
             public void update(List<Tama> tamaList,List<Texture2D> tamatextureList)
@@ -483,6 +487,7 @@ namespace Shooting
         {
             protected Vector2 shokiposi;
             protected int n;
+            protected int tama_zokusei;
             /// <summary>
             /// 玉のコントラクタ
             /// </summary>
@@ -492,8 +497,8 @@ namespace Shooting
             /// <param name="setHP">玉の威力</param>
             /// <param name="setspeed">玉のスピード</param>
             /// <param name="num">玉番号</param>
-            
-            public Tama(Vector2 posi, Texture2D settexture, Vector2 setsize, int setHP, Vector2 setspeed, int num)
+            /// <param name="tama_zokusei">玉の属性、1:味方に所属する玉、2:敵に所属する玉</param>
+            public Tama(Vector2 posi, Texture2D settexture, Vector2 setsize, int setHP, Vector2 setspeed, int num, int tama_zokusei)
             {
                 position = new Vector2(posi.X, posi.Y);
                 texture = settexture; //うまくいかなかったらここ
@@ -508,6 +513,7 @@ namespace Shooting
                     case 0:             //玉番号0のときプレイヤーの玉
                         speed.X = 0;
                         speed.Y = -16;
+                        HP = 1;         //玉のHPは玉の威力
                         break;
                     case 1:
                         speed.X = 0;
@@ -522,6 +528,14 @@ namespace Shooting
                     default:
                         break;
                 }
+            }
+            /// <summary>
+            /// 玉の属性を返す
+            /// </summary>
+            /// <returns>1:味方に属する玉、2:敵に属する玉</returns>
+            public int getTamaZokusei()
+            {
+                return tama_zokusei;
             }
             public void update()
             {
