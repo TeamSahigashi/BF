@@ -728,6 +728,10 @@ namespace Shooting
             }
             public void update()
             {
+                if (!PositionIsInField(position, size))//フィールドの外にはみ出たら、existにfalseを入れて消す
+                {
+                    exist = false;
+                }
                 switch (n)
                 {
                     case 0:             //玉番号0のとき
