@@ -266,7 +266,7 @@ namespace Shooting
             public void update(List<Tama> tamaList, List<Texture2D> tamaTextureList)
             {
                 KeyboardState KeyState = Keyboard.GetState();
-                if (swforstatus.ElapsedMilliseconds > 500 && status != 1)
+                if (swforstatus.ElapsedMilliseconds > 250 && status != 1)
                 {
                     status = 1;           //ステータス変化の0.5秒後にstatusをもとにもどす
                     swforstatus.Reset();
@@ -298,7 +298,7 @@ namespace Shooting
                 switch (status)
                 {
                     case 0:                     //死んでるとき
-                        position.X = position.X + 8 * (float)Math.Sin(t);//fordg
+                        position.X = position.X + 16 * (float)Math.Sin(t);//fordg
                         sp.setPos(position);
                         spriteBatch.Begin();
                         sp.Draw(spriteBatch);
