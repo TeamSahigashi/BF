@@ -65,7 +65,7 @@ namespace Shooting
 
 
             scoreupdate();
-            this.Window.Title = "stagenum = " + stagenum + " scenenum = " + scenenum;
+            this.Window.Title = "stagenum = " + stagenum + " scenenum = " + scenenum + " syori: " + flg1 + " ";
 
             switch (stagenum)
             {
