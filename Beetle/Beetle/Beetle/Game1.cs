@@ -52,7 +52,7 @@ namespace Shooting
         int scenenum; //シーン番号　０：タイトル　１：プレイ画面　２：
         const int stageMax = 3; //ステージ最大番号
         bool syokaiyobidashi; //ステージ開始時のみの操作など、初回呼び出しに使う
-        
+        public static Vector2 positionofplayer; //時期狙い軌道のための，プレイヤーの位置情報
         
         public Game1()
         {
