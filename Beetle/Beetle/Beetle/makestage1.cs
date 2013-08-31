@@ -35,7 +35,7 @@ namespace Shooting
             {
                 if (flg1 != flg2 && sw.ElapsedMilliseconds > 5000)
                 {
-                    makeEnemy(new Vector2(100, 100), 0, 0);
+                    makeEnemy(new Vector2(0, 0), 0, 1);
                     flg2++;
                 }
 
@@ -60,7 +60,7 @@ namespace Shooting
                         //ここに一定時間ごとに呼び出される処理
                         if (flg3 - flg4 == 1)
                         {
-                            makeEnemy(ichi, 0, 0);
+                            makeEnemy(ichi, 0, 1);
                             ichi += ichikankakaku;
                             kazu--;
                             flg4++;
@@ -120,7 +120,7 @@ namespace Shooting
                             //同時に一定の間隔で出す
                             while (temp > 0)
                             {
-                                makeEnemy((ichi + ichikankakaku* (doujiPop - temp)), 0, 0);
+                                makeEnemy((ichi + ichikankakaku* (doujiPop - temp)), 0, 1);
                                 temp--;
                             }
                             kazu--;
