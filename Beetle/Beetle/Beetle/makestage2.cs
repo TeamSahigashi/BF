@@ -25,7 +25,7 @@ namespace Shooting
             {
                 if (flg1 != flg2 && sw.ElapsedMilliseconds > 3000)
                 {
-                    makeEnemy(new Vector2(0, 100),0, 1);
+                    makeEnemy(new Vector2(0, 100),0, 1,0,0);
                     flg2++;
                 }
 

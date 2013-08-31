@@ -35,7 +35,7 @@ namespace Shooting
             {
                 if (flg1 != flg2 && sw.ElapsedMilliseconds > 3000)
                 {
-                    makeEnemy(new Vector2(0, 100),0, 1);
+                    makeEnemy(new Vector2(0, 100),0, 1,1,3);
                     flg2++;
                 }
 
@@ -59,7 +59,7 @@ namespace Shooting
                         //ここに一定時間ごとに呼び出される処理
                         if (flg3 - flg4 == 1)
                         {
-                            makeEnemy(ichi, 2, 1);
+                            makeEnemy(ichi, 2, 1,0,1);
                             ichi += ichikankakaku;
                             kazu--;
                             flg4++;
@@ -114,7 +114,7 @@ namespace Shooting
                         //ここに一定時間ごとに呼び出される処理
                         if (flg3 - flg4 == 1)
                         {
-                            makeEnemy(ichi, 0, 2);
+                            makeEnemy(ichi, 0, 2,1,2);
                             ichi += ichikankakaku;
                             kazu--;
                             flg4++;
@@ -166,8 +166,8 @@ namespace Shooting
                         //ここに一定時間ごとに呼び出される処理
                         if (flg3 - flg4 == 1)
                         {
-                            makeEnemy(ichi, 0, 5);
-                            makeEnemy(new Vector2(600, 0), 0, 5);
+                            makeEnemy(ichi, 0, 5,0,3);
+                            makeEnemy(new Vector2(600, 0), 0, 5,1,3);
                             ichi += ichikankakaku;
                             kazu--;
                             flg4++;
@@ -226,7 +226,7 @@ namespace Shooting
                             //同時に一定の間隔で出す
                             while (temp > 0)
                             {
-                                makeEnemy((ichi + ichikankakaku* (doujiPop - temp)), 0, 2);
+                                makeEnemy((ichi + ichikankakaku* (doujiPop - temp)), 0, 2,0,1);
                                 temp--;
                             }
                             kazu--;
