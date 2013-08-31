@@ -108,7 +108,7 @@ namespace Shooting
             /// <returns>1:はみ出てない　2:はみ出てる</returns>
             public bool PositionIsInField(Vector2 p, Vector2 s)
             {
-                if (p.X < 0 || p.Y < 0 || p.X > FIELD_W - s.X || p.Y > FIELD_H - s.Y)//フィールドの外に出てる
+                if (p.X < -s.X -100 || p.Y < -s.Y - 100 || p.X > FIELD_W + 100 || p.Y > FIELD_H + 100)//フィールドの外に完全に出てる
                 {
                     return false;
                 }
@@ -637,16 +637,16 @@ namespace Shooting
                         if (t % 100 == 0)
                         {
                             makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2, position.Y + size.Y), new Vector2(0, 4), shoottamatexturei, tamaList, tamatextureList, 0);
-                            makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2 - tamatextureList[shoottamatexturei].Width, position.Y + size.Y), new Vector2(0, 4), shoottamatexturei, tamaList, tamatextureList, 0);
-                            makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2 + tamatextureList[shoottamatexturei].Width, position.Y + size.Y), new Vector2(0, 4), shoottamatexturei, tamaList, tamatextureList, 0);
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2 - tamatextureList[shoottamatexturei].Width, position.Y + size.Y), new Vector2(-1, 4), shoottamatexturei, tamaList, tamatextureList, 0);
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2 + tamatextureList[shoottamatexturei].Width, position.Y + size.Y), new Vector2(1, 4), shoottamatexturei, tamaList, tamatextureList, 0);
                         }
                         break;
                     case 3:
                         if (t % 100 == 0)
                         {
                             makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2, position.Y + size.Y), new Vector2(0, 8), shoottamatexturei, tamaList, tamatextureList, 0);
-                            makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2 - tamatextureList[shoottamatexturei].Width, position.Y + size.Y), new Vector2(0, 8), shoottamatexturei, tamaList, tamatextureList, 0);
-                            makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2 + tamatextureList[shoottamatexturei].Width, position.Y + size.Y), new Vector2(0, 8), shoottamatexturei, tamaList, tamatextureList, 0);
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2 - tamatextureList[shoottamatexturei].Width, position.Y + size.Y), new Vector2(-1, 8), shoottamatexturei, tamaList, tamatextureList, 0);
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2 + tamatextureList[shoottamatexturei].Width, position.Y + size.Y), new Vector2(1, 8), shoottamatexturei, tamaList, tamatextureList, 0);
                         }
                         break;
                     case 4:
