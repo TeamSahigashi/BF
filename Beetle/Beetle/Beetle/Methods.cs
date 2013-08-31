@@ -134,7 +134,7 @@ namespace Shooting
                 {
                     if (hit(itemEne,itemTama))
                     {
-                        if (itemTama.getTamaZokusei() == 2)
+                        if (itemTama.getTamaZokusei() == 1)
                         {
                             itemEne.HPReduce(itemTama.checkHP()); //敵のHPへらす
                             if (itemEne.checkHP() <= 0)
