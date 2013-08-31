@@ -33,9 +33,9 @@ namespace Shooting
             //２つのフラグflg1 flg2 に差がある時のみ実行するようにし、実行を１度でもするとflg2をインクリメントする
             if (flg1 == 1)
             {
-                if (flg1 != flg2 && sw.ElapsedMilliseconds > 5000)
+                if (flg1 != flg2 && sw.ElapsedMilliseconds > 3000)
                 {
-                    makeEnemy(new Vector2(100, 100), 0, 0);
+                    makeEnemy(new Vector2(0, 100),0, 1);
                     flg2++;
                 }
 
@@ -48,19 +48,18 @@ namespace Shooting
             
             }
 
-            /*処理２*/
-            /*１秒毎に敵を出現させる*/
+
 
             if (flg1 == 2)
             {
-                if (flg2 == 1)
+                if (flg2 == flg1 - 1)
                 {
                     if (sw2.IsRunning)
                     {
                         //ここに一定時間ごとに呼び出される処理
                         if (flg3 - flg4 == 1)
                         {
-                            makeEnemy(ichi, 0, 0);
+                            makeEnemy(ichi, 2, 1);
                             ichi += ichikankakaku;
                             kazu--;
                             flg4++;
@@ -86,29 +85,136 @@ namespace Shooting
                         sw2.Restart();//ストップウォッチリスタート
                         flg3 = 1;//連続で呼ぶためのフラグ
                         flg4 = 0;//同上
-                        kazu = 10;//呼び出す数
-                        jikankankaku = 1000;//呼び出し感覚
+                        kazu = 5;//呼び出す数
+                        jikankankaku = 1500;//呼び出し感覚
                         jikan = jikankankaku;//２が始まってから最初に呼び出して、次の処理が始まるまでの時間
-                        ichi = Vector2.Zero;
-                        ichikankakaku = new Vector2(0, 40);
+                        ichi = new Vector2(0,100);
+                        ichikankakaku = new Vector2(0, 0);
 
                     }
 
                 }
 
-                if (flg2 == 2)
+                if (flg2 == flg1)
+                {
+                    taiki(100, 1);
+                }
+            }
+
+
+            /*処理２*/
+            /*１秒毎に敵を出現させる*/
+
+            if (flg1 == 3)
+            {
+                if (flg2 == flg1 - 1)
+                {
+                    if (sw2.IsRunning)
+                    {
+                        //ここに一定時間ごとに呼び出される処理
+                        if (flg3 - flg4 == 1)
+                        {
+                            makeEnemy(ichi, 0, 2);
+                            ichi += ichikankakaku;
+                            kazu--;
+                            flg4++;
+                        }
+
+                        //どういう間隔で上野処理を呼び出すかのフラグ管理
+                        if (flg3 - flg4 == 0 && sw2.ElapsedMilliseconds > jikan)
+                        {
+                            jikan += jikankankaku;
+                            flg3++;
+                        }
+
+                        //予定の数だけ呼び出したら処理２は終わり
+                        if (kazu == 0)
+                        {
+                            flg2++;
+                        }
+                    }
+
+                    //処理２が始まったらまずここが呼ばれる
+                    else
+                    {
+                        sw2.Restart();//ストップウォッチリスタート
+                        flg3 = 1;//連続で呼ぶためのフラグ
+                        flg4 = 0;//同上
+                        kazu = 5;//呼び出す数
+                        jikankankaku = 1500;//呼び出し感覚
+                        jikan = jikankankaku;//２が始まってから最初に呼び出して、次の処理が始まるまでの時間
+                        ichi = new Vector2(800 - enemyTextureList[0].Width, 100);
+                        ichikankakaku = new Vector2(0, 0);
+
+                    }
+
+                }
+
+                if (flg2 == flg1)
                 {
                     taiki(1000, 1);
                 }
             }
 
 
-
-            /*処理３*/
-
-            if (flg1 == 3)
+            if (flg1 == 4)
             {
-                if (flg2 == 2)
+                if (flg2 == flg1 - 1)
+                {
+                    if (sw2.IsRunning)
+                    {
+                        //ここに一定時間ごとに呼び出される処理
+                        if (flg3 - flg4 == 1)
+                        {
+                            makeEnemy(ichi, 0, 5);
+                            makeEnemy(new Vector2(600, 0), 0, 5);
+                            ichi += ichikankakaku;
+                            kazu--;
+                            flg4++;
+                        }
+
+                        //どういう間隔で上野処理を呼び出すかのフラグ管理
+                        if (flg3 - flg4 == 0 && sw2.ElapsedMilliseconds > jikan)
+                        {
+                            jikan += jikankankaku;
+                            flg3++;
+                        }
+
+                        //予定の数だけ呼び出したら処理２は終わり
+                        if (kazu == 0)
+                        {
+                            flg2++;
+                        }
+                    }
+
+                    //処理２が始まったらまずここが呼ばれる
+                    else
+                    {
+                        sw2.Restart();//ストップウォッチリスタート
+                        flg3 = 1;//連続で呼ぶためのフラグ
+                        flg4 = 0;//同上
+                        kazu = 5;//呼び出す数
+                        jikankankaku = 1500;//呼び出し感覚
+                        jikan = jikankankaku;//２が始まってから最初に呼び出して、次の処理が始まるまでの時間
+                        ichi = new Vector2(200,0);
+                        ichikankakaku = new Vector2(0, 0);
+
+                    }
+
+                }
+
+                if (flg2 == flg1)
+                {
+                    taiki(1000, 1);
+                }
+            }
+
+
+            /*処理3*/
+
+            if (flg1 == 5)
+            {
+                if (flg2 == flg1 - 1 )
                 {
                     if (sw2.IsRunning)
                     {
@@ -120,7 +226,7 @@ namespace Shooting
                             //同時に一定の間隔で出す
                             while (temp > 0)
                             {
-                                makeEnemy((ichi + ichikankakaku* (doujiPop - temp)), 0, 0);
+                                makeEnemy((ichi + ichikankakaku* (doujiPop - temp)), 0, 2);
                                 temp--;
                             }
                             kazu--;
@@ -148,10 +254,10 @@ namespace Shooting
                         flg3 = 1;//連続で呼ぶためのフラグ
                         flg4 = 0;//同上
                         kazu = 10;//呼び出す数
-                        jikankankaku = 1000;//呼び出し感覚
+                        jikankankaku = 2000;//呼び出し感覚
                         jikan = jikankankaku;//２が始まってから最初に呼び出して、次の処理が始まるまでの時間
-                        ichikankakaku = new Vector2(0,50);//連続して配置するときの位置間隔
-                        ichi = new Vector2(0, 0); //最初の一個が出る位置
+                        ichikankakaku = new Vector2(0,140);//連続して配置するときの位置間隔
+                        ichi = new Vector2(800 - enemyTextureList[0].Width, 0); //最初の一個が出る位置
                         doujiPop = 3;
 
                     }
@@ -159,12 +265,11 @@ namespace Shooting
                 }
 
 
-                if (flg2 == 3)
+                if (flg2 == flg1)
                 {
                     taiki(1000, 1);
                 }
             }
-
 
             this.Window.Title += sw.Elapsed;
             this.Window.Title += " " + sw.ElapsedMilliseconds;
@@ -185,7 +290,7 @@ namespace Shooting
                 //敵全滅してるかどうかチェックするのはこれ
                 //オプションつけてないなら無条件で通過
                 //つけてるなら全滅してないと通過しない
-                if (!(checkAllDeath() && zenmetsuOP == 0))
+                if ((zenmetsuOP ==1 && checkAllDeath()) || zenmetsuOP == 0)
                 {
 
                     //時計が動いてないなら動かしておいて
