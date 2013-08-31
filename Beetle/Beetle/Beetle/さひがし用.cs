@@ -258,9 +258,9 @@ namespace Shooting
             /// <param name="pos">発射位置</param>
             /// <param name="num">玉番号</param>
             /// <param name="tamaList">玉リストをとる</param>
-            void makeTama(Vector2 pos, int num, List<Tama>tamaList, List<Texture2D> tamaTextureList)
+            void makeTama(Vector2 pos, int tamanum, List<Tama>tamaList, List<Texture2D> tamaTextureList, int tamaugoki)
             {
-                Tama tm = new Tama(pos, tamaTextureList[num], new Vector2(tamaTextureList[num].Width, tamaTextureList[num].Height), 1, speed * 4, num, 1);
+                Tama tm = new Tama(pos, tamaTextureList[tamanum], new Vector2(tamaTextureList[tamanum].Width, tamaTextureList[tamanum].Height), 1, new Vector2(0, 0), tamaugoki, 1);
                 TamaList.Add(tm);
             }
             public void update(List<Tama> tamaList, List<Texture2D> tamaTextureList)
@@ -289,7 +289,7 @@ namespace Shooting
                 }
                 if ((KeyState.IsKeyDown(Keys.Enter)) && (t % 6 == 0)) //update6回に一回makeTama
                 {
-                    makeTama(new Vector2(position.X + (size.X - tamaTextureList[0].Width) / 2, position.Y - (tamaTextureList[0].Height + 12)), 0, tamaList, tamaTextureList);
+                    makeTama(new Vector2(position.X + (size.X - tamaTextureList[0].Width) / 2, position.Y - (tamaTextureList[0].Height + 12)), 0, tamaList, tamaTextureList, 1);
                 }
                 t++;
             }
@@ -344,7 +344,6 @@ namespace Shooting
         }
         class Enemy : Actor
         {
-            protected Vector2 playerposition;
             protected Vector2 shokiposi;
             protected int enemyn;
             protected int haveitem;
@@ -460,10 +459,10 @@ namespace Shooting
             /// <param name="pos">発射位置</param>
             /// <param name="num">玉番号</param>
             /// <param name="tamaList">玉リストをとる</param>
-            void makeTama(Vector2 pos, int num, List<Tama> tamaList, List<Texture2D> tamaTextureList)
+            void makeTama(Vector2 pos, int tamanum, List<Tama> tamaList, List<Texture2D> tamaTextureList, int tamaugoki)
             {
-                Tama tm = new Tama(pos, tamaTextureList[num], new Vector2(tamaTextureList[num].Width, tamaTextureList[num].Height), 1, speed * 4, num, 2); //fordg
-                TamaList.Add(tm);
+                        Tama tm = new Tama(pos, tamaTextureList[tamanum], new Vector2(tamaTextureList[tamanum].Width, tamaTextureList[tamanum].Height), 1, new Vector2(0, 0), tamaugoki, 2); //fordg
+                        TamaList.Add(tm);
             }
             public void update(List<Tama> tamaList,List<Texture2D> tamatextureList)
             {
@@ -601,22 +600,19 @@ namespace Shooting
                     case 0:
                         if (t % 100 == 0)
                         {
-                            makeTama(new Vector2(position.X + (size.X - tamatextureList[2].Width) / 2, position.Y + size.Y), 3, tamaList, tamatextureList);
-                        //fordg
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[2].Width) / 2, position.Y + size.Y), 6, tamaList, tamatextureList, 1);
                         }
                         break;
                     case 1:
                         if (t % 100 == 0)
                         {
-                            makeTama(new Vector2(position.X + (size.X - tamatextureList[2].Width) / 2, position.Y + size.Y), 3, tamaList, tamatextureList);
-                        //fordg
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[2].Width) / 2, position.Y + size.Y), 3, tamaList, tamatextureList, 2);
                         }
                         break;
                     case 2:
                         if (t % 100 == 0)
                         {
-                            makeTama(new Vector2(position.X + (size.X - tamatextureList[2].Width) / 2, position.Y + size.Y), 3, tamaList, tamatextureList);
-                        //fordg
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[2].Width) / 2, position.Y + size.Y), 3, tamaList, tamatextureList, 3);
                         }
                         break;
                     case 3:
@@ -657,9 +653,9 @@ namespace Shooting
             /// <param name="setsize">玉のサイズ</param>
             /// <param name="setHP">玉の威力</param>
             /// <param name="setspeed">玉のスピード</param>
-            /// <param name="num">玉番号</param>
+            /// <param name="num">玉</param>
             /// <param name="tama_zokusei">玉の属性、1:味方に所属する玉、2:敵に所属する玉</param>
-            public Tama(Vector2 posi, Texture2D settexture, Vector2 setsize, int setHP, Vector2 setspeed, int num, int tama_zokusei)
+            public Tama(Vector2 posi, Texture2D settexture, Vector2 setsize, int setHP, Vector2 setspeed, int tamaugoki, int set_tama_zokusei)
             {
                 position = new Vector2(posi.X, posi.Y);
                 texture = settexture; //うまくいかなかったらここ
@@ -668,49 +664,47 @@ namespace Shooting
                 speed = setspeed;
                 exist = true;
                 shokiposi = posi;
-                n = num;
+                tama_zokusei = set_tama_zokusei;
+                n = tamaugoki;
                 t = 0;
-                switch (n)
+                switch (n)     //各玉の初速度，HP
                 {
-                    case 0:             //玉番号0のときプレイヤーの玉
-                        speed.X = 0;
-                        speed.Y = -16;
-                        HP = 1;         //玉のHPは玉の威力
-                        break;
+                    case 0:
                     case 1:
-                        speed.X = 0;
-                        speed.Y = 4;
-                        HP = 1;
-                        break;
                     case 2:
-                        speed.X = 0;
-                        speed.Y = 4;
-                        HP = 1;
-                        break;
                     case 3:
-                        speed.X = 0;
-                        speed.Y = 4;
-                        HP = 1;
+                        if (tama_zokusei == 1)
+                        {
+                            speed.X = 0;
+                            speed.Y = -16;
+                            HP = 1;
+                        }
+                        else
+                        {
+                            speed.X = 0;
+                            speed.Y = 4;
+                            HP = 1;
+                        }
                         break;
                     case 4:
-                        speed.X = 0;
-                        speed.Y = 4;
-                        HP = 1;
-                        break;
                     case 5:
-                        speed.X = 0;
-                        speed.Y = 4;
-                        HP = 1;
-                        break;
                     case 6:
-                        speed.X = 0;
-                        speed.Y = 4;
-                        HP = 1;
-                        break;
                     case 7:
-                        speed.X = 0;
-                        speed.Y = 4;
-                        HP = 1;
+                    case 8:
+                    case 9:
+
+                        if (tama_zokusei == 1)
+                        {
+                            speed.X = 0;
+                            speed.Y = -24;
+                            HP = 1;
+                        }
+                        else
+                        {
+                            speed.X = 0;
+                            speed.Y = 6;
+                            HP = 1;
+                        }
                         break;
                     default:
                         break;
@@ -733,7 +727,6 @@ namespace Shooting
                 switch (n)
                 {
                     case 0:             //玉番号0のとき
-                        break;
                     case 1:
                         break;
                     case 2:
@@ -750,6 +743,27 @@ namespace Shooting
                         break;
                     case 6:
                         speed.X = 4 * (float)Math.Sin(t / 4.0);
+                        break;
+                    case 7:
+                    case 8:
+                    case 9:
+                        speed.X = 8 * (float)Math.Sin(t / 4.0);
+                        break;
+                    case 10:
+                        if (tama_zokusei == 1)
+                        {
+                            if (t % 60 == 0)
+                            {
+                                speed.Y++;
+                            }
+                        }
+                        else
+                        {
+                            if (t % 60 == 0)
+                            {
+                                speed.Y--;
+                            }
+                        }
                         break;
                     default:
                         break;
