@@ -364,8 +364,8 @@ namespace Shooting
             /// <param name="enemynum">敵のテクスチャの種類番号</param>
             /// <param name="ugokinum">うごきの番号</param>
             /// <param name="es">敵のステータスクラスHP, speed, haveItem, scoreをもつ</param>
-            /// <param name="shootpatterni">弾道，玉の出し方</param>
-            /// <param name="shoottamai">打つ球のテクスチャの種類番号</param>
+            /// <param name="setshootpatterni">弾道，玉の出し方</param>
+            /// <param name="setshoottamai">打つ球のテクスチャの種類番号</param>
             public Enemy(Vector2 setposi, Texture2D settexture, Vector2 setsize, int enemynum, int ugokinum, EnemyStatus es, int setshootpatterni, int setshoottamatexturei)
             {
                 position = new Vector2(setposi.X, setposi.Y);
@@ -602,26 +602,38 @@ namespace Shooting
                     case 0:
                         if (t % 100 == 0)
                         {
-                            makeTama(new Vector2(position.X + (size.X - tamatextureList[2].Width) / 2, position.Y + size.Y), 0, tamaList, tamatextureList, 0);
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[2].Width) / 2, position.Y + size.Y), shoottamatexturei, tamaList, tamatextureList, 0);
                         }
                         break;
                     case 1:
-                        if (sw1.ElapsedMilliseconds % 2000 == 0)
+                        if (t % 50 == 0)
                         {
-                            makeTama(new Vector2(position.X + (size.X - tamatextureList[2].Width) / 2, position.Y + size.Y), 1, tamaList, tamatextureList, 1);
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[2].Width) / 2, position.Y + size.Y), shoottamatexturei, tamaList, tamatextureList, 6);
                         }
                         break;
                     case 2:
-                        if (t % 100 == 0)
+                        if (t % 300 == 0)
                         {
-                            makeTama(new Vector2(position.X + (size.X - tamatextureList[2].Width) / 2, position.Y + size.Y), 2, tamaList, tamatextureList, 2);
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[2].Width) / 2, position.Y + size.Y), shoottamatexturei, tamaList, tamatextureList, 0);
                         }
                         break;
                     case 3:
+                        if (t % 100 == 0)
+                        {
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[2].Width) / 2, position.Y + size.Y), shoottamatexturei, tamaList, tamatextureList, 3);
+                        }
                         break;
                     case 4:
+                        if (t % 200 == 0)
+                        {
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[2].Width) / 2, position.Y + size.Y), shoottamatexturei, tamaList, tamatextureList, 4);
+                        }
                         break;
                     case 5:
+                        if (t % 300 == 0)
+                        {
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[2].Width) / 2, position.Y + size.Y), shoottamatexturei, tamaList, tamatextureList, 5);
+                        }
                         break;
                     case 6:
                         break;
