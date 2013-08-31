@@ -142,9 +142,9 @@ namespace Shooting
             //敵のステータスのロード
             EnemyStatus ene = new EnemyStatus(1, new Vector2(1,1), 0, 10); //スイカ
             enemyStatusList.Add(ene);
-            ene = new EnemyStatus(10, new Vector2(2, 2), 0, 20); //メロン
+            ene = new EnemyStatus(1, new Vector2(1, 1), 0, 20); //メロン
             enemyStatusList.Add(ene);
-            ene = new EnemyStatus(100, new Vector2(4, 4), 0, 100); //金魚
+            ene = new EnemyStatus(1, new Vector2(1, 1), 0, 100); //金魚
             enemyStatusList.Add(ene);
 
             // TODO: this.Content クラスを使用して、ゲームのコンテンツを読み込みます。

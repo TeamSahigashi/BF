@@ -162,7 +162,7 @@ namespace Shooting
                 sp = settexture; //うまくいかなかったらここ
                 size = new Vector2(setsize.X, setsize.Y);
                 HP = setHP;
-                speed = setspeed;
+                speed = setspeed * 4;
                 exist = true;
                 status = 1;
                 attacklevel = 0;
@@ -266,14 +266,9 @@ namespace Shooting
             public void update(List<Tama> tamaList, List<Texture2D> tamaTextureList)
             {
                 KeyboardState KeyState = Keyboard.GetState();
-                if (swforstatus.ElapsedMilliseconds > 500 && status == 2)
+                if (swforstatus.ElapsedMilliseconds > 500 && status != 1)
                 {
-                    status = 1;           //無敵の処理、無敵になってから0.5秒後なら、statusをもとにもどす
-                    swforstatus.Reset();
-                }
-                if (swforstatus.ElapsedMilliseconds > 1000 && status == 0)
-                {
-                    status = 1;           //復活してるときの処理、無敵になってから0.5秒後なら、statusをもとにもどす
+                    status = 1;           //ステータス変化の0.5秒後にstatusをもとにもどす
                     swforstatus.Reset();
                 }
                 if (KeyState.IsKeyDown(Keys.Left) && position.X > 0)
@@ -391,7 +386,7 @@ namespace Shooting
                 swforstatus = new Stopwatch();
                 t = 0;
                 flag = true;
-                switch (ugokin)
+                switch (ugokin) //うごきごとに、speedの初期化
                 {
                     case 0:             //うごき番号０のとき静止
                         speed = speed * new Vector2(0, 0);
@@ -403,10 +398,10 @@ namespace Shooting
                         speed = speed * new Vector2(-1, 0);
                         break;
                     case 3:             //うごき番号３のとき右下へまっすぐ
-                        speed = speed * new Vector2(1, 1);
+                        speed = speed * new Vector2((float)0.9375, (float)0.25);
                         break;
                     case 4:             //うごき番号４のとき左下へまっすぐ
-                        speed = speed * new Vector2(-1, 1);
+                        speed = speed * new Vector2((float)-0.9375, (float)0.25);
                         break;
                     case 5:             //うごき番号５のとき下へまっすぐ
                         speed = speed * new Vector2(0, 1);
@@ -451,17 +446,10 @@ namespace Shooting
                 {
                     HP -= points;
                 }
-                muteki();         //無敵にする
             }
-            /// <summary>
-            /// 無敵にする、ストップウォッチをまわす
+            /// これを倒したときにえられるスコアを渡す
             /// </summary>
-            public void muteki()
-            {
-                status = 2;     //無敵のにする
-                swforstatus.Reset();
-                swforstatus.Start();    //無敵にしてからの時間をはかる
-            }
+            /// <returns></returns>
             public int getScore()
             {
                 return score;
@@ -618,8 +606,18 @@ namespace Shooting
                         }
                         break;
                     case 1:
+                        if (t % 100 == 0)
+                        {
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[2].Width) / 2, position.Y + size.Y), 3, tamaList, tamatextureList);
+                        //fordg
+                        }
                         break;
                     case 2:
+                        if (t % 100 == 0)
+                        {
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[2].Width) / 2, position.Y + size.Y), 3, tamaList, tamatextureList);
+                        //fordg
+                        }
                         break;
                     case 3:
                         break;
