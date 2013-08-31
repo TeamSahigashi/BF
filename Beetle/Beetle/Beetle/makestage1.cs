@@ -59,7 +59,7 @@ namespace Shooting
                         //ここに一定時間ごとに呼び出される処理
                         if (flg3 - flg4 == 1)
                         {
-                            makeEnemy(ichi, 2, 1,0,1);
+                            makeEnemy(ichi, 2, 1,1,1);
                             ichi += ichikankakaku;
                             kazu--;
                             flg4++;
@@ -166,7 +166,7 @@ namespace Shooting
                         //ここに一定時間ごとに呼び出される処理
                         if (flg3 - flg4 == 1)
                         {
-                            makeEnemy(ichi, 0, 5,0,3);
+                            makeEnemy(ichi, 0, 5,1,3);
                             makeEnemy(new Vector2(600, 0), 0, 5,1,3);
                             ichi += ichikankakaku;
                             kazu--;
