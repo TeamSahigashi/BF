@@ -134,14 +134,16 @@ namespace Shooting
                 {
                     if (hit(itemEne,itemTama))
                     {
-                        
-                        itemEne.HPReduce(itemTama.checkHP()); //敵のHPへらす
-                        if (itemEne.checkHP() <= 0)
+                        if (itemTama.getTamaZokusei() == 2)
                         {
-                            itemEne.delete();
-                            score += itemEne.getScore();
+                            itemEne.HPReduce(itemTama.checkHP()); //敵のHPへらす
+                            if (itemEne.checkHP() <= 0)
+                            {
+                                itemEne.delete();
+                                score += itemEne.getScore();
+                            }
+                            itemTama.delete(); //たま消す
                         }
-                        itemTama.delete(); //たま消す
                         this.Window.Title = "hit! E T";
                     }
                 }
