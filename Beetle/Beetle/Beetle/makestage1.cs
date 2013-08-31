@@ -166,7 +166,7 @@ namespace Shooting
                         //ここに一定時間ごとに呼び出される処理
                         if (flg3 - flg4 == 1)
                         {
-                            makeEnemy(ichi, 0, 3);
+                            makeEnemy(ichi, 0, 5);
                             makeEnemy(new Vector2(600, 0), 0, 5);
                             ichi += ichikankakaku;
                             kazu--;
@@ -270,7 +270,6 @@ namespace Shooting
                     taiki(1000, 1);
                 }
             }
-
 
             this.Window.Title += sw.Elapsed;
             this.Window.Title += " " + sw.ElapsedMilliseconds;

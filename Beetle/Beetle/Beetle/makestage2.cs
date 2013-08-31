@@ -18,14 +18,14 @@ namespace Shooting
 
         void Makestage2()
         {
-
+            
             //敵の出現を管理
             //２つのフラグflg1 flg2 に差がある時のみ実行するようにし、実行を１度でもするとflg2をインクリメントする
             if (flg1 == 1)
             {
-                if (flg1 != flg2 && sw.ElapsedMilliseconds > 5000)
+                if (flg1 != flg2 && sw.ElapsedMilliseconds > 3000)
                 {
-                    makeEnemy(new Vector2(100, 1000), 0, 0);
+                    makeEnemy(new Vector2(0, 100),0, 1);
                     flg2++;
                 }
 
@@ -35,8 +35,9 @@ namespace Shooting
                     taiki(5000, 1);
                     //中でflg++してる
                 }
-
+            
             }
+
 
 
             this.Window.Title += sw.Elapsed;

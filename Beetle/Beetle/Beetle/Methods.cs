@@ -209,6 +209,7 @@ namespace Shooting
                 stagenum++;
                 clearflag = false;
                 syokaiyobidashi = true;
+                sw.Restart();
             }
         }
 
