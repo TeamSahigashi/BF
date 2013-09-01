@@ -518,7 +518,7 @@ namespace Shooting
                     case 6:
                         break;
                     case 7:
-                        if (sw1.ElapsedMilliseconds > 2000 && sw1.ElapsedMilliseconds < 3000) //静止
+                        if (sw1.ElapsedMilliseconds > 2000 && sw1.ElapsedMilliseconds < 12000) //静止
                         {
                             if (flag)
                             {
@@ -536,7 +536,7 @@ namespace Shooting
                         }
                         break;
                     case 8:
-                        if (sw1.ElapsedMilliseconds > 2000 && speed.X > - (shokispeed.X - 0.001)) //ターン
+                        if (sw1.ElapsedMilliseconds > 5000 && speed.X > - (shokispeed.X - 0.001)) //ターン
                         {
                             if (flag)
                             {
@@ -557,7 +557,7 @@ namespace Shooting
                         }
                         break;
                     case 9:
-                        if (sw1.ElapsedMilliseconds > 2000 && speed.X < (shokispeed.X - 0.001)) //ターン
+                        if (sw1.ElapsedMilliseconds > 5000 && speed.X < (shokispeed.X - 0.001)) //ターン
                         {
                             if (flag)
                             {
