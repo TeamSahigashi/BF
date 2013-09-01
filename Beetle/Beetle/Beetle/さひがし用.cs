@@ -20,7 +20,7 @@ namespace Shooting
         const int FIELD_H = 800;
         const int FIELD_W = 800;
         //ここのあたりに定義を書いていくでござる
-        void test()
+        public static void test()
         {
             Console.WriteLine("うぇーいｗｗ");
             return;
@@ -261,15 +261,22 @@ namespace Shooting
             /// </summary>
             void makeTama(Vector2 settamapos, Vector2 settamaspeed, int tamanum, List<Tama> tamaList, List<Texture2D> tamaTextureList, int tamaugoki)
             {
+                test();
                 Tama tm = new Tama(settamapos, tamaTextureList[tamanum], new Vector2(tamaTextureList[tamanum].Width, tamaTextureList[tamanum].Height), 1, settamaspeed, tamaugoki, 1);
                 TamaList.Add(tm);
             }
+            
             public void update(List<Tama> tamaList, List<Texture2D> tamaTextureList)
             {
                 KeyboardState KeyState = Keyboard.GetState();
-                if (swforstatus.ElapsedMilliseconds > 250 && status != 1)
+                if (swforstatus.ElapsedMilliseconds > 250 && status == 2)
                 {
-                    status = 1;           //ステータス変化の0.5秒後にstatusをもとにもどす
+                    status = 1;           //Hpreduce時，ステータス変化の0.5秒後にstatusをもとにもどす
+                    swforstatus.Reset();
+                }
+                if (swforstatus.ElapsedMilliseconds > 2000 && status == 0)
+                {
+                    status = 1;           //復帰するときステータス変化の5秒後にstatusをもとにもどす
                     swforstatus.Reset();
                 }
                 if (KeyState.IsKeyDown(Keys.Left) && position.X > 0)
@@ -297,31 +304,30 @@ namespace Shooting
             }
             public void draw(SpriteBatch spriteBatch)
             {
+                spriteBatch.Begin();
                 switch (status)
                 {
-                    case 0:                     //死んでるとき
-                        position.X = position.X + 16 * (float)Math.Sin(t);//fordg
+                    case 0:                     //死んでふっかつするとき，一定時間は点滅する，その間は無敵
                         sp.setPos(position);
-                        spriteBatch.Begin();
-                        sp.Draw(spriteBatch);
-                        spriteBatch.End();
-                        break;
+                        if (t % 2 == 0)
+                        {
+                            sp.Draw(spriteBatch);
+                        }
+                            break;
                     case 1:                     //普通のとき
                         sp.setPos(position);
-                        spriteBatch.Begin();
                         sp.Draw(spriteBatch);
-                        spriteBatch.End();
                         break;
-                    case 2:                     //無敵のとき
-                        position.X = position.X + 8 * (float)Math.Sin(t); //fordg
+                    case 2:                     //攻撃をうけて一定時間はふるえる，その間は無敵
+                        position.X = position.X + 4 * (float)Math.Sin(t); //fordg
+                        position.Y = position.Y + 4 * (float)Math.Cos(t); //fordg
                         sp.setPos(position);
-                        spriteBatch.Begin();
                         sp.Draw(spriteBatch);
-                        spriteBatch.End();
                         break;
                     default:
                         break;
-                }              
+                }
+                spriteBatch.End();
             }
         }
        class EnemyStatus
@@ -662,6 +668,10 @@ namespace Shooting
                         }
                         break;
                     case 6:
+                        if (cRandom.Next(10) == 0)
+                        {
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2, position.Y + size.Y), new Vector2(4 - cRandom.Next(8), cRandom.Next(8)), shoottamatexturei, tamaList, tamatextureList, 0);
+                        }
                         break;
                     default:
                         break;

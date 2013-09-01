@@ -52,8 +52,10 @@ namespace Shooting
         int scenenum; //シーン番号　０：タイトル　１：プレイ画面　２：
         const int stageMax = 3; //ステージ最大番号
         bool syokaiyobidashi; //ステージ開始時のみの操作など、初回呼び出しに使う
+
         public static Vector2 positionofplayer; //時期狙い軌道のための，プレイヤーの位置情報
-        
+        public static Random cRandom; //乱数
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -137,7 +139,8 @@ namespace Shooting
             texturePlayer = Content.Load<Texture2D>("beatle");
             playerSp = new sprite(texturePlayer, new Vector2(0, 0), new Point(40, 60), new Point(3, 1),5000);
 
-          
+            positionofplayer = new Vector2(0, 0); //時期狙い軌道のための，プレイヤーの位置情報
+            cRandom = new System.Random();//乱数
 
             //敵のステータスのロード
             EnemyStatus ene = new EnemyStatus(1, new Vector2(1,1), 0, 10); //スイカ
