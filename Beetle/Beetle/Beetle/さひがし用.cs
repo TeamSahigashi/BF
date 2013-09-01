@@ -169,6 +169,7 @@ namespace Shooting
                 t = 0;
                 sw1 = new Stopwatch();
                 swforstatus = new Stopwatch();
+                zanki = setzanki;
             }
             
             /// <summary>
