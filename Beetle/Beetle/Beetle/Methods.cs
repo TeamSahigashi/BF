@@ -36,7 +36,7 @@ namespace Shooting
 
             if (syokaiyobidashi)
             {
-                player = new Player(new Vector2(350, 700), playerSp, playerSp.getFrame(),zanki, new Vector2(1, 1), 1);
+                player = new Player(new Vector2(350, 700), playerSp, playerSp.getFrame(),zanki, new Vector2(1, 1), 3);
                 sw.Start();
                 syokaiyobidashi = false;
                 flg1 = 1;
@@ -65,7 +65,7 @@ namespace Shooting
 
 
             scoreupdate();
-            this.Window.Title = "stagenum = " + stagenum + " scenenum = " + scenenum + " syori: " + flg1 + " ";
+  //          this.Window.Title = "stagenum = " + stagenum + " scenenum = " + scenenum + " syori: " + flg1 + " ";
 
             switch (stagenum)
             {
@@ -95,7 +95,7 @@ namespace Shooting
                 {
                     player.HPReduce(item.checkHP()); //自分のHP減らす
                     item.delete(); //弾を消す（Exist->false）
-                    this.Window.Title = "hit! P T";
+               //     this.Window.Title = "hit! P T";
                 }
             }
 
@@ -105,13 +105,18 @@ namespace Shooting
                 if (hit(item, player))
                 {
                     player.HPReduce(1); //敵の攻撃力？
-                    this.Window.Title = "hit! P E";
+            //        this.Window.Title = "hit! P E";
                     
                 }
             }
 
-            Window.Title += " " + player.checkHP();
-
+            Window.Title = " score:" + titlescore;
+            if (score - titlescore != 0)
+            {
+                Window.Title += " + " + (score - titlescore);
+            }
+            Window.Title +=  " 残機: " + player.zankiCheck() + " 残りHP " + player.checkHP();
+            
             //HP０なら残機減らす
             if (player.checkHP() == 0)
             {
@@ -129,7 +134,7 @@ namespace Shooting
             {
                 player.getitem(item); //アイテムとったときの挙動
                 item.delete(); //アイテムを消す
-                this.Window.Title = "hit! P I";
+            //    this.Window.Title = "hit! P I";
             }
             //敵と弾
             foreach (var itemEne in EnemyList)
@@ -148,7 +153,7 @@ namespace Shooting
                             }
                             itemTama.delete(); //たま消す
                         }
-                        this.Window.Title = "hit! E T";
+            //            this.Window.Title = "hit! E T";
                     }
                 }
             }
@@ -244,7 +249,11 @@ namespace Shooting
         {
             if (score > titlescore)
             {
-                titlescore++;
+                titlescore += 2;
+            }
+            else if (score < titlescore)
+            {
+                titlescore = score;
             }
         }
     }

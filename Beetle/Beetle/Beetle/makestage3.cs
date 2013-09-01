@@ -21,7 +21,6 @@ namespace Shooting
 
             if (flg1 == 1)
             {
-
                 if (flg2 == flg1 - 1)
                 {
                     if (sw2.IsRunning)
@@ -29,10 +28,11 @@ namespace Shooting
                         //ここに一定時間ごとに呼び出される処理
                         if (flg3 - flg4 == 1)
                         {
-                            makeEnemy(ichi, 2, 1, 1, 5);
-                            makeEnemy(new Vector2(800, 100), 2, 2, 1, 5);
-                            makeEnemy(new Vector2(350, 0), 1, 5, 4, 4);
-                            ichi += ichikankakaku;
+                            int temp = doujiPop;
+
+                            //同時に一定の間隔で出す
+                            makeEnemy(new Vector2(100, 800), 1, 6, 4, 6);
+                            makeEnemy(new Vector2(700, 800), 1, 6, 4, 6);
                             kazu--;
                             flg4++;
                         }
@@ -51,27 +51,31 @@ namespace Shooting
                         }
                     }
 
-                    //処理２が始まったらまずここが呼ばれる
                     else
                     {
+                        sw2.Restart();
                         sw2.Restart();//ストップウォッチリスタート
                         flg3 = 1;//連続で呼ぶためのフラグ
                         flg4 = 0;//同上
                         kazu = 5;//呼び出す数
-                        jikankankaku = 1500;//呼び出し感覚
+                        jikankankaku = 4000;//呼び出し感覚
                         jikan = jikankankaku;//２が始まってから最初に呼び出して、次の処理が始まるまでの時間
-                        ichi = new Vector2(0, 100);
-                        ichikankakaku = new Vector2(0, 0);
+                        ichikankakaku = new Vector2(0, 140);//連続して配置するときの位置間隔
+                        ichi = new Vector2(0, 100); //最初の一個が出る位置
+                        doujiPop = 1;
 
                     }
 
                 }
+
 
                 if (flg2 == flg1)
                 {
                     taiki(1000, 1);
                 }
             }
+
+
 
             this.Window.Title += sw.Elapsed;
             this.Window.Title += " " + sw.ElapsedMilliseconds;
