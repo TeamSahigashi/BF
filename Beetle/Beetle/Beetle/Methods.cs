@@ -36,7 +36,7 @@ namespace Shooting
 
             if (syokaiyobidashi)
             {
-                player = new Player(new Vector2(300, 200), playerSp, playerSp.getFrame(), zanki, new Vector2(1, 1), zanki);
+                player = new Player(new Vector2(300, 200), playerSp, playerSp.getFrame(),zanki, new Vector2(1, 1), 1);
                 sw.Start();
                 syokaiyobidashi = false;
                 flg1 = 1;
@@ -117,7 +117,11 @@ namespace Shooting
             {
                 player.zankiReduce(1); 
                 //残機減ったら死んだ処理する
-                player.recover();
+                if (player.zankiCheck() <= 0)
+                {
+                    scenenum = 2;
+                }
+                else player.recover();
             }
 
             //プレイヤーとアイテム

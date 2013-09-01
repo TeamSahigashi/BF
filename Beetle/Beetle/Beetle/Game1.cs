@@ -28,6 +28,8 @@ namespace Shooting
         Texture2D textureArrow;
         Texture2D textureTitle;
         Texture2D textureGameScene;
+        Texture2D textureClear;
+        Texture2D textureGameover;
 
         List<Texture2D> enemyTextureList;
         List<Texture2D> tamaTextureList;
@@ -43,6 +45,8 @@ namespace Shooting
         Player player;
         titlescene title;
         gamescene gamescene;
+        gamescene clearscene;
+        gamescene gameoverscene;
         //敵のステータス
         List<EnemyStatus> enemyStatusList;
 
@@ -103,6 +107,10 @@ namespace Shooting
             sceneTextureList.Add(textureTitle);
             textureGameScene = Content.Load<Texture2D>("stage1");
             sceneTextureList.Add(textureTitle);
+            textureClear = Content.Load<Texture2D>("clear");
+            sceneTextureList.Add(textureClear);
+            textureGameover = Content.Load<Texture2D>("gameover");
+            sceneTextureList.Add(textureGameover);
 
             //オブジェクトのロード
             textureArrow = Content.Load<Texture2D>("arrow");
@@ -111,6 +119,10 @@ namespace Shooting
             SceneList.Add(title);
             gamescene = new Shooting.gamescene(textureGameScene);
             SceneList.Add(title);
+            clearscene = new Shooting.gamescene(textureClear);
+            SceneList.Add(clearscene);
+            gameoverscene = new Shooting.gamescene(textureGameover);
+            SceneList.Add(gameoverscene);
 
             textureEnemy1 = Content.Load<Texture2D>("watermelon");
             enemyTextureList.Add(textureEnemy1);
@@ -188,6 +200,33 @@ namespace Shooting
                 gamescene.update();
                 GameUpdate();
             }
+
+            if (scenenum == 2)
+            {
+                gameoverscene.update();
+                KeyboardState ks = Keyboard.GetState();
+
+                if (ks.IsKeyDown(Keys.Enter))
+                {
+                    scenenum = 0;
+                    syokaiyobidashi = true;
+                    base.Initialize();
+                }
+            }
+
+            if (scenenum == 3)
+            {
+                clearscene.update();
+                KeyboardState ks = Keyboard.GetState();
+
+                if (ks.IsKeyDown(Keys.Enter))
+                {
+                    scenenum = 0;
+                    syokaiyobidashi = true;
+                    title = new titlescene(textureTitle, textureArrow);
+                    base.Initialize();
+                }
+            }
             base.Update(gameTime);
         }
 
@@ -202,6 +241,7 @@ namespace Shooting
             if (scenenum == 0)
             {
                 title.draw(spriteBatch);
+                
             }
             // TODO: ここに描画コードを追加します。
             if (scenenum == 1)
@@ -223,6 +263,50 @@ namespace Shooting
                     item.draw(spriteBatch);
                 }
 
+            }
+
+            if (scenenum == 2)
+            {
+                gamescene.draw(spriteBatch);
+                player.draw(spriteBatch);
+                foreach (var item in EnemyList)
+                {
+                    item.draw(spriteBatch);
+                }
+                foreach (var item in TamaList)
+                {
+                    item.draw(spriteBatch);
+                }
+
+                foreach (var item in ItemList)
+                {
+                    item.draw(spriteBatch);
+                }
+
+                gameoverscene.draw(spriteBatch);
+
+            }
+
+            if (scenenum == 3)
+            {
+                gamescene.draw(spriteBatch);
+
+                player.draw(spriteBatch);
+                foreach (var item in EnemyList)
+                {
+                    item.draw(spriteBatch);
+                }
+                foreach (var item in TamaList)
+                {
+                    item.draw(spriteBatch);
+                }
+
+                foreach (var item in ItemList)
+                {
+                    item.draw(spriteBatch);
+                }
+
+                clearscene.draw(spriteBatch);
             }
             base.Draw(gameTime);
         }
