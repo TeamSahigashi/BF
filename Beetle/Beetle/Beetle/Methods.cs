@@ -36,7 +36,7 @@ namespace Shooting
 
             if (syokaiyobidashi)
             {
-                player = new Player(new Vector2(300, 200), playerSp, playerSp.getFrame(),zanki, new Vector2(1, 1), 1);
+                player = new Player(new Vector2(350, 700), playerSp, playerSp.getFrame(),zanki, new Vector2(1, 1), 1);
                 sw.Start();
                 syokaiyobidashi = false;
                 flg1 = 1;
@@ -163,15 +163,6 @@ namespace Shooting
         }
 
 
-
-
-        /// <summary>
-        /// ３面設定
-        /// </summary>
-        void Makestage3()
-        {
-
-        }
 
 
         /// <summary>
