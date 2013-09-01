@@ -295,7 +295,7 @@ namespace Shooting
                 {
                     position.Y += speed.Y;
                 }
-                if ((KeyState.IsKeyDown(Keys.Enter)) && (t % 6 == 0)) //update6回に一回makeTama
+                if ((KeyState.IsKeyDown(Keys.Enter)) && status ==1 &&(t % 6 == 0)) //update6回に一回makeTama
                 {
                     makeTama(new Vector2(position.X + (size.X - tamaTextureList[0].Width) / 2, position.Y - (tamaTextureList[0].Height + 12)), new Vector2(0,-16), 0, tamaList, tamaTextureList, 0);
                 }
@@ -643,16 +643,16 @@ namespace Shooting
                         if (t % 100 == 0)
                         {
                             makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2, position.Y + size.Y), new Vector2(0, 4), shoottamatexturei, tamaList, tamatextureList, 0);
-                            makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2 - tamatextureList[shoottamatexturei].Width, position.Y + size.Y), new Vector2(-1, 4), shoottamatexturei, tamaList, tamatextureList, 0);
-                            makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2 + tamatextureList[shoottamatexturei].Width, position.Y + size.Y), new Vector2(1, 4), shoottamatexturei, tamaList, tamatextureList, 0);
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2 - tamatextureList[shoottamatexturei].Width, position.Y + size.Y), new Vector2(-2, 4), shoottamatexturei, tamaList, tamatextureList, 0);
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2 + tamatextureList[shoottamatexturei].Width, position.Y + size.Y), new Vector2(2, 4), shoottamatexturei, tamaList, tamatextureList, 0);
                         }
                         break;
                     case 3:
                         if (t % 100 == 0)
                         {
                             makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2, position.Y + size.Y), new Vector2(0, 8), shoottamatexturei, tamaList, tamatextureList, 0);
-                            makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2 - tamatextureList[shoottamatexturei].Width, position.Y + size.Y), new Vector2(-1, 8), shoottamatexturei, tamaList, tamatextureList, 0);
-                            makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2 + tamatextureList[shoottamatexturei].Width, position.Y + size.Y), new Vector2(1, 8), shoottamatexturei, tamaList, tamatextureList, 0);
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2 - tamatextureList[shoottamatexturei].Width, position.Y + size.Y), new Vector2(-2, 8), shoottamatexturei, tamaList, tamatextureList, 0);
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2 + tamatextureList[shoottamatexturei].Width, position.Y + size.Y), new Vector2(2, 8), shoottamatexturei, tamaList, tamatextureList, 0);
                         }
                         break;
                     case 4:
@@ -670,7 +670,7 @@ namespace Shooting
                     case 6:
                         if (cRandom.Next(10) == 0)
                         {
-                            makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2, position.Y + size.Y), new Vector2(4 - cRandom.Next(8), cRandom.Next(8)), shoottamatexturei, tamaList, tamatextureList, 0);
+                            makeTama(new Vector2(position.X + (size.X - tamatextureList[shoottamatexturei].Width) / 2, position.Y + size.Y), new Vector2(4 - cRandom.Next(8), cRandom.Next(4) + 1), shoottamatexturei, tamaList, tamatextureList, 0);
                         }
                         break;
                     default:

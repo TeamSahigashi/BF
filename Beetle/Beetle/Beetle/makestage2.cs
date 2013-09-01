@@ -49,7 +49,7 @@ namespace Shooting
             {
                 if (flg1 != flg2 && sw.ElapsedMilliseconds > 3000)
                 {
-                    makeEnemy(new Vector2(0, -40), 1, 11, 6, 1);
+                    makeEnemy(new Vector2(0, -40), 1, 12, 6, 1);
                     makeEnemy(new Vector2(100, -40), 1, 11, 6, 1);
                     makeEnemy(new Vector2(200, -40), 1, 11, 6, 1);
                     makeEnemy(new Vector2(300, -40), 1, 11, 6, 1);
