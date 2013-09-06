@@ -25,14 +25,14 @@ namespace Shooting
             {
                 if (flg1 != flg2 && sw.ElapsedMilliseconds > 3000)
                 {
-                    makeEnemy(new Vector2(800, 0), 1, 9, 4, 1);
-                    makeEnemy(new Vector2(800, 100), 1, 9, 4, 1);
-                    makeEnemy(new Vector2(800, 200), 1, 9, 4, 1);
-                    makeEnemy(new Vector2(800, 300), 1, 9, 4, 1);
-                    makeEnemy(new Vector2(-40, 0), 1, 8, 4, 1);
-                    makeEnemy(new Vector2(-40, 100), 1, 8, 4, 1);
-                    makeEnemy(new Vector2(-40, 200), 1, 8, 4, 1);
-                    makeEnemy(new Vector2(-40, 300), 1, 8, 4, 1);
+                    makeEnemy(new Vector2(800, 0), 1, 9, Uchikata.Jikinerai, 1,0);
+                    makeEnemy(new Vector2(800, 100), 1, 9, Uchikata.Jikinerai, 1,0);
+                    makeEnemy(new Vector2(800, 200), 1, 9, Uchikata.Jikinerai, 1,0);
+                    makeEnemy(new Vector2(800, 300), 1, 9, Uchikata.Jikinerai, 1,0);
+                    makeEnemy(new Vector2(-40, 0), 1, 8, Uchikata.Jikinerai, 1,0);
+                    makeEnemy(new Vector2(-40, 100), 1, 8, Uchikata.Jikinerai, 1,0);
+                    makeEnemy(new Vector2(-40, 200), 1, 8, Uchikata.Jikinerai, 1,0);
+                    makeEnemy(new Vector2(-40, 300), 1, 8, Uchikata.Jikinerai, 1,0);
                     flg2++;
                 }
 
@@ -49,15 +49,15 @@ namespace Shooting
             {
                 if (flg1 != flg2 && sw.ElapsedMilliseconds > 3000)
                 {
-                    makeEnemy(new Vector2(0, -40), 1, 12, 6, 1);
-                    makeEnemy(new Vector2(100, -40), 1, 11, 6, 1);
-                    makeEnemy(new Vector2(200, -40), 1, 11, 6, 1);
-                    makeEnemy(new Vector2(300, -40), 1, 11, 6, 1);
-                    makeEnemy(new Vector2(400, -40), 1, 7, 6, 1);
-                    makeEnemy(new Vector2(500, -50), 1, 10, 6, 1);
-                    makeEnemy(new Vector2(600, -50), 1, 10, 6, 1);
-                    makeEnemy(new Vector2(700, -50), 1, 10, 6, 1);
-                    makeEnemy(new Vector2(800, -50), 1, 10, 6, 1);
+                    makeEnemy(new Vector2(0, -40), 1, 12, Uchikata.Ransya, 1,0);
+                    makeEnemy(new Vector2(100, -40), 1, 11, Uchikata.Ransya, 1,0);
+                    makeEnemy(new Vector2(200, -40), 1, 11, Uchikata.Ransya, 1,0);
+                    makeEnemy(new Vector2(300, -40), 1, 11, Uchikata.Ransya, 1,0);
+                    makeEnemy(new Vector2(400, -40), 1, 7, Uchikata.Ransya, 1,0);
+                    makeEnemy(new Vector2(500, -50), 1, 10, Uchikata.Ransya, 1,0);
+                    makeEnemy(new Vector2(600, -50), 1, 10, Uchikata.Ransya, 1,0);
+                    makeEnemy(new Vector2(700, -50), 1, 10, Uchikata.Ransya, 1,0);
+                    makeEnemy(new Vector2(800, -50), 1, 10, Uchikata.Ransya, 1,0);
                     flg2++;
                 }
 
@@ -81,7 +81,7 @@ namespace Shooting
                         {
                             //ここに一定間隔ごとに呼ぶ敵を書く。
                             //位置をずらしながら呼びたい場合はichi、ichi間隔（したにあるやつ）を変える。
-                            makeEnemy(ichi, 0, 4, 2, 3);
+                            makeEnemy(ichi, 0, 4, Uchikata.HayaiShitaMassugu, 3,0);
                             ichi += ichikankakaku;
                             //同時に色々配置したい場合はこっち 
                             //したでdoujipopを設定し、同時に出現させる数を設定しておく
@@ -90,7 +90,7 @@ namespace Shooting
                             while (temp > 0)
                             {
                                 //同時に出す敵をここに書く（変更するのは数字部分のみ）
-                                makeEnemy((ichi + ichikankakaku * (doujiPop - temp)), 0, 2, 0, 1);
+                                makeEnemy((ichi + ichikankakaku * (doujiPop - temp)), 0, 2, 0, 1,0);
                                 temp--;
                             }
 
@@ -149,8 +149,8 @@ namespace Shooting
                             //位置をずらしながら呼びたい場合はichi、ichi間隔（したにあるやつ）を変える。
                             //同じ位置から出すなら２番めのようにかいて良い。
                             //この場合、敵を同時に２箇所から、とう時間間隔で出現させる（ichikankaku=0なので同じ位置から出続ける）
-                            makeEnemy(ichi, 0, 5, 5, 3);
-                            makeEnemy(new Vector2(800, 0), 0, 4, 3, 3);
+                            makeEnemy(ichi, 3, 5, Uchikata.HayaiJikinerai, 3,0);
+                            makeEnemy(new Vector2(800, 0), 3, 4, Uchikata.HayaiSanWay, 3,0);
                             ichi += ichikankakaku;
                             //同時に色々配置したい場合はこっち 
                             //したでdoujipopを設定し、同時に出現させる数を設定しておく
@@ -159,7 +159,7 @@ namespace Shooting
                             while (temp > 0)
                             {
                                 //同時に出す敵をここに書く（変更するのは数字部分のみ）
-                                makeEnemy((ichi + ichikankakaku * (doujiPop - temp)), 0, 2, 0, 1);
+                                makeEnemy((ichi + ichikankakaku * (doujiPop - temp)), 0, 2, 0, 1,0);
                                 temp--;
                             }
 

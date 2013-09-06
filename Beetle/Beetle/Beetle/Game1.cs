@@ -20,6 +20,7 @@ namespace Shooting
         SpriteBatch spriteBatch;
 
         sprite playerSp;
+        sprite EffectSp;
         TimeSpan ts1;
 
         Texture2D texturePlayer;
@@ -30,42 +31,59 @@ namespace Shooting
         Texture2D textureGameScene;
         Texture2D textureClear;
         Texture2D textureGameover;
+        Texture2D textureEffect;
+        Texture2D textureItem;
 
-        List<Texture2D> enemyTextureList;
+        SoundEffect soundeffect;
+        List<SoundEffect> soundeffectList;
+        static List<Texture2D> enemyTextureList;
         List<Texture2D> tamaTextureList;
         List<Texture2D> sceneTextureList;
+        static List<Texture2D> itemTextureList;
+        static List<sprite> effectspriteList;
 
-
+        Song bgm;
         
         //オブジェクトたち
-        List<scene> SceneList;
+        List<Scene> SceneList;
         List<Enemy> EnemyList;
-        public static List<Tama> TamaList;
-        public static List<Item> ItemList;
+        static List<Tama> TamaList;
+        List<Item> ItemList;
         Player player;
-        titlescene title;
-        gamescene gamescene;
-        gamescene clearscene;
-        gamescene gameoverscene;
+        Titlescene title;
+        Gamescene gamescene;
+        Gamescene clearscene;
+        Gamescene gameoverscene;
+
         //敵のステータス
         List<EnemyStatus> enemyStatusList;
-
+        //エフェクトのリスト
+        static List<Effect> EffectList;
         bool clearflag; //各面をクリアしたかどうかのフラグ
-        const int zanki = 10;　//残機設定
+        
+        //プレイヤーの初期ステータスの設定
+        const int zanki = 3;　//初期残機設定
+        const int HP = 10;   //HP設定
+        const int playershokiX = 350;//プレイヤーの初期位置のX座標
+        const int playershokiY = 700;//プレイヤーの初期位置のY座標
+
+        //フィールドの高さ、幅
+        const int FIELD_H = 800;
+        const int FIELD_W = 800;
+
         int stagenum;　//ステージ番号
         int scenenum; //シーン番号　０：タイトル　１：プレイ画面　２：
         const int stageMax = 3; //ステージ最大番号
         bool syokaiyobidashi; //ステージ開始時のみの操作など、初回呼び出しに使う
-
-        public static Vector2 positionofplayer; //時期狙い軌道のための，プレイヤーの位置情報
-        public static Random cRandom; //乱数
+        static Vector2 positionofplayer; //時期狙い軌道のための，プレイヤーの位置情報
+        static Random cRandom; //乱数
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 800;
+            graphics.PreferredBackBufferWidth = FIELD_H;
+            graphics.PreferredBackBufferHeight = FIELD_W;
         }
         
         /// <summary>
@@ -81,17 +99,25 @@ namespace Shooting
             tamaTextureList = new List<Texture2D>();
             enemyStatusList = new List<EnemyStatus>();
             sceneTextureList = new List<Texture2D>();
+            effectspriteList = new List<sprite>();
+            itemTextureList = new List<Texture2D>();
+            soundeffectList = new List<SoundEffect>();
 
-            SceneList = new List<scene>();
+            SceneList = new List<Scene>();
             EnemyList = new List<Enemy>();
-             TamaList = new List<Tama>();
+            TamaList = new List<Tama>();
             ItemList = new List<Item>();
+            EffectList = new List<Effect>();
 
             stagenum = 0; //fordg
             scenenum = 0; //fordg 
             syokaiyobidashi = true;
             score = 0;
             base.Initialize();
+            positionofplayer = new Vector2(0, 0); //時期狙い軌道のための，プレイヤーの位置情報
+            cRandom = new System.Random();//乱数
+            MediaPlayer.Play(bgm);
+            MediaPlayer.IsRepeating = true;
         }
 
         /// <summary>
@@ -115,13 +141,13 @@ namespace Shooting
             //オブジェクトのロード
             textureArrow = Content.Load<Texture2D>("arrow");
 
-            title = new titlescene(textureTitle, textureArrow);
+            title = new Titlescene(textureTitle, textureArrow);
             SceneList.Add(title);
-            gamescene = new Shooting.gamescene(textureGameScene);
+            gamescene = new Gamescene(textureGameScene);
             SceneList.Add(title);
-            clearscene = new Shooting.gamescene(textureClear);
+            clearscene = new Gamescene(textureClear);
             SceneList.Add(clearscene);
-            gameoverscene = new Shooting.gamescene(textureGameover);
+            gameoverscene = new Gamescene(textureGameover);
             SceneList.Add(gameoverscene);
 
             textureEnemy1 = Content.Load<Texture2D>("watermelon");
@@ -129,6 +155,8 @@ namespace Shooting
             textureEnemy1 = Content.Load<Texture2D>("melon");
             enemyTextureList.Add(textureEnemy1);
             textureEnemy1 = Content.Load<Texture2D>("kingyo");
+            enemyTextureList.Add(textureEnemy1);
+            textureEnemy1 = Content.Load<Texture2D>("stagbeetle");
             enemyTextureList.Add(textureEnemy1);
             
             textureTama = Content.Load<Texture2D>("tamatate");
@@ -146,20 +174,72 @@ namespace Shooting
             textureTama = Content.Load<Texture2D>("tama6");
             tamaTextureList.Add(textureTama);
 
+            textureItem = Content.Load<Texture2D>("item1");
+            itemTextureList.Add(textureItem);
+            textureItem = Content.Load<Texture2D>("item2");
+            itemTextureList.Add(textureItem);
+            textureItem = Content.Load<Texture2D>("item3");
+            itemTextureList.Add(textureItem);
+            textureItem = Content.Load<Texture2D>("item4");
+            itemTextureList.Add(textureItem);
+            textureItem = Content.Load<Texture2D>("item5");
+            itemTextureList.Add(textureItem);
+            textureItem = Content.Load<Texture2D>("item6");
+            itemTextureList.Add(textureItem);
 
 
-            texturePlayer = Content.Load<Texture2D>("beatle");
-            playerSp = new sprite(texturePlayer, new Vector2(0, 0), new Point(40, 60), new Point(3, 1),5000);
+            textureEffect = Content.Load<Texture2D>("effect1");
+            EffectSp = new sprite(textureEffect, new Vector2(0, 0), new Point(100, 100), new Point(2, 1), 200);
+            effectspriteList.Add(EffectSp);
+            textureEffect = Content.Load<Texture2D>("effect2");
+            EffectSp = new sprite(textureEffect, new Vector2(0, 0), new Point(50, 50), new Point(4, 1), 400);
+            effectspriteList.Add(EffectSp);
 
-            positionofplayer = new Vector2(0, 0); //時期狙い軌道のための，プレイヤーの位置情報
-            cRandom = new System.Random();//乱数
+            texturePlayer = Content.Load<Texture2D>("beetle");
+            playerSp = new sprite(texturePlayer, new Vector2(0, 0), new Point(40, 60), new Point(3, 1), 5000);
+
+            soundeffect = Content.Load<SoundEffect>("soundclear");//0
+            soundeffectList.Add(soundeffect);
+            soundeffect = Content.Load<SoundEffect>("soundgameover");//1
+            soundeffectList.Add(soundeffect);
+            soundeffect = Content.Load<SoundEffect>("soundhpreduce");//2
+            soundeffectList.Add(soundeffect);
+            soundeffect = Content.Load<SoundEffect>("soundgetitem");//3
+            soundeffectList.Add(soundeffect);
+            soundeffect = Content.Load<SoundEffect>("soundenemypowerdown");//4
+            soundeffectList.Add(soundeffect);
+            soundeffect = Content.Load<SoundEffect>("soundshoot1");//5
+            soundeffectList.Add(soundeffect);
+            soundeffect = Content.Load<SoundEffect>("soundshoot2");//6
+            soundeffectList.Add(soundeffect);
+            soundeffect = Content.Load<SoundEffect>("soundshoot3");//7
+            soundeffectList.Add(soundeffect);
+            soundeffect = Content.Load<SoundEffect>("soundshoot4");//8
+            soundeffectList.Add(soundeffect);
+            soundeffect = Content.Load<SoundEffect>("soundshoot5");//9
+            soundeffectList.Add(soundeffect);
+            soundeffect = Content.Load<SoundEffect>("soundshoot6");//10
+            soundeffectList.Add(soundeffect);
+            soundeffect = Content.Load<SoundEffect>("soundshoot7");//11
+            soundeffectList.Add(soundeffect);
+            soundeffect = Content.Load<SoundEffect>("soundshoot8");//12
+            soundeffectList.Add(soundeffect);
+            soundeffect = Content.Load<SoundEffect>("soundshoot9");//13
+            soundeffectList.Add(soundeffect);
+            soundeffect = Content.Load<SoundEffect>("soundshoot10");//14
+            soundeffectList.Add(soundeffect);
+
+            bgm = Content.Load<Song>("bgm");
 
             //敵のステータスのロード
-            EnemyStatus ene = new EnemyStatus(1, new Vector2(1,1), 0, 10); //スイカ
+            EnemyStatus ene;
+            ene = new EnemyStatus(1, 1, 10, 1); //スイカ
             enemyStatusList.Add(ene);
-            ene = new EnemyStatus(2, new Vector2(1, 1), 0, 20); //メロン
+            ene = new EnemyStatus(2, 1, 20, 1); //メロン
             enemyStatusList.Add(ene);
-            ene = new EnemyStatus(4, new Vector2(1, 1), 0, 100); //金魚
+            ene = new EnemyStatus(3, 1, 100, 1); //金魚
+            enemyStatusList.Add(ene);
+            ene = new EnemyStatus(5, 1, 1000, 10); //クワガタ
             enemyStatusList.Add(ene);
 
             // TODO: this.Content クラスを使用して、ゲームのコンテンツを読み込みます。
@@ -183,9 +263,8 @@ namespace Shooting
         protected override void Update(GameTime gameTime)
         {
             // ゲームの終了条件をチェックします。
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (scenenum == -1)
                 this.Exit();
-
             // TODO: ここにゲームのアップデート ロジックを追加します。
 
             if (scenenum == 0)
@@ -204,10 +283,13 @@ namespace Shooting
             if (scenenum == 2)
             {
                 gameoverscene.update();
-                KeyboardState ks = Keyboard.GetState();
-
-                if (ks.IsKeyDown(Keys.Enter))
+                if (checkUserMessage(UserMessage.Shot))//スペースキー、エンターキー、ゲームパッドボタンA
                 {
+                    flg1 = -1;
+                }
+                else if (flg1 == -1)
+                {
+                    KillAllObject();//フィールド内に残ってる機を消す
                     scenenum = 0;
                     syokaiyobidashi = true;
                     base.Initialize();
@@ -217,13 +299,16 @@ namespace Shooting
             if (scenenum == 3)
             {
                 clearscene.update();
-                KeyboardState ks = Keyboard.GetState();
-
-                if (ks.IsKeyDown(Keys.Enter))
+                if (checkUserMessage(UserMessage.Shot))//スペースキー、エンターキー、ゲームパッドボタンA
                 {
+                    flg1 = -1;
+                }
+                else if (flg1 == -1)//
+                {
+                    KillAllObject();//フィールド内に残ってる機を消す
                     scenenum = 0;
                     syokaiyobidashi = true;
-                    title = new titlescene(textureTitle, textureArrow);
+                    title = new Titlescene(textureTitle, textureArrow);
                     base.Initialize();
                 }
             }
@@ -248,6 +333,10 @@ namespace Shooting
             {
                 gamescene.draw(spriteBatch);
 
+                foreach (var item in ItemList)//アイテムは下層に描画
+                {
+                    item.draw(spriteBatch);
+                }
                 player.draw(spriteBatch);
                 foreach (var item in EnemyList)
                 {
@@ -257,17 +346,19 @@ namespace Shooting
                 {
                     item.draw(spriteBatch);
                 }
-
-                foreach (var item in ItemList)
+                foreach (var item in EffectList)
                 {
                     item.draw(spriteBatch);
                 }
-
             }
 
             if (scenenum == 2)
             {
                 gamescene.draw(spriteBatch);
+                foreach (var item in ItemList)
+                {
+                    item.draw(spriteBatch);
+                }
                 player.draw(spriteBatch);
                 foreach (var item in EnemyList)
                 {
@@ -277,12 +368,10 @@ namespace Shooting
                 {
                     item.draw(spriteBatch);
                 }
-
-                foreach (var item in ItemList)
+                foreach (var item in EffectList)
                 {
                     item.draw(spriteBatch);
                 }
-
                 gameoverscene.draw(spriteBatch);
 
             }
@@ -291,6 +380,10 @@ namespace Shooting
             {
                 gamescene.draw(spriteBatch);
 
+                foreach (var item in ItemList)
+                {
+                    item.draw(spriteBatch);
+                }
                 player.draw(spriteBatch);
                 foreach (var item in EnemyList)
                 {
@@ -300,12 +393,10 @@ namespace Shooting
                 {
                     item.draw(spriteBatch);
                 }
-
-                foreach (var item in ItemList)
+                foreach (var item in EffectList)
                 {
                     item.draw(spriteBatch);
                 }
-
                 clearscene.draw(spriteBatch);
             }
             base.Draw(gameTime);

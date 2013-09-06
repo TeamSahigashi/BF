@@ -32,11 +32,14 @@ namespace Shooting
         {
             playerSp.update(100f);
 
-            
+            foreach (var item in effectspriteList)
+            {
+                item.update(100f);
+            }
 
             if (syokaiyobidashi)
             {
-                player = new Player(new Vector2(350, 700), playerSp, playerSp.getFrame(),zanki, new Vector2(1, 1), 3);
+                player = new Player(new Vector2(playershokiX, playershokiY), playerSp, playerSp.getFrame(), HP, new Vector2(1, 1), zanki);
                 sw.Start();
                 syokaiyobidashi = false;
                 flg1 = 1;
@@ -45,13 +48,13 @@ namespace Shooting
                 flg4 = 0;
             }
 
-            player.update(TamaList,tamaTextureList);
+            player.update(TamaList,tamaTextureList, soundeffectList);
             
             if (EnemyList != null)
             {
                 foreach (var item in EnemyList)
                 {
-                    item.update(TamaList,tamaTextureList);
+                    item.update(TamaList, tamaTextureList, ItemList, soundeffectList);
                 }
             }
 
@@ -63,6 +66,21 @@ namespace Shooting
                 }
             }
 
+            if (ItemList != null)
+            {
+                foreach (var item in ItemList)
+                {
+                    item.update();
+                }
+            }
+
+            if (EffectList != null)
+            {
+                foreach (var item in EffectList)
+                {
+                    item.update();
+                }
+            }
 
             scoreupdate();
   //          this.Window.Title = "stagenum = " + stagenum + " scenenum = " + scenenum + " syori: " + flg1 + " ";
@@ -91,11 +109,14 @@ namespace Shooting
             //プレイヤーと弾
             foreach (var item in TamaList)
             {
-                if (hit(item,player))
+                if (item.getTamaZokusei() != 1)
                 {
-                    player.HPReduce(item.checkHP()); //自分のHP減らす
-                    item.delete(); //弾を消す（Exist->false）
-               //     this.Window.Title = "hit! P T";
+                    if (hit(item, player))
+                    {
+                        player.HPReduce(item.checkHP(),soundeffectList[2]); //自分のHP減らす
+                        item.delete(); //弾を消す（Exist->false）
+                        //     this.Window.Title = "hit! P T";
+                    }
                 }
             }
 
@@ -104,7 +125,7 @@ namespace Shooting
             {
                 if (hit(item, player))
                 {
-                    player.HPReduce(1); //敵の攻撃力？
+                    player.HPReduce(item.checkAP(),soundeffectList[2]); //敵の攻撃力分減らす
             //        this.Window.Title = "hit! P E";
                     
                 }
@@ -117,14 +138,16 @@ namespace Shooting
             }
             Window.Title +=  " 残機: " + player.zankiCheck() + " 残りHP " + player.checkHP();
             
-            //HP０なら残機減らす
-            if (player.checkHP() == 0)
+            //HP０より小さいなら残機減らす
+            if (player.checkHP() <= 0)
             {
                 player.zankiReduce(1); 
                 //残機減ったら死んだ処理する
-                if (player.zankiCheck() <= 0)
+                if (player.zankiCheck() <= 0)//残機0ならゲームオーバー
                 {
                     scenenum = 2;
+                    soundeffectList[1].Play();
+                    sw2.Restart();
                 }
                 else player.recover();
             }
@@ -132,8 +155,11 @@ namespace Shooting
             //プレイヤーとアイテム
             foreach (var item in ItemList)
             {
-                player.getitem(item); //アイテムとったときの挙動
-                item.delete(); //アイテムを消す
+                if(hit(item, player))
+                {
+                player.getitem(item, soundeffectList); //アイテムとったときの挙動
+                item.delete();        //アイテムを消す
+                }
             //    this.Window.Title = "hit! P I";
             }
             //敵と弾
@@ -145,10 +171,11 @@ namespace Shooting
                     {
                         if (itemTama.getTamaZokusei() == 1)
                         {
-                            itemEne.HPReduce(itemTama.checkHP()); //敵のHPへらす
+                            itemEne.HPReduce(itemTama.checkHP(), soundeffectList[4]); //敵のHPへらす
                             if (itemEne.checkHP() <= 0)
                             {
-                                itemEne.delete();
+                                itemEne.makeDying();//死んでいる処理の中でdelete()して消す
+                                //itemEne.delete();
                                 score += itemEne.getScore();
                             }
                             itemTama.delete(); //たま消す
@@ -163,11 +190,7 @@ namespace Shooting
 
             //いなくなった奴はリストから抜く
             removeObject();
-
-
         }
-
-
 
 
         /// <summary>
@@ -178,15 +201,16 @@ namespace Shooting
         /// <returns>当たった:true</returns>
         bool hit(Object A, Object B)
         {
-            int X0 = (int)A.locate().X;
-            int X1 = (int)A.locate().X + (int)A.getSize().X;
-            int Y0 = (int)A.locate().Y;
-            int Y1 = (int)A.locate().Y + (int)A.getSize().Y;
+            int sukima = 5;  // sukimaの分あたり判定をせまくする
+            int X0 = (int)A.locate().X + sukima;
+            int X1 = (int)A.locate().X + (int)A.getSize().X - sukima;
+            int Y0 = (int)A.locate().Y + sukima;
+            int Y1 = (int)A.locate().Y + (int)A.getSize().Y - sukima;
 
-            int X2 = (int)B.locate().X;
-            int X3 = (int)B.locate().X + (int)B.getSize().X;
-            int Y2 = (int)B.locate().Y;
-            int Y3 = (int)B.locate().Y + (int)B.getSize().Y;
+            int X2 = (int)B.locate().X + sukima;
+            int X3 = (int)B.locate().X + (int)B.getSize().X - sukima;
+            int Y2 = (int)B.locate().Y + sukima;
+            int Y3 = (int)B.locate().Y + (int)B.getSize().Y - sukima;
 
             if (X0 < X3 && X2 < X1 && Y0 < Y3 && Y2 < Y1)
             {
@@ -214,13 +238,32 @@ namespace Shooting
                 sw.Restart();
             }
         }
+        void KillAllObject()//敵機、アイテム、弾をすべて消す
+        {
+            foreach (var item in EnemyList)
+            {
+                item.delete();
+            }
+            foreach (var item in ItemList)
+            {
+                item.delete();
+            }
+            foreach (var item in TamaList)
+            {
+                item.delete();
+            }
+            foreach (var item in EffectList)
+            {
+                item.delete();
+            }
+        }
 
         void removeObject()
         {
             EnemyList.RemoveAll(checkExist);
             ItemList.RemoveAll(checkExist);
             TamaList.RemoveAll(checkExist);
-          
+            EffectList.RemoveAll(checkExist);
         }
 
         static bool checkExist(Object ob) //この要素を削除する
@@ -228,22 +271,11 @@ namespace Shooting
             return !ob.checkExist();
         }
 
-        /// <summary>
-        /// 敵を生成します。
-        /// </summary>
-        /// <param name="pos">出現位置</param>
-        /// <param name="enenum">敵の番号</param>
-        public void makeEnemy(Vector2 pos,int enenum,int kidounum, int shootpattern,int tamasyurui)
-        {
-            Enemy ene = new Enemy(pos, enemyTextureList[enenum], new Vector2(enemyTextureList[enenum].Width, enemyTextureList[enenum].Height), enenum, kidounum, enemyStatusList[enenum],shootpattern,tamasyurui);
-            EnemyList.Add(ene);
-        }
-
         public bool checkAllDeath()
         {
             return EnemyList.Count == 0;
         }
-
+        
 
         void scoreupdate()
         {
@@ -254,8 +286,53 @@ namespace Shooting
             else if (score < titlescore)
             {
                 titlescore = score;
+          }
+        }
+
+        public static bool checkUserMessage(UserMessage s) //キーボード、ゲームパッドの管理、指定の操作が入力されているか、チェック
+        {
+            GamePadState gp = GamePad.GetState(PlayerIndex.One);//ゲームパッドの状態を保持
+            KeyboardState ks = Keyboard.GetState(); //キーボードの状態を保持
+            bool b = false;
+            switch (s)
+            {
+                case UserMessage.Hidari:
+                    if (ks.IsKeyDown(Keys.Left) || gp.IsButtonDown(Buttons.DPadLeft))
+                    {
+                        b = true;
+                    }
+                    break;
+                case UserMessage.Migi:
+                    if (ks.IsKeyDown(Keys.Right) || gp.IsButtonDown(Buttons.DPadRight))
+                    {
+                        b = true;
+                    }
+                    break;
+                case UserMessage.Shita:
+                    if (ks.IsKeyDown(Keys.Down) || gp.IsButtonDown(Buttons.DPadDown))
+                    {
+                        b = true;
+                    }
+                    break;
+                case UserMessage.Ue:
+                    if (ks.IsKeyDown(Keys.Up) || gp.IsButtonDown(Buttons.DPadUp))
+                    {
+                        b = true;
+                    }
+                    break;
+                case UserMessage.Shot:
+                    if (ks.IsKeyDown(Keys.Space) || ks.IsKeyDown(Keys.Enter) || gp.IsButtonDown(Buttons.A))
+                    {
+                        b = true;
+                    }
+                    break;
+                default:
+                    b= false;
+                    break;
             }
+            return b;
         }
     }
 }
+
 

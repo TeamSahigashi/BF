@@ -29,12 +29,15 @@ namespace Shooting
                         if (flg3 - flg4 == 1)
                         {
                             int temp = doujiPop;
-
+                            
                             //同時に一定の間隔で出す
-                            makeEnemy(new Vector2(100, 800), 1, 6, 4, 6);
-                            makeEnemy(new Vector2(700, 800), 1, 6, 4, 6);
+                            makeKuwagata(new Vector2(-50, 200), 0);
                             kazu--;
                             flg4++;
+                            //EnemyList[0].setLevel(3);
+                            //EnemyList[1].setLevel(3);
+                            //EnemyList[0].setUgoki(12);//ugokiReset(int ugokibango) エネミーの動きを更新
+                            //EnemyList[1].setUgoki(cRandom.Next(12));
                         }
 
                         //どういう間隔で上野処理を呼び出すかのフラグ管理
@@ -55,10 +58,10 @@ namespace Shooting
                     {
                         sw2.Restart();
                         sw2.Restart();//ストップウォッチリスタート
-                        flg3 = 1;//連続で呼ぶためのフラグ
+                        flg3 = 0;//連続で呼ぶためのフラグ
                         flg4 = 0;//同上
-                        kazu = 5;//呼び出す数
-                        jikankankaku = 4000;//呼び出し感覚
+                        kazu = 1;//呼び出す数
+                        jikankankaku = 3000;//呼び出し感覚
                         jikan = jikankankaku;//２が始まってから最初に呼び出して、次の処理が始まるまでの時間
                         ichikankakaku = new Vector2(0, 140);//連続して配置するときの位置間隔
                         ichi = new Vector2(0, 100); //最初の一個が出る位置
@@ -75,6 +78,10 @@ namespace Shooting
                 }
             }
 
+            if (flg1 == 2)
+            {
+                scenenum = 3;
+            }
 
 
             this.Window.Title += sw.Elapsed;
@@ -82,5 +89,7 @@ namespace Shooting
             this.Window.Title += " score:" + titlescore;
 
         }
+
     }
+
 }
