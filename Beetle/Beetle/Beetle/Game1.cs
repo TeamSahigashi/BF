@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 namespace Shooting
 {
     /// <summary>
-    /// 基底 Game クラスから派生した、ゲームのメイン クラスです。
+    /// 基底 Game クラスから派生した，ゲームのメイン クラスです．
     /// </summary>
     public partial class Game1 : Microsoft.Xna.Framework.Game
     {
@@ -21,7 +21,7 @@ namespace Shooting
 
         sprite playerSp;
         sprite EffectSp;
-        TimeSpan ts1;
+        //TimeSpan ts1;
 
         Texture2D texturePlayer;
         Texture2D textureTama;
@@ -67,14 +67,14 @@ namespace Shooting
         const int playershokiX = 350;//プレイヤーの初期位置のX座標
         const int playershokiY = 700;//プレイヤーの初期位置のY座標
 
-        //フィールドの高さ、幅
+        //フィールドの高さ，幅
         const int FIELD_H = 800;
         const int FIELD_W = 800;
 
         int stagenum;　//ステージ番号
         int scenenum; //シーン番号　０：タイトル　１：プレイ画面　２：
         const int stageMax = 3; //ステージ最大番号
-        bool syokaiyobidashi; //ステージ開始時のみの操作など、初回呼び出しに使う
+        bool syokaiyobidashi; //ステージ開始時のみの操作など，初回呼び出しに使う
         static Vector2 positionofplayer; //時期狙い軌道のための，プレイヤーの位置情報
         static Random cRandom; //乱数
 
@@ -87,14 +87,14 @@ namespace Shooting
         }
         
         /// <summary>
-        /// ゲームが実行を開始する前に必要な初期化を行います。
-        /// ここで、必要なサービスを照会して、関連するグラフィック以外のコンテンツを
-        /// 読み込むことができます。base.Initialize を呼び出すと、使用するすべての
-        /// コンポーネントが列挙されるとともに、初期化されます。
+        /// ゲームが実行を開始する前に必要な初期化を行います．
+        /// ここで，必要なサービスを照会して，関連するグラフィック以外のコンテンツを
+        /// 読み込むことができます．base.Initialize を呼び出すと，使用するすべての
+        /// コンポーネントが列挙されるとともに，初期化されます．
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: ここに初期化ロジックを追加します。
+            // TODO: ここに初期化ロジックを追加します．
             enemyTextureList = new List<Texture2D>();
             tamaTextureList = new List<Texture2D>();
             enemyStatusList = new List<EnemyStatus>();
@@ -109,24 +109,22 @@ namespace Shooting
             ItemList = new List<Item>();
             EffectList = new List<Effect>();
 
-            stagenum = 0; //fordg
-            scenenum = 0; //fordg 
+            stagenum = 0; //fordg 0:Makestage1(), 1:Makestage2(), 2:Makestage3();
+            scenenum = 0; //fordg 0:タイトル画面，1：ゲーム画面，2:ゲームオーバー画面，3:クリア画面
             syokaiyobidashi = true;
             score = 0;
-            base.Initialize();
             positionofplayer = new Vector2(0, 0); //時期狙い軌道のための，プレイヤーの位置情報
             cRandom = new System.Random();//乱数
-            MediaPlayer.Play(bgm);
-            MediaPlayer.IsRepeating = true;
+            base.Initialize();
         }
 
         /// <summary>
-        /// LoadContent はゲームごとに 1 回呼び出され、ここですべてのコンテンツを
-        /// 読み込みます。
+        /// LoadContent はゲームごとに 1 回呼び出され，ここですべてのコンテンツを
+        /// 読み込みます．
         /// </summary>
         protected override void LoadContent()
         {
-            // 新規の SpriteBatch を作成します。これはテクスチャーの描画に使用できます。
+            // 新規の SpriteBatch を作成します．これはテクスチャーの描画に使用できます．
             spriteBatch = new SpriteBatch(GraphicsDevice);
             //シーンのロード
             textureTitle = Content.Load<Texture2D>("title");
@@ -229,7 +227,7 @@ namespace Shooting
             soundeffect = Content.Load<SoundEffect>("soundshoot10");//14
             soundeffectList.Add(soundeffect);
 
-            bgm = Content.Load<Song>("bgm");
+            //bgm = Content.Load<Song>("bgm");
 
             //敵のステータスのロード
             EnemyStatus ene;
@@ -242,30 +240,30 @@ namespace Shooting
             ene = new EnemyStatus(5, 1, 1000, 10); //クワガタ
             enemyStatusList.Add(ene);
 
-            // TODO: this.Content クラスを使用して、ゲームのコンテンツを読み込みます。
+            // TODO: this.Content クラスを使用して，ゲームのコンテンツを読み込みます．
 
         }
 
         /// <summary>
-        /// UnloadContent はゲームごとに 1 回呼び出され、ここですべてのコンテンツを
-        /// アンロードします。
+        /// UnloadContent はゲームごとに 1 回呼び出され，ここですべてのコンテンツを
+        /// アンロードします．
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: ここで ContentManager 以外のすべてのコンテンツをアンロードします。
+            // TODO: ここで ContentManager 以外のすべてのコンテンツをアンロードします．
         }
 
         /// <summary>
-        /// ワールドの更新、衝突判定、入力値の取得、オーディオの再生などの
-        /// ゲーム ロジックを、実行します。
+        /// ワールドの更新，衝突判定，入力値の取得，オーディオの再生などの
+        /// ゲーム ロジックを，実行します．
         /// </summary>
         /// <param name="gameTime">ゲームの瞬間的なタイミング情報</param>
         protected override void Update(GameTime gameTime)
         {
-            // ゲームの終了条件をチェックします。
+            // ゲームの終了条件をチェックします．
             if (scenenum == -1)
                 this.Exit();
-            // TODO: ここにゲームのアップデート ロジックを追加します。
+            // TODO: ここにゲームのアップデート ロジックを追加します．
 
             if (scenenum == 0)
             {
@@ -283,31 +281,31 @@ namespace Shooting
             if (scenenum == 2)
             {
                 gameoverscene.update();
-                if (checkUserMessage(UserMessage.Shot))//スペースキー、エンターキー、ゲームパッドボタンA
+                if (checkUserMessage(UserMessage.Shot))//スペースキー，エンターキー，ゲームパッドボタンA
                 {
                     flg1 = -1;
                 }
-                else if (flg1 == -1)
+                else if (flg1 == -1)//キーを押してから，離したときに実行（連続で画面が遷移するのを防ぐ）
                 {
                     KillAllObject();//フィールド内に残ってる機を消す
-                    scenenum = 0;
-                    syokaiyobidashi = true;
-                    base.Initialize();
+                    scenenum = 0;//タイトル画面へ戻る
+                    syokaiyobidashi = true;//初回呼び出しのフラグを立てる
+                    base.Initialize();//初期化
                 }
             }
 
             if (scenenum == 3)
             {
                 clearscene.update();
-                if (checkUserMessage(UserMessage.Shot))//スペースキー、エンターキー、ゲームパッドボタンA
+                if (checkUserMessage(UserMessage.Shot))//スペースキー，エンターキー，ゲームパッドボタンA
                 {
                     flg1 = -1;
                 }
                 else if (flg1 == -1)//
                 {
                     KillAllObject();//フィールド内に残ってる機を消す
-                    scenenum = 0;
-                    syokaiyobidashi = true;
+                    scenenum = 0;//タイトル画面へ戻る
+                    syokaiyobidashi = true;//初回呼び出しのフラグを立てる
                     title = new Titlescene(textureTitle, textureArrow);
                     base.Initialize();
                 }
@@ -316,7 +314,7 @@ namespace Shooting
         }
 
         /// <summary>
-        /// ゲームが自身を描画するためのメソッドです。
+        /// ゲームが自身を描画するためのメソッドです．
         /// </summary>
         /// <param name="gameTime">ゲームの瞬間的なタイミング情報</param>
         protected override void Draw(GameTime gameTime)
@@ -328,25 +326,26 @@ namespace Shooting
                 title.draw(spriteBatch);
                 
             }
-            // TODO: ここに描画コードを追加します。
+            // TODO: ここに描画コードを追加します．
+            //※後に描画したスプライトが上にくる
             if (scenenum == 1)
             {
                 gamescene.draw(spriteBatch);
 
-                foreach (var item in ItemList)//アイテムは下層に描画
+                foreach (var item in ItemList)//アイテム
                 {
                     item.draw(spriteBatch);
                 }
                 player.draw(spriteBatch);
-                foreach (var item in EnemyList)
+                foreach (var item in EnemyList)//敵
                 {
                     item.draw(spriteBatch);
                 }
-                foreach (var item in TamaList)
+                foreach (var item in TamaList)//弾
                 {
                     item.draw(spriteBatch);
                 }
-                foreach (var item in EffectList)
+                foreach (var item in EffectList)//エフェクトスプライト
                 {
                     item.draw(spriteBatch);
                 }
@@ -355,20 +354,20 @@ namespace Shooting
             if (scenenum == 2)
             {
                 gamescene.draw(spriteBatch);
-                foreach (var item in ItemList)
+                foreach (var item in ItemList)//アイテム
                 {
                     item.draw(spriteBatch);
                 }
                 player.draw(spriteBatch);
-                foreach (var item in EnemyList)
+                foreach (var item in EnemyList)//敵
                 {
                     item.draw(spriteBatch);
                 }
-                foreach (var item in TamaList)
+                foreach (var item in TamaList)//弾
                 {
                     item.draw(spriteBatch);
                 }
-                foreach (var item in EffectList)
+                foreach (var item in EffectList)//エフェクトスプライト
                 {
                     item.draw(spriteBatch);
                 }
@@ -380,20 +379,20 @@ namespace Shooting
             {
                 gamescene.draw(spriteBatch);
 
-                foreach (var item in ItemList)
+                foreach (var item in ItemList)//アイテム
                 {
                     item.draw(spriteBatch);
                 }
                 player.draw(spriteBatch);
-                foreach (var item in EnemyList)
+                foreach (var item in EnemyList)//敵
                 {
                     item.draw(spriteBatch);
                 }
-                foreach (var item in TamaList)
+                foreach (var item in TamaList)//弾
                 {
                     item.draw(spriteBatch);
                 }
-                foreach (var item in EffectList)
+                foreach (var item in EffectList)//エフェクトスプライト
                 {
                     item.draw(spriteBatch);
                 }

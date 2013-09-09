@@ -46,6 +46,8 @@ namespace Shooting
                 flg2 = 0;
                 flg3 = 1;
                 flg4 = 0;
+                //MediaPlayer.Play(bgm);
+                //MediaPlayer.IsRepeating = true;
             }
 
             player.update(TamaList,tamaTextureList, soundeffectList);
@@ -132,10 +134,10 @@ namespace Shooting
             }
 
             Window.Title = " score:" + titlescore;
-            if (score - titlescore != 0)
-            {
-                Window.Title += " + " + (score - titlescore);
-            }
+            //if (score - titlescore != 0)
+            //{
+            //    Window.Title += " + " + (score - titlescore);
+            //}
             Window.Title +=  " 残機: " + player.zankiCheck() + " 残りHP " + player.checkHP();
             
             //HP０より小さいなら残機減らす
@@ -158,6 +160,7 @@ namespace Shooting
                 if(hit(item, player))
                 {
                 player.getitem(item, soundeffectList); //アイテムとったときの挙動
+                score += item.getScore();  //アイテムをとったときスコアを得る
                 item.delete();        //アイテムを消す
                 }
             //    this.Window.Title = "hit! P I";
@@ -174,7 +177,7 @@ namespace Shooting
                             itemEne.HPReduce(itemTama.checkHP(), soundeffectList[4]); //敵のHPへらす
                             if (itemEne.checkHP() <= 0)
                             {
-                                itemEne.makeDying();//死んでいる処理の中でdelete()して消す
+                                itemEne.MakeDelete();//死んでいる処理の中でdelete()して消す
                                 //itemEne.delete();
                                 score += itemEne.getScore();
                             }
@@ -238,7 +241,7 @@ namespace Shooting
                 sw.Restart();
             }
         }
-        void KillAllObject()//敵機、アイテム、弾をすべて消す
+        void KillAllObject()//敵機，アイテム，弾をすべて消す
         {
             foreach (var item in EnemyList)
             {
@@ -288,8 +291,17 @@ namespace Shooting
                 titlescore = score;
           }
         }
-
-        public static bool checkUserMessage(UserMessage s) //キーボード、ゲームパッドの管理、指定の操作が入力されているか、チェック
+        /// <summary>
+        /// ユーザからの入力を返す
+        /// UserMessage.Hidari:カーソルキー左，ゲームパッド十字キー左
+        /// UserMessage.Migi:カーソルキー右，ゲームパッド十字キー右
+        /// UserMessage.Shita:カーソルキー下，ゲームパッド十字キー下
+        /// UserMessage.Ue:カーソルキー上，ゲームパッド十字キー上
+        /// UserMessage.Shot:スペースキー，エンターキー，ゲームパッドボタンA
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static bool checkUserMessage(UserMessage s) //キーボードとゲームパッドの操作を管理
         {
             GamePadState gp = GamePad.GetState(PlayerIndex.One);//ゲームパッドの状態を保持
             KeyboardState ks = Keyboard.GetState(); //キーボードの状態を保持

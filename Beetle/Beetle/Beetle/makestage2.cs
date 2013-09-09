@@ -20,7 +20,7 @@ namespace Shooting
         {
             
             //敵の出現を管理
-            //２つのフラグflg1 flg2 に差がある時のみ実行するようにし、実行を１度でもするとflg2をインクリメントする
+            //２つのフラグflg1 flg2 に差がある時のみ実行するようにし，実行を１度でもするとflg2をインクリメントする
             if (flg1 == 1)
             {
                 if (flg1 != flg2 && sw.ElapsedMilliseconds > 3000)
@@ -79,12 +79,12 @@ namespace Shooting
                         //ここに一定時間ごとに呼び出される処理
                         if (flg3 - flg4 == 1)
                         {
-                            //ここに一定間隔ごとに呼ぶ敵を書く。
-                            //位置をずらしながら呼びたい場合はichi、ichi間隔（したにあるやつ）を変える。
+                            //ここに一定間隔ごとに呼ぶ敵を書く．
+                            //位置をずらしながら呼びたい場合はichi，ichi間隔（したにあるやつ）を変える．
                             makeEnemy(ichi, 0, 4, Uchikata.HayaiShitaMassugu, 3,0);
                             ichi += ichikankakaku;
                             //同時に色々配置したい場合はこっち 
-                            //したでdoujipopを設定し、同時に出現させる数を設定しておく
+                            //したでdoujipopを設定し，同時に出現させる数を設定しておく
                             int temp = doujiPop;
 
                             while (temp > 0)
@@ -118,12 +118,12 @@ namespace Shooting
                         sw2.Restart();//ストップウォッチリスタート
                         flg3 = 1;//連続で呼ぶためのフラグ
                         flg4 = 0;//同上
-                        jikan = jikankankaku;//処理が始まってから最初に呼び出して、次の処理が始まるまでの時間
+                        jikan = jikankankaku;//処理が始まってから最初に呼び出して，次の処理が始まるまでの時間
                         //上の４こはいじっちゃダメ
                         //ここから必要に応じて変更
                         kazu = 5;//時間間隔で呼び出す数
                         jikankankaku = 1500;//呼び出し間隔
-                        ichi = new Vector2(200, 0);//同時に呼び出す場合の、基準となる位置
+                        ichi = new Vector2(200, 0);//同時に呼び出す場合の，基準となる位置
                         ichikankakaku = new Vector2(0, 0);//上の基準からどれくらいずつの感覚で離れて呼ぶか
 
                     }
@@ -145,15 +145,15 @@ namespace Shooting
                         //ここに一定時間ごとに呼び出される処理
                         if (flg3 - flg4 == 1)
                         {
-                            //ここに一定間隔ごとに呼ぶ敵を書く。
-                            //位置をずらしながら呼びたい場合はichi、ichi間隔（したにあるやつ）を変える。
-                            //同じ位置から出すなら２番めのようにかいて良い。
-                            //この場合、敵を同時に２箇所から、とう時間間隔で出現させる（ichikankaku=0なので同じ位置から出続ける）
+                            //ここに一定間隔ごとに呼ぶ敵を書く．
+                            //位置をずらしながら呼びたい場合はichi，ichi間隔（したにあるやつ）を変える．
+                            //同じ位置から出すなら２番めのようにかいて良い．
+                            //この場合，敵を同時に２箇所から，とう時間間隔で出現させる（ichikankaku=0なので同じ位置から出続ける）
                             makeEnemy(ichi, 3, 5, Uchikata.HayaiJikinerai, 3,0);
                             makeEnemy(new Vector2(800, 0), 3, 4, Uchikata.HayaiSanWay, 3,0);
                             ichi += ichikankakaku;
                             //同時に色々配置したい場合はこっち 
-                            //したでdoujipopを設定し、同時に出現させる数を設定しておく
+                            //したでdoujipopを設定し，同時に出現させる数を設定しておく
                             int temp = doujiPop;
 
                             while (temp > 0)
@@ -187,12 +187,12 @@ namespace Shooting
                         sw2.Restart();//ストップウォッチリスタート
                         flg3 = 1;//連続で呼ぶためのフラグ
                         flg4 = 0;//同上
-                        jikan = jikankankaku;//処理が始まってから最初に呼び出して、次の処理が始まるまでの時間
+                        jikan = jikankankaku;//処理が始まってから最初に呼び出して，次の処理が始まるまでの時間
                         //上の４こはいじっちゃダメ
                         //ここから必要に応じて変更
                         kazu = 5;//時間間隔で呼び出す数
                         jikankankaku = 1500;//呼び出し間隔
-                        ichi = new Vector2(200, 0);//同時に呼び出す場合の、基準となる位置
+                        ichi = new Vector2(200, 0);//同時に呼び出す場合の，基準となる位置
                         ichikankakaku = new Vector2(0, 0);//上の基準からどれくらいずつの感覚で離れて呼ぶか
 
                     }
@@ -203,6 +203,11 @@ namespace Shooting
                 {
                     taiki(1000, 1);
                 }
+            }
+            if (flg1 == 5)
+            {
+                //clearflag = true;//次の面へ
+                clearflag = true;
             }
 
             this.Window.Title += sw.Elapsed;

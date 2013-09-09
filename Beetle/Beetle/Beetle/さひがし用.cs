@@ -18,7 +18,7 @@ namespace Shooting
 
         //ここのあたりに定義を書いていくでござる
 
-        public enum Uchikata //敵の発弾方法、makeEnemy()で使う
+        public enum Uchikata //敵の発弾方法，makeEnemy()で使う
         {
             ShitaMassugu, HayaiShitaMassugu, SanWay, HayaiSanWay,
             Jikinerai, HayaiJikinerai, Ransya, JikineraiRansya,
@@ -44,7 +44,7 @@ namespace Shooting
             return;
         }
         /// <summary>
-        /// 引数で与えられた角度分回転させます、0度のとき真下向き
+        /// 引数で与えられた角度分回転させます，0度のとき真下向き
         /// </summary>
         /// <param name="v"></param>
         /// <param name="kakudo"></param>
@@ -68,9 +68,9 @@ namespace Shooting
             //位置
             protected Vector2 position;
             protected Texture2D texture;
-            //幅、高さ
+            //幅，高さ
             protected Vector2 size;
-            //ヒットポイント　弾の威力、機の体力、アイテムの効果値
+            //ヒットポイント　弾の威力，機の体力，アイテムの効果値
             protected int HP;
             //速さベクトル
             protected Vector2 speed;
@@ -78,7 +78,7 @@ namespace Shooting
             protected bool exist;
             public Object() { }//コンストラクタ
 
-            /// existをfalseにして、消す処理
+            /// existをfalseにして，消す処理
             /// </summary>
             public void delete()
             {
@@ -152,13 +152,13 @@ namespace Shooting
         class Actor : Object
         {
             protected int shokiHP;
-            protected int status;//弾が命中した最中か、通常か、死んでいるところかの状態
+            protected int status;//弾が命中した最中か，通常か，死んでいるところかの状態
             protected Stopwatch swforstatus;
             protected int level;//弾の打ち方を調整
             public Actor() { }
 
             /// <summary>
-            /// ある弾をおくとき、自分を円形に取り囲むようにする位置情報を、弾のテクスチャのサイズから計算
+            /// ある弾をおくとき，自分を円形に取り囲むようにする位置情報を，弾のテクスチャのサイズから計算
             /// </summary>
             /// <returns></returns>
             protected Vector2 setTamaP(Texture2D texture, float kakudo, float hankei)
@@ -244,7 +244,7 @@ namespace Shooting
            /// <param name="points">HPを減らす数int</param>
            public void HPReduce(int points, SoundEffect soundeffect)
            {
-               if (status == 1)    //通常状態のときだけ、ダメージをうける
+               if (status == 1)    //通常状態のときだけ，ダメージをうける
                {
                    soundeffect.Play();
                    HP -= points;
@@ -254,7 +254,7 @@ namespace Shooting
                }
            }
             /// <summary>
-            /// 死んだときなど、プレイヤーの位置を再設定
+            /// 死んだときなど，プレイヤーの位置を再設定
             /// </summary>
             /// <param name="pos">プレイヤーの再設定位置</param>
             public void setPos(Vector2 pos)
@@ -262,7 +262,7 @@ namespace Shooting
                 position = pos;
             }
             /// <summary>
-            /// 残機が減った後、復帰するときの処理、初期位置に再配置
+            /// 残機が減った後，復帰するときの処理，初期位置に再配置
             /// </summary>
             public void recover()
             {
@@ -271,7 +271,7 @@ namespace Shooting
                 setPos(shokiposition);
             }
             /// <summary>
-            /// 死んだときの処理、残機を1減らし,HPを回復して元の位置に復帰
+            /// 死んだときの処理，残機を1減らし,HPを回復して元の位置に復帰
             /// </summary>
             /// <param name="points">残機を減らす数int</param>
             /// 
@@ -298,6 +298,7 @@ namespace Shooting
                 {
                     case 0:         //アイテム番号0を拾ったときレベルアップして弾の打ち方を派手にしていく
                         level += item.checkHP();
+                        
                         break;
                     case 1:         //アイテム番号1を拾ったとき速度アップ
                         speed.X += item.checkHP();
@@ -345,7 +346,7 @@ namespace Shooting
                     position.Y += speed.Y;
                 }
 
-                //弾発射、通常状態のときのみ発射できる、ダメージを受けている最中は弾はうてない
+                //弾発射，通常状態のときのみ発射できる，ダメージを受けている最中は弾はうてない
                 if (checkUserMessage(UserMessage.Shot) && status == 1 && (t % 6 == 0))
                 {
                     soundeffectList[5].Play();
@@ -356,18 +357,15 @@ namespace Shooting
                     }
                     else if (level > 10 && level <= 20)
                     {
-                        for (i = 0; i < 3; i++)
-                        {
-                            ichi = setTamaP(tamaTextureList[0], 120 + i * 60, 50);
-                            makeTama(ichi, new Vector2(-4 + 4 * i, -16), 1, tamaList, tamaTextureList, 0, 1, Color.BlueViolet);
-                        }
+                        ichi = setTamaP(tamaTextureList[0], 180, 50);
+                        makeTama(ichi, new Vector2(0, -16), 0, tamaList, tamaTextureList, 0, 1, Color.BlueViolet);
                     }
                     if (level > 20 && level <= 30)
                     {
                         for (i = 0; i < 3; i++)
                         {
                             ichi = setTamaP(tamaTextureList[0], 120 + i * 60, 50);
-                            makeTama(ichi, new Vector2(-4 + 4 * i, -16), 2, tamaList, tamaTextureList, 0, 1, Color.White);
+                            makeTama(ichi, new Vector2(-4 + 4 * i, -16), 3, tamaList, tamaTextureList, 0, 1, Color.BlueViolet);
                         }
                     }
                     if (level > 30)
@@ -375,7 +373,7 @@ namespace Shooting
                         for (i = 0; i < 3; i++)
                         {
                             ichi = setTamaP(tamaTextureList[0], 120 + i * 60, 50);
-                            makeTama(ichi, new Vector2(-4 + 4 * i, -16), 3, tamaList, tamaTextureList, 0, 1, Color.White);
+                            makeTama(ichi, new Vector2(-4 + 4 * i, -16), 2, tamaList, tamaTextureList, 0, 1, Color.BlueViolet);
                         }
                     }
                 }
@@ -384,7 +382,7 @@ namespace Shooting
                     case 0:
                         if (swforstatus.ElapsedMilliseconds > 2000)
                         {
-                            status = 1;           //死んでいるzankireduce()のときの処理、ステータス変化の5秒後にstatusをもとにもどす
+                            status = 1;           //死んでいるzankireduce()のときの処理，ステータス変化の5秒後にstatusをもとにもどす
                             swforstatus.Stop();
                         }
                         break;
@@ -419,7 +417,7 @@ namespace Shooting
                         sp.setColor(Color.White);
                         sp.Draw(spriteBatch);
                         break;
-                    case 2:                     //ダメージをうけているHPreduce()のときの処理、攻撃をうけて一定時間はふるえる，その間は無敵
+                    case 2:                     //ダメージをうけているHPreduce()のときの処理，攻撃をうけて一定時間はふるえる，その間は無敵
                         position.X = position.X + 4 * (float)Math.Sin(t); //fordg
                         position.Y = position.Y + 4 * (float)Math.Cos(t); //fordg
                         sp.setPos(position);
@@ -458,7 +456,7 @@ namespace Shooting
         {
             sprite sp;
             Stopwatch sw;
-            int num;
+            //int num;
             public Effect(sprite setsp, Vector2 setsize, Vector2 setposition, int num)
             {
                 sp = setsp;
@@ -518,12 +516,12 @@ namespace Shooting
             protected Vector2 shokispeed;
             protected Stopwatch sw1;
             protected bool ugokiflag1;
-            protected bool ugokiflag2;
             protected int shoottamatexturei;
             protected Uchikata shootpatterni;
             protected int subayasa;
             protected int AP;
             protected bool haittaflg;
+            protected bool hansyaflg;
             /// <summary>
             /// 敵のコンストラクタ
             /// </summary>
@@ -555,10 +553,12 @@ namespace Shooting
                 shoottamatexturei= setshoottamatexturei;
                 t = 0;
                 ugokiflag1 = true;
-                ugokiflag2 = true;
                 level = 1;
                 AP = es.AP;
                 haittaflg = false;
+                speed.X = subayasa;
+                speed.Y = subayasa;
+                hansyaflg = false;
             }
             /// <summary>
             /// 引数だけHPを減らす
@@ -566,7 +566,7 @@ namespace Shooting
             /// <param name="points">HPを減らす数int</param>
             public void HPReduce(int points, SoundEffect soundeffect)
             {
-                if (status != 0)    //死んでいるとき以外、ダメージをうける
+                if (status != 0)    //死んでいるとき以外，ダメージをうける
                 {
                     soundeffect.Play();
                     HP -= points;
@@ -583,8 +583,11 @@ namespace Shooting
             {
                 ugokin = k;
                 ugokiflag1 = true;
-                ugokiflag2 = true;
                 return;
+            }
+            public void setHansya()
+            {
+                hansyaflg = true;
             }
 
             public void setUchikata(Uchikata u)
@@ -599,6 +602,11 @@ namespace Shooting
                 return;
             }
 
+            public void setSpeed(Vector2 s)
+            {
+                speed = s;
+                return;
+            }
             public void setLevel(int setlevel)
             {
                 level = setlevel;
@@ -699,174 +707,159 @@ namespace Shooting
                         break;
                 }
             }
-
-            public void ugokiinit()
+            /// <summary>
+            /// 敵機の軌道
+            /// </summary>
+            public void Ugoki()
             {
-                t = 0;
-                speed.X = subayasa;
-                speed.Y = subayasa;
-                switch (ugokin) //うごきごとに、speedの初期化
+                if (ugokiflag1)//動きの初回に実行
                 {
-                    case 0:             //うごき番号０のとき静止
-                        speed.X = 0;
-                        speed.Y = 0;
-                        break;
-                    case 1:             //うごき番号１のとき右へまっすぐ
-                        speed.X = 1 * subayasa;
-                        speed.Y = 0;
-                        break;
-                    case 2:             //うごき番号２のとき左へまっすぐ
-                        speed.X = -1 * subayasa;
-                        speed.Y = 0;
-                        break;
-                    case 3:             //うごき番号３のとき右下へまっすぐ
-                        speed.X = 1 * subayasa;
-                        speed.Y = (float)0.25 * subayasa;
-                        break;
-                    case 4:             //うごき番号４のとき左下へまっすぐ
-                        speed.X = -1 * subayasa;
-                        speed.Y = (float)0.25 * subayasa;
-                        break;
-                    case 5:             //うごき番号５のとき下へまっすぐ
-                        speed.X = 0;
-                        speed.Y = 1 * subayasa;
-                        break;
-                    case 6:             //うごき番号６のとき上へまっすぐ
-                        speed.X = 0;
-                        speed.Y = -1 * subayasa;
-                        break;
-                    case 7:             //うごき番号７のとき下へまっすぐ、ターンして上へ
-                        speed.X = 0;
-                        speed.Y = 1 * subayasa;
-                        sw1.Start();
-                        break;
-                    case 8:
-                        speed.X = 1 * subayasa;
-                        speed.Y = 0;
-                        sw1.Start();
-                        break;
-                    case 9:
-                        speed.X = -1 * subayasa;
-                        speed.Y = 0;
-                        sw1.Start();
-                        break;
-                    case 10:
-                        speed.X = 0;
-                        speed.Y = 1 * subayasa;
-                        sw1.Start();
-                        break;
-                    case 11:
-                        speed.X = 0;
-                        speed.Y = 1 * subayasa;
-                        sw1.Start();
-                        break;
-                    case 12://初速度自機狙い
-                        speed = positionofplayer - position;
-                        speed.Normalize();
-                        speed.X *= subayasa;
-                        speed.Y *= subayasa;
-                        break;
-                    case 16:
-                        speed.X = subayasa;
-                        speed.Y = -2 * subayasa;
-                        break;
-                    default:
-                        break;
+                    ugokiflag1 = false;
+                    shokispeed = speed;
+                    t = 0;
                 }
-                shokispeed = speed;
-            }
-            public void ugokiupdate()
-            {
                 switch (ugokin)
                 {
-                    //加速度がある動きは、ここで速度を更新、等速直線はなにもしない
-                    case 7:
-                        if (sw1.ElapsedMilliseconds > 2000 && sw1.ElapsedMilliseconds < 12000) //静止
+                    case 0:             //うごき番号０のとき静止
+                        if (t == 0)
                         {
-                            speed = new Vector2(0, 0);
-                        }
-                        else if (sw1.ElapsedMilliseconds > 12000)
-                        {
-                            speed = subayasa * new Vector2(0, -1);    //ターン
+                            speed.X = 0;
+                            speed.Y = 0;
                         }
                         break;
-                    case 8:
-                        if (sw1.ElapsedMilliseconds > 5000)
+                    case 1:             //うごき番号１のとき右へまっすぐ
+                        if (t == 0)
                         {
-                            if (ugokiflag2)
-                            {
-                                t = 0;
-                                ugokiflag2 = false;
-                            }
-                            if (speed.X > -(subayasa - 0.001)) //ターン
-                            {
-                                speed.X = subayasa * (float)Math.Cos(t / 32.0);
-                                speed.Y = subayasa * (float)Math.Sin(t / 32.0);
-                            }
-                            else
-                            {
-                                speed = subayasa * new Vector2(-1, 0);
-                            }
+                            speed.X = subayasa;
+                            speed.Y = 0;
                         }
                         break;
-                    case 9:
-                        if (sw1.ElapsedMilliseconds > 5000 && speed.X < (subayasa - 0.001)) //ターン
+                    case 2:             //うごき番号２のとき左へまっすぐ
+                        if (t == 0)
                         {
-                            if (ugokiflag2)
-                            {
-                                t = 0;
-                                ugokiflag2 = false;
-                            }
+                            speed.X = -1 * subayasa;
+                            speed.Y = 0;
+                        }
+                        break;
+                    case 3:             //うごき番号３のとき右下へまっすぐ
+                        if (t == 0)
+                        {
+                            speed.X = 1 * subayasa;
+                            speed.Y = (float)0.25 * subayasa;
+                        }
+                        break;
+                    case 4:             //うごき番号４のとき左下へまっすぐ
+                        if (t == 0)
+                        {
+                            speed.X = -1 * subayasa;
+                            speed.Y = (float)0.25 * subayasa;
+                        }
+                        break;
+                    case 5:             //うごき番号５のとき下へまっすぐ
+                        if (t == 0)
+                        {
+                            speed.X = 0;
+                            speed.Y = 1 * subayasa;
+                        }
+                        break;
+                    case 6:             //うごき番号６のとき上へまっすぐ
+                        if (t == 0)
+                        {
+                            speed.X = 0;
+                            speed.Y = -1 * subayasa;
+                        }
+                        break;
+                    case 7:             //下，制止，上
+                        if (t == 0)     //下
+                        {
+                            speed.Y = subayasa;
+                            speed.X = 0;
+                        }
+                        else if (t == 100)//制止
+                        {
+                            speed.Y = 0;
+                        }
+                        else if (t == 500)//上
+                        {
+                            speed.Y = -subayasa;
+                        }
+                        break;
+                    case 8:             //右下左ターン
+                        if (t == 0)
+                        {
+                            speed.X = subayasa;
+                            speed.Y = 0;
+                        }
+                        else if (t > 200 && t < 303)
+                        {
+                            speed.X = subayasa * (float)Math.Cos((t - 200) / 32.0);
+                            speed.Y = subayasa * (float)Math.Sin((t - 200) / 32.0);
+                        }
+                        else if (t == 303)
+                        {
+                            speed.X = -subayasa;
+                            speed.Y = 0;
+                        }
+                        break;
+                    case 9:             //左下右ターン
+                        if (t == 0)
+                        {
+                            speed.X = -subayasa;
+                            speed.Y = 0;
+                        }
+                        else if (t > 200 && t < 303)
+                        {
                             speed.X = -subayasa * (float)Math.Cos(t / 32.0);
                             speed.Y = subayasa * (float)Math.Sin(t / 32.0);
                         }
-                        else
+                        else if (t == 303)
                         {
-                            if (sw1.ElapsedMilliseconds > 5000)
-                            {
-                                speed = subayasa * new Vector2(1, 0);
-                            }
+                            speed.X = subayasa;
+                            speed.Y = 0;
                         }
                         break;
-                    case 10:
-                        if (sw1.ElapsedMilliseconds > 2000 && speed.Y > -(subayasa - 0.001)) //ターン
+                    case 10:            //下左上ターン
+                        if (t == 0)
                         {
-                            if (ugokiflag2)
-                            {
-                                t = 0;
-                                ugokiflag2 = false;
-                            }
+                            speed.X = 0;
+                            speed.Y = subayasa;
+                        }
+                        else if (t > 200 && t < 303)
+                        {
                             speed.X = -subayasa * (float)Math.Sin(t / 32.0);
                             speed.Y = subayasa * (float)Math.Cos(t / 32.0);
                         }
-                        else
+                        else if (t == 303)
                         {
-                            if (sw1.ElapsedMilliseconds > 2000)
-                            {
-                                speed = subayasa * new Vector2(0, -1);
-                            }
+                            speed.X = 0;
+                            speed.Y = -subayasa;
                         }
                         break;
-                    case 11:
-                        if (sw1.ElapsedMilliseconds > 2000)
+                    case 11:            //下右上ターン
+                        if (t == 0)
                         {
-                            if (ugokiflag2)
-                            {
-                                t = 0;
-                                ugokiflag2 = false;
-                            }
-                            if (speed.Y > -(subayasa - 0.001)) //ターン
-                            {
-                                speed.X = subayasa * (float)Math.Sin(t / 32.0);
-                                speed.Y = subayasa * (float)Math.Cos(t / 32.0);
-                            }
-                            else
-                            {
-                                speed = subayasa * new Vector2(0, -1);
-                            }
+                            speed.X = 0;
+                            speed.Y = subayasa;
+                        }
+                        else if (t > 200 && t < 303)
+                        {
+                            speed.X = subayasa * (float)Math.Sin(t / 32.0);
+                            speed.Y = subayasa * (float)Math.Cos(t / 32.0);
+                        }
+                        else if (t == 303)
+                        {
+                            speed.X = 0;
+                            speed.Y = -subayasa;
                         }
                         break;
-                    case 12://初速度時機狙い
+                    case 12://初速度自機狙い
+                        if (t == 0)
+                        {
+                            speed = positionofplayer - position;
+                            speed.Normalize();
+                            speed.X *= subayasa;
+                            speed.Y *= subayasa;
+                        }
                         break;
                     case 13://常に自機狙い
                         speed = positionofplayer - position;
@@ -874,48 +867,55 @@ namespace Shooting
                         speed.X *= subayasa;
                         speed.Y *= subayasa;
                         break;
-                    case 14://常に自機狙いx
+                    case 14://X座標自機狙い
                         speed = positionofplayer - position;
                         speed.Normalize();
+                        speed.X *= subayasa;
                         speed.Y = shokispeed.Y;
                         break;
-                    case 15://常に自機狙いy
+                    case 15://Y座標自機狙い
                         speed = positionofplayer - position;
                         speed.Normalize();
                         speed.X = shokispeed.X;
+                        speed.Y *= subayasa;
                         break;
-                    case 16://フィールドのはしで反射
-                        if(position.X < 0)
-                        {
-                            speed.X = -speed.X;
-                        }
-                        if (position.X > FIELD_W - size.X)
-                        {
-                            speed.X = -speed.X;
-                        }
-                        if (position.Y < 0)
-                        {
-                            speed.Y = -speed.Y;
-                        }
-                        if (position.Y > FIELD_H - size.Y)
-                        {
-                            speed.Y = -speed.Y;
-                        }
+                    case 16://ゆらゆら
+                        speed.X = (float)Math.Cos(t / 100) * subayasa;
                         break;
                     case 17://回転
                         speed = Rotate(speed, t);
                         break;
                     case 18://ゆらゆらx
-                        speed.X = (float)Math.Cos(t/10) * subayasa;
+                        speed.X = (float)Math.Cos(t / 10) * subayasa;
                         break;
                     case 19://ゆらゆらy
                         speed.Y = (float)Math.Cos(t / 10) * subayasa;
                         break;
-                    default:
+                    case 20://放物運動
+                        speed.Y = speed.Y + (float)0.1;
+                        break;
+                    case 21://ランダムウォーク
+                        if (t % 100 == 0)
+                        {
+                            speed.X = 4 - cRandom.Next(9);
+                            speed.Y = -cRandom.Next(3);
+                        }
+                        break;
+                    case 22://サイクロイド
+                        speed.X = (float)Math.Cos((float)t / 32) * 2;
+                        speed.Y = (float)Math.Sin((float)t / 8) * 4;
+                        break;
+                    case 23://縦長楕円
+                        speed.X = (float)Math.Cos((float)t / 32) * 2;
+                        speed.Y = (float)Math.Sin((float)t / 32) * 4;
+                        break;
+                    case 24://横長楕円
+                        speed.X = (float)Math.Cos((float)t / 32) * 4;
+                        speed.Y = (float)Math.Sin((float)t / 32) * 2;
                         break;
                 }
+                t++;
             }
-
             /// これを倒したときにえられるスコアを渡す
             /// </summary>
             /// <returns></returns>
@@ -923,17 +923,42 @@ namespace Shooting
             {
                 return score;
             }
-            public void makeDying()
+
+            /// <summary>
+            /// 死んでいるときの処理をする
+            /// </summary>
+            public void MakeDelete()
             {
                 status = 0;
             }
-
+            public virtual void UpdateUgoki()
+            {
+            }
+            void Hansya()
+            {
+                if (position.X < 0)
+                {
+                    speed.X = -speed.X;
+                }
+                else if (position.X > FIELD_W - size.X)
+                {
+                    speed.X = -speed.X;
+                }
+                else if (position.Y < 0)
+                {
+                    speed.Y = -speed.Y;
+                }
+                else if (position.Y > FIELD_H - size.Y)
+                {
+                    speed.Y = -speed.Y;
+                }
+            }
             public virtual void update(List<Tama> tamaList,List<Texture2D> tamatextureList, List<Item> ItemList, List<SoundEffect> soundeffectList)
             {
                 switch (status)
                 {
                     case 0:
-                        if (swforstatus.ElapsedMilliseconds > 200)//死んでいるときの処理、死んでいる状態0.2秒間後に実行
+                        if (swforstatus.ElapsedMilliseconds > 200)//死んでいるときの処理，死んでいる状態0.2秒間後に実行
                         {
                             if (haveitem >= 0)  //アイテムをもっているとき
                             {
@@ -947,33 +972,34 @@ namespace Shooting
                     case 2:
                         if (swforstatus.ElapsedMilliseconds > 100)
                         {
-                            status = 1;          //ダメージを受けているときの処理、0.1秒後、もとにもどる
+                            status = 1;          //ダメージを受けているときの処理，0.1秒後，もとにもどる
                         }
                         break;
                 }
-                if (ugokiflag1)
-                {
-                    ugokiinit();
-                    ugokiflag1 = false;
-                }
+
                 if (status != 0)
                 {
-                    ugokiupdate();
+                    Ugoki();
                     if (haittaflg)
                     {
                         shoottama(shootpatterni, tamatextureList, tamaList, shoottamatexturei, Color.White, soundeffectList);
                     }
-                    position += speed;
+
                 }
-                if (haittaflg == false && PositionIsInField2(position, size))
+                UpdateUgoki();
+                if(PositionIsInField(position, size))
                 {
                     haittaflg = true;
                 }
-                t++;
-                if(!PositionIsInField(position, size) && haittaflg) //フィールドの外に出たら、消す
+                if(!PositionIsInField(position, size) && haittaflg) //フィールドの外に出たら，消す
                 {
                     delete();
                 }
+                if (hansyaflg)
+                {
+                    Hansya();
+                }
+                position += speed;
             }
             public void draw(SpriteBatch spriteBatch)
             {
@@ -1006,7 +1032,7 @@ namespace Shooting
             protected Vector2 shokiposi;
             protected int n;
             protected int tama_zokusei;
-            protected Stopwatch sw1;
+            //protected Stopwatch sw1;
             public Color color;
             /// <summary>
             /// 玉のコンストラクタ
@@ -1017,7 +1043,7 @@ namespace Shooting
             /// <param name="setHP">玉の威力</param>
             /// <param name="setspeed">玉のスピード</param>
             /// <param name="num">玉</param>
-            /// <param name="tama_zokusei">玉の属性、1:味方に所属する玉、2:敵に所属する玉</param>
+            /// <param name="tama_zokusei">玉の属性，1:味方に所属する玉，2:敵に所属する玉</param>
             public Tama(Vector2 setpos, Texture2D settexture, Color setcolor, Vector2 setsize, int setHP, Vector2 setspeed, int tamaugoki, int set_tama_zokusei)
             {
                 position = new Vector2(setpos.X, setpos.Y);
@@ -1051,14 +1077,14 @@ namespace Shooting
             /// <summary>
             /// 玉の属性を返す
             /// </summary>
-            /// <returns>1:味方に属する玉、2:敵に属する玉</returns>
+            /// <returns>1:味方に属する玉，2:敵に属する玉</returns>
             public int getTamaZokusei()
             {
                 return tama_zokusei;
             }
             public void update()
             {
-                if (!PositionIsInField(position, size))//フィールドの外にはみ出たら、消す
+                if (!PositionIsInField(position, size))//フィールドの外にはみ出たら，消す
                 {
                     delete();
                 }
@@ -1106,8 +1132,9 @@ namespace Shooting
                     default:
                         break;
                 }
-                position += speed;
                 t++;
+                position += speed;
+
             }
             public void draw(SpriteBatch spriteBatch)
             {
@@ -1143,23 +1170,37 @@ namespace Shooting
             /// アイテムのコンストラクタ
             /// </summary>
             /// <param name="num">アイテム番号</param>
-            public Item(int itemnum, int p, Texture2D settexture, Vector2 setsize, Vector2 setpos)
+            public Item(int itemnum, int setHP, Texture2D settexture, Vector2 setsize, Vector2 setpos)
             {
                 texture = settexture;
                 position = setpos;
                 size = setsize;
                 num = itemnum;
                 exist = true;
-                HP = p;
+                HP = setHP;//得られるスコア
             }
+            /// これを拾ったときにえられるスコアを渡す
+            /// </summary>
+            /// <returns></returns>
+            public int getScore()
+            {
+                return HP;
+            }
+           /// <summary>
+           /// アイテムのアップデート処理
+           /// </summary>
             public void update()
             {
-                if (!PositionIsInField(position, size))//フィールドの外にはみ出たら、消す
+                if (!PositionIsInField(position, size))//フィールドの外にはみ出たら，消す
                 {
                     delete();
                 }
                 position.Y++;
             }
+           /// <summary>
+           /// アイテムの描画処理
+           /// </summary>
+           /// <param name="spriteBatch"></param>
             public void draw(SpriteBatch spriteBatch)
             {
                 spriteBatch.Begin();
@@ -1167,14 +1208,30 @@ namespace Shooting
                 spriteBatch.End();
             }
         }
-        static void makeItem(int itemnum, int HP, Texture2D texture, Vector2 pos, List<Item> ItemList)
+        /// <summary>
+        /// アイテムをつくる
+        /// </summary>
+        /// <param name="itemnum">アイテム番号</param>
+        /// <param name="score">拾ったときに得られるスコア</param>
+        /// <param name="texture">アイテムのテクスチャ</param>
+        /// <param name="pos">アイテムを落とす位置</param>
+        /// <param name="ItemList"></param>
+        static void makeItem(int itemnum, int score, Texture2D texture, Vector2 pos, List<Item> ItemList)
         {
-            Item item = new Item(itemnum, HP, itemTextureList[itemnum], new Vector2(itemTextureList[itemnum].Width, itemTextureList[itemnum].Height), pos);
+            Item item = new Item(itemnum, score, itemTextureList[itemnum], new Vector2(itemTextureList[itemnum].Width, itemTextureList[itemnum].Height), pos);
             ItemList.Add(item);
         }
+        /// <summary>
+        /// クワガタ
+        /// </summary>
         class Kuwagata : Enemy
         {
             int t1;
+            /// <summary>
+            /// クワガタのコンストラクタ
+            /// </summary>
+            /// <param name="setposi">初期位置</param>
+            /// <param name="sethaveitem">もっているアイテム番号</param>
             public Kuwagata(Vector2 setposi, int sethaveitem)
             {
                 speed.X = 2;
@@ -1192,151 +1249,87 @@ namespace Shooting
                 sw1 = new Stopwatch();
                 swforstatus = new Stopwatch();
                 shootpatterni = Uchikata.Jikinerai;
-                shoottamatexturei= 1;
+                shoottamatexturei = 1;
                 t = 0;
-                ugokiflag1 = true;
-                ugokiflag2 = true;
-                level = 20;
-                AP = 10;
-                haittaflg = false;
                 subayasa = 1;
                 t1 = 0;
             }
-            public override void update(List<Tama> tamaList, List<Texture2D> tamatextureList, List<Item> ItemList, List<SoundEffect> soundeffectList)
+            public override void UpdateUgoki()
             {
                 switch (t1)
                 {
                     case 0:
-                        level = 10;
+                        level = 60;
                         setTama(1);
-                        setUchikata(Uchikata.Jikinerai);
-                        setKidou(13);
+                        setUchikata(Uchikata.HayaiJikinerai);
+                        setKidou(3);
                         break;
                     case 100:
-                        level = 20;
+                        level = 10;
                         setTama(4);
                         setUchikata(Uchikata.Zenhoi);
-                        //setKidou(0);
-                        break;
-                    case 150:
-                        level = 36;
-                        setTama(2);
-                        setUchikata(Uchikata.Zenhoi);
-                        //setKidou(0);
                         break;
                     case 200:
-                        level = 18;
-                        setTama(4);
-                        setUchikata(Uchikata.Zenhoi);
-                        //setKidou(0);
-                        break;
-                    case 250:
-                        level = 12;
-                        setTama(5);
-                        setUchikata(Uchikata.Zenhoi);
-                        //setKidou(16);
-                        break;
-                     case 300:
-                        level = 24;
+                        level = 60;
                         setTama(2);
-                        setUchikata(Uchikata.Zenhoi);
-                        //setKidou(16);
-                        break;
-                     case 350:
-                        level = 15;
-                        setTama(3);
-                        setUchikata(Uchikata.Zenhoi);
-                        //setKidou(16);
+                        setUchikata(Uchikata.HayaiJikinerai);
                         break;
                     case 400:
-                        level = 36;
-                        setTama(1);
-                        setTama(1);
+                        level = 10;
+                        setTama(3);
                         setUchikata(Uchikata.Zenhoi);
                         setKidou(0);
-                        break;
-                    case 500:
-                        setTama(6);
-                        setUchikata(Uchikata.Jikinerai);
-                        setKidou(13);
                         break;
                     case 600:
-                        setTama(4);
-                        setUchikata(Uchikata.JikineraiRansya);
-                        setKidou(0);
-                        break;
-                    case 700:
-                        level = 36;
-                        setTama(1);
-                        setUchikata(Uchikata.Zenhoi);
-                        setKidou(16);
-                        break;
-                    case 800:
-                        level = 100;
+                        level = 60;
                         setTama(2);
                         setUchikata(Uchikata.HayaiJikinerai);
-                        //setKidou(0);
                         break;
-                    case 900:
-                        setTama(3);
-                        level = 100;
-                        setUchikata(Uchikata.HayaiJikinerai);
-                        //setKidou(13);
+                    case 800:
+                        level = 10;
+                        setTama(4);
+                        setUchikata(Uchikata.Zenhoi);
                         break;
                     case 1000:
+                        level = 60;
+                        setTama(2);
+                        setUchikata(Uchikata.HayaiJikinerai);
+                        break;
+                    case 1100:
+                        level = 10;
+                        setTama(6);
+                        setUchikata(Uchikata.Zenhoi);
+                        break;
+                    case 1200:
+                        level = 60;
+                        setTama(2);
+                        setUchikata(Uchikata.HayaiJikinerai);
+                        break;
+                    case 1400:
+                        level = 10;
+                        setTama(6);
+                        setUchikata(Uchikata.Zenhoi);
+                        break;
+                    case 1600:
+                        level = 60;
+                        setTama(2);
+                        setUchikata(Uchikata.HayaiJikinerai);
+                        break;
+                    case 1800:
+                        level = 10;
+                        setTama(6);
+                        setUchikata(Uchikata.Zenhoi);
+                        break;
+                    case 2000:
                         t1 = 0;
                         break;
                 }
-                switch (status)
-                {
-                    case 0:
-                        if (swforstatus.ElapsedMilliseconds > 200)//死んでいるときの処理、死んでいる状態0.2秒間後に実行
-                        {
-                            if (haveitem >= 0)  //アイテムをもっているとき
-                            {
-                                makeItem(haveitem, 1, itemTextureList[haveitem], position, ItemList);//アイテムを置く
-                                delete();  //消える
-                            }
-                        }
-                        break;
-                    case 1://普通の状態nop
-                        break;
-                    case 2:
-                        if (swforstatus.ElapsedMilliseconds > 100)
-                        {
-                            status = 1;          //ダメージを受けているときの処理、0.1秒後、もとにもどる
-                        }
-                        break;
-                }
-                if (ugokiflag1)
-                {
-                    ugokiinit();
-                    ugokiflag1 = false;
-                }
-                if (status != 0)
-                {
-                    ugokiupdate();
-                    if (haittaflg)
-                    {
-                        shoottama(shootpatterni, tamatextureList, tamaList, shoottamatexturei, Color.White, soundeffectList);
-                    }
-                    position += speed;
-                }
-                if (haittaflg == false && PositionIsInField2(position, size))
-                {
-                    haittaflg = true;
-                }
                 t1++;
-                t++;
-                if(!PositionIsInField(position, size) && haittaflg) //フィールドの外に出たら、消す
-                {
-                    delete();
-                }
             }
         }
 
         /// <summary>
-        /// 面に敵を配置する。
+        /// 面に敵を配置する．
         /// pos:
         /// 最初に配置される位置
         /// enenum:

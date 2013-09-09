@@ -21,66 +21,27 @@ namespace Shooting
 
             if (flg1 == 1)
             {
-                if (flg2 == flg1 - 1)
+                if (flg1 != flg2)
                 {
-                    if (sw2.IsRunning)
-                    {
-                        //ここに一定時間ごとに呼び出される処理
-                        if (flg3 - flg4 == 1)
-                        {
-                            int temp = doujiPop;
-                            
-                            //同時に一定の間隔で出す
-                            makeKuwagata(new Vector2(-50, 200), 0);
-                            kazu--;
-                            flg4++;
-                            //EnemyList[0].setLevel(3);
-                            //EnemyList[1].setLevel(3);
-                            //EnemyList[0].setUgoki(12);//ugokiReset(int ugokibango) エネミーの動きを更新
-                            //EnemyList[1].setUgoki(cRandom.Next(12));
-                        }
-
-                        //どういう間隔で上野処理を呼び出すかのフラグ管理
-                        if (flg3 - flg4 == 0 && sw2.ElapsedMilliseconds > jikan)
-                        {
-                            jikan += jikankankaku;
-                            flg3++;
-                        }
-
-                        //予定の数だけ呼び出したら処理２は終わり
-                        if (kazu == 0)
-                        {
-                            flg2++;
-                        }
-                    }
-
-                    else
-                    {
-                        sw2.Restart();
-                        sw2.Restart();//ストップウォッチリスタート
-                        flg3 = 0;//連続で呼ぶためのフラグ
-                        flg4 = 0;//同上
-                        kazu = 1;//呼び出す数
-                        jikankankaku = 3000;//呼び出し感覚
-                        jikan = jikankankaku;//２が始まってから最初に呼び出して、次の処理が始まるまでの時間
-                        ichikankakaku = new Vector2(0, 140);//連続して配置するときの位置間隔
-                        ichi = new Vector2(0, 100); //最初の一個が出る位置
-                        doujiPop = 1;
-
-                    }
-
+                    makeEnemy(new Vector2(350, 100), 0, 24, Uchikata.HayaiShitaMassugu, 3, 0);
+                    makeKuwagata(new Vector2(-50, 100), 5);
+                    EnemyList[0].setSpeed(new Vector2(2, -4));
+                    flg2++;
                 }
 
-
-                if (flg2 == flg1)
+                //処理１（flg1 = 1）が終わったらここ
+                else
                 {
-                    taiki(1000, 1);
+                    taiki(5000, 1);
+                    //中でflg++してる
                 }
+
             }
 
             if (flg1 == 2)
             {
                 scenenum = 3;
+                soundeffectList[0].Play();
             }
 
 

@@ -6,7 +6,7 @@ namespace Shooting
     static class Program
     {
         /// <summary>
-        /// アプリケーションのメイン エントリー ポイントです。
+        /// アプリケーションのメイン エントリー ポイントです．
         /// </summary>
         static void Main(string[] args)
         {
