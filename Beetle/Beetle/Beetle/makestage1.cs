@@ -35,7 +35,7 @@ namespace Shooting
             {
                 if (flg1 != flg2 && sw.ElapsedMilliseconds > 3000)
                 {
-                    makeEnemy(new Vector2(0, 100), 0, 1, Uchikata.HayaiJikinerai, 3, 0);
+                    makeEnemy(new Vector2(0, 100), 0, 1, Uchikata.HayaiJikinerai, 3, 4);
                     flg2++;
                 }
 
@@ -443,7 +443,7 @@ namespace Shooting
                 {
                     if (flg1 != flg2)
                     {
-                        for (i = 0; i < 8; i++)
+                        for (i = 0; i < 4; i++)
                         {
                             makeEnemy(new Vector2(800, i * 60), 1, 9, Uchikata.Jikinerai, 1, 0);
                             makeEnemy(new Vector2(-40, i * 60), 1, 8, Uchikata.Jikinerai, 1, 0);
@@ -466,12 +466,12 @@ namespace Shooting
                     {
                         for (i = 0; i < 4; i++)
                         {
-                            makeEnemy(new Vector2(i * 100, -40), 1, 11, Uchikata.Ransya, 1, 0);
+                            makeEnemy(new Vector2(i * 100, -40), 1, 11, Uchikata.Ransya, 1, 1);
                         }
-                        makeEnemy(new Vector2(400, -40), 1, 7, Uchikata.Ransya, 1, 0);
+                        makeEnemy(new Vector2(400, -40), 1, 7, Uchikata.Ransya, 1, 2);
                         for (i = 0; i < 4; i++)
                         {
-                            makeEnemy(new Vector2(500 + i * 100, -50), 1, 10, Uchikata.Ransya, 1, 0);
+                            makeEnemy(new Vector2(500 + i * 100, -50), 1, 10, Uchikata.Ransya, 1, 3);
                         }
                         flg2++;
                     }
@@ -544,6 +544,57 @@ namespace Shooting
                 {
                     if (flg1 != flg2)
                     {
+                        for (i = 12; i < 18; i++)
+                        {
+                            makeEnemy(new Vector2(100 + (i - 12) * 40, 100), 0, i, Uchikata.HayaiJikinerai, 1, 0);
+                        }
+                        foreach (var item in EnemyList)
+                        {
+                            item.setSpeed(new Vector2(1, 1));
+                            item.setHansya();
+                        }
+                        EnemyList[2].delete();
+                        flg2++;
+                    }
+
+                    //処理１（flg1 = 1）が終わったらここ
+                    else
+                    {
+                        taiki(5000, 1);
+                        //中でflg++してる
+                    }
+
+                }
+
+                if (flg1 == 13)
+                {
+                    if (flg1 != flg2)
+                    {
+                        for (i = 18; i < 24; i++)
+                        {
+                            makeEnemy(new Vector2(100 + (i - 12) * 40, 100), 0, i, Uchikata.HayaiJikinerai, 1, 0);
+                        }
+                        foreach (var item in EnemyList)
+                        {
+                            item.setSpeed(new Vector2(1, 1));
+                            item.setHansya();
+                        }
+                        EnemyList[0].setSpeed(new Vector2(2, -4));
+                        flg2++;
+                    }
+
+                    //処理１（flg1 = 1）が終わったらここ
+                    else
+                    {
+                        taiki(5000, 1);
+                        //中でflg++してる
+                    }
+
+                }
+                if (flg1 == 14)
+                {
+                    if (flg1 != flg2)
+                    {
                         makeKuwagata(new Vector2(-50, 100), 5);
                         flg2++;
                     }
@@ -556,7 +607,7 @@ namespace Shooting
                     }
 
                 }
-                if (flg1 == 13)
+                if (flg1 == 15)
                 {
                     //clearflag = true;//次の面へ
                     scenenum = 3;

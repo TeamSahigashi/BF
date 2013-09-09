@@ -23,9 +23,16 @@ namespace Shooting
             {
                 if (flg1 != flg2)
                 {
-                    makeEnemy(new Vector2(350, 100), 0, 24, Uchikata.HayaiShitaMassugu, 3, 0);
-                    makeKuwagata(new Vector2(-50, 100), 5);
-                    EnemyList[0].setSpeed(new Vector2(2, -4));
+                    for (i = 12; i < 18; i++)
+                    {
+                        makeEnemy(new Vector2(100 + (i - 12) * 40, 100), 0, i, Uchikata.HayaiJikinerai, 1, 0);
+                    }
+                    foreach (var item in EnemyList)
+                    {
+                        item.setSpeed(new Vector2(1, 1));
+                        item.setHansya();
+                    }
+                    EnemyList[2].delete() ;
                     flg2++;
                 }
 
@@ -39,6 +46,31 @@ namespace Shooting
             }
 
             if (flg1 == 2)
+            {
+                if (flg1 != flg2)
+                {
+                    for (i = 18; i < 24; i++)
+                    {
+                        makeEnemy(new Vector2(100 + (i - 12) * 40, 100), 0, i, Uchikata.HayaiJikinerai, 1, 0);
+                    }
+                    foreach (var item in EnemyList)
+                    {
+                        item.setSpeed(new Vector2(1, 1));
+                        item.setHansya();
+                    }
+                    EnemyList[0].setSpeed(new Vector2(2, -4));
+                    flg2++;
+                }
+
+                //処理１（flg1 = 1）が終わったらここ
+                else
+                {
+                    taiki(5000, 1);
+                    //中でflg++してる
+                }
+
+            }
+            if (flg1 == 3)
             {
                 scenenum = 3;
                 soundeffectList[0].Play();
