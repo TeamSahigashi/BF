@@ -156,6 +156,10 @@ namespace Shooting
             enemyTextureList.Add(textureEnemy1);
             textureEnemy1 = Content.Load<Texture2D>("stagbeetle");
             enemyTextureList.Add(textureEnemy1);
+            textureEnemy1 = Content.Load<Texture2D>("pantsu");
+            enemyTextureList.Add(textureEnemy1);
+            textureEnemy1 = Content.Load<Texture2D>("bura");
+            enemyTextureList.Add(textureEnemy1);
             
             textureTama = Content.Load<Texture2D>("tamatate");
             tamaTextureList.Add(textureTama);
@@ -237,7 +241,11 @@ namespace Shooting
             enemyStatusList.Add(ene);
             ene = new EnemyStatus(3, 1, 100, 1); //金魚
             enemyStatusList.Add(ene);
-            ene = new EnemyStatus(5, 1, 1000, 10); //クワガタ
+            ene = new EnemyStatus(4, 1, 1000, 10); //クワガタ
+            enemyStatusList.Add(ene);
+            ene = new EnemyStatus(5, 1, 100, 10); //パンツ
+            enemyStatusList.Add(ene);
+            ene = new EnemyStatus(5, 1, 100, 10); //ブラ
             enemyStatusList.Add(ene);
 
             // TODO: this.Content クラスを使用して，ゲームのコンテンツを読み込みます．

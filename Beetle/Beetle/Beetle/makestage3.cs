@@ -23,9 +23,9 @@ namespace Shooting
             {
                 if (flg1 != flg2)
                 {
-                    for (i = 12; i < 18; i++)
+                    for (i = 12; i < 16; i++)
                     {
-                        makeEnemy(new Vector2(100 + (i - 12) * 40, 100), 0, i, Uchikata.HayaiJikinerai, 1, 0);
+                        makeEnemy(new Vector2(10 + (i - 12) * 200, 100), 4, i, Uchikata.HayaiJikinerai, 1, 0);
                     }
                     foreach (var item in EnemyList)
                     {
@@ -49,9 +49,9 @@ namespace Shooting
             {
                 if (flg1 != flg2)
                 {
-                    for (i = 18; i < 24; i++)
+                    for (i = 16; i < 20; i++)
                     {
-                        makeEnemy(new Vector2(100 + (i - 12) * 40, 100), 0, i, Uchikata.HayaiJikinerai, 1, 0);
+                        makeEnemy(new Vector2(10 + (i - 16) * 200, 100), 4, i, Uchikata.HayaiJikinerai, 1, 0);
                     }
                     foreach (var item in EnemyList)
                     {
@@ -71,6 +71,31 @@ namespace Shooting
 
             }
             if (flg1 == 3)
+            {
+                if (flg1 != flg2)
+                {
+                    for (i = 20; i < 24; i++)
+                    {
+                        makeEnemy(new Vector2(10 + (i - 20) * 200, 100), 4, i, Uchikata.HayaiJikinerai, 1, 0);
+                    }
+                    foreach (var item in EnemyList)
+                    {
+                        item.setSpeed(new Vector2(1, 1));
+                        item.setHansya();
+                    }
+                    EnemyList[0].setSpeed(new Vector2(2, -4));
+                    flg2++;
+                }
+
+                //処理１（flg1 = 1）が終わったらここ
+                else
+                {
+                    taiki(5000, 1);
+                    //中でflg++してる
+                }
+
+            }
+            if (flg1 == 4)
             {
                 scenenum = 3;
                 soundeffectList[0].Play();
